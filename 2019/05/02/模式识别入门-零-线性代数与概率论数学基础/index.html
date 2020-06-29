@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/success.png">
+  <link rel="icon" type="image/png" href="/img/success.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Kehan Xue">
+  <meta name="keywords" content="">
+  <title>模式识别入门（零） - 线性代数与概率论数学基础 - Kehan&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+  
+
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script  src="/js/utils.js" ></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Kehan's Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/img/d6k.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+  <div class="mt-3 post-meta">
+    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+    <time datetime="2019-05-02 17:41">
+      May 2, 2019 pm
+    </time>
+  </div>
+
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      44
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <article class="markdown-body">
+              <p>本学期选修了学校自动化学院的张绍武教授《模式识别》课程。此为期末总结时候的复习总结。此篇主要包含了一些数学常识与基础。</p>
+<a id="more"></a>
+<h1 id="Chapter-0-数学基础"><a href="#Chapter-0-数学基础" class="headerlink" title="Chapter 0 数学基础"></a>Chapter 0 数学基础</h1><h2 id="0-1-行列式与线性方程组"><a href="#0-1-行列式与线性方程组" class="headerlink" title="0.1 行列式与线性方程组"></a>0.1 行列式与线性方程组</h2><p>解行列式: </p>
+<ol>
+<li>按行 (列) 展开计算</li>
+<li>化为三角行列式计算</li>
+</ol>
+<pre><code class="hljs matlab">det(A)</code></pre>
+<p>解线性方程组:</p>
+<script type="math/tex; mode=display">
+\left\{\begin{array}{c}{a_{11} x_{1}+a_{12} x_{2}+\cdots+a_{1 n} x_{n}=b_{1}} \\ {a_{21} x_{1}+a_{22} x_{2}+\cdots+a_{2 n} x_{n}=b_{2}} \\ {\ldots \ldots \ldots \ldots \ldots \ldots \ldots \ldots \ldots} \\ {a_{n 1} x_{1}+a_{n 2} x_{2}+\cdots+a_{n n} x_{n}=b_{n}}\end{array}\right.</script><ol>
+<li><p>若系数行列式$\mathrm{D}=\left|a_{i j}\right| \neq 0$, 则方程组存在唯一解</p>
+<script type="math/tex; mode=display">
+x_{1}=\frac{D_{1}}{D}, x_{2}=\frac{D_{2}}{D}, \cdots, x_{n}=\frac{D_{n}}{D}</script></li>
+<li><p>若为齐次方程组($b=0$), 有非零解的充要条件是$\mathrm{D}=\left|a_{i j}\right|=0$</p>
+</li>
+</ol>
+<h2 id="0-2-矩阵"><a href="#0-2-矩阵" class="headerlink" title="0.2 矩阵"></a>0.2 矩阵</h2><script type="math/tex; mode=display">
+A_{m \times n}=\left[a_{i j}\right]_{m} \times_{\mathrm{n}}​</script><p>方阵:</p>
+<script type="math/tex; mode=display">
+m=n</script><p>对角阵:</p>
+<script type="math/tex; mode=display">
+\wedge=\operatorname{diag}\left(a_{11}, a_{22}, \ldots, a_{n n}\right)</script><pre><code class="hljs matlab"><span class="hljs-built_in">diag</span>(A)</code></pre>
+<p>单位阵:</p>
+<script type="math/tex; mode=display">
+E=\operatorname{diag}(1,1, \dots, 1)</script><pre><code class="hljs matlab"><span class="hljs-built_in">eye</span>(n)</code></pre>
+<p>上三角与下三角阵: (TODO)</p>
+<pre><code class="hljs matlab"><span class="hljs-built_in">triu</span>(A)
+<span class="hljs-built_in">tril</span>(A)</code></pre>
+<h2 id="0-3-矩阵运算"><a href="#0-3-矩阵运算" class="headerlink" title="0.3 矩阵运算"></a>0.3 矩阵运算</h2><p>矩阵乘法 C=AB:</p>
+<script type="math/tex; mode=display">
+c_{i j}=\sum_{k} a_{i k} b_{k j}</script><p>矩阵的转置:</p>
+<script type="math/tex; mode=display">
+\mathrm{A}=\left(\mathrm{a}_{i j}\right), \mathrm{A}^{\prime}=\mathrm{A}^{\mathrm{T}}=\left(\mathrm{a}_{j i}\right)</script><p>对称方阵:</p>
+<script type="math/tex; mode=display">
+\mathrm{A}^{\prime}=\mathrm{A}, 即 \mathrm{a}_{i j}=\mathrm{a}_{j i}</script><p>方阵的行列式性质:</p>
+<ol>
+<li>如果$|\mathrm{A}| \neq 0$, $A$ 称为非奇异阵, 否则为奇异阵.</li>
+<li>$\left|A^{\prime}\right|=|A|, \quad|A B|=|A||B|$</li>
+</ol>
+<p>逆矩阵:</p>
+<p>如果$AB = BA = E$, 则称$A$可逆, $B$为$A$的逆.</p>
+<p>方阵$A$可逆的充要条件为</p>
+<script type="math/tex; mode=display">
+|\mathrm{A}| \neq 0</script><pre><code class="hljs matlab">B = inv(A)</code></pre>
+<h2 id="0-4-分块矩阵及其运算"><a href="#0-4-分块矩阵及其运算" class="headerlink" title="0.4 分块矩阵及其运算"></a>0.4 分块矩阵及其运算</h2><p>用横线和竖线把矩阵分成若干小块,每个小块为一个矩阵,它可以作为一个元素参加运算。</p>
+<script type="math/tex; mode=display">
+\left[ \begin{array}{ccccc}{1} & {0} & {\vdots} & {1} & {0} \\ {0} & {1} & {\vdots} & {0} & {1} \\ {\cdots} & {\cdots} & {\vdots} & {\cdots} & {\cdots} \\ {0} & {0} & {\vdots} & {1} & {2} \\ {0} & {0} & {\vdots} & {2} & {1}\end{array}\right] = \left[ \begin{array}{ll}{E_{2}} & {E_{2}} \\ {O} & {B_{22}}\end{array}\right]</script><p>分块对角阵(TODO):</p>
+<script type="math/tex; mode=display">
+|\mathrm{A}|=\left|\mathrm{A}_{11}\right|\left|\mathrm{A}_{22}\right| \ldots\left|\mathrm{A}_{\mathrm{rr}}\right|</script><pre><code class="hljs matlab">A = <span class="hljs-built_in">blkdiag</span>(A11, A22, ..., Arr)
+A11 = A(<span class="hljs-number">1</span>:m, <span class="hljs-number">1</span>:n)</code></pre>
+<h2 id="0-5-向量"><a href="#0-5-向量" class="headerlink" title="0.5 向量"></a>0.5 向量</h2><p>n维向量:</p>
+<script type="math/tex; mode=display">
+\mathbf{x}=\left(x_{1}, x_{2}, \ldots, x_{n}\right)^{\mathrm{T}}</script><p>线性相关与线性无关:</p>
+<p>设有n维向量组: $\mathbf{x}<em>{1}, \mathbf{x}</em>{2}, \dots, \mathbf{x}<em>{\mathrm{m}}$, 如果只有当$k</em>{1}=k<em>{2}=\ldots=k</em>{\mathrm{m}}=0$时, 才能使得下式成立, 则称该向量组线性无关, 否则则称线性相关.</p>
+<script type="math/tex; mode=display">
+k_{1} \mathbf{x}_{1}+k_{2} \mathbf{x}_{2}+\cdots+k_{m} \mathbf{x}_{m}=0</script><p>m个n维的向量的矩阵表示:</p>
+<script type="math/tex; mode=display">
+\mathrm{A}=\left(\mathbf{a}_{1}, \mathbf{a}_{2}, \ldots, \mathbf{a}_{\mathrm{m}}\right)</script><p>n个n维向量: $\boldsymbol{a}<em>{i}=\left(\mathbf{a}</em>{\mathbf{i} 1}, \mathbf{a}<em>{\mathbf{i} 2}, \ldots, \mathbf{a}</em>{\mathbf{i n}}\right)^{\mathrm{T}}$线性无关的充要条件是</p>
+<script type="math/tex; mode=display">
+| \mathrm{A}\mathrm  | \neq 0</script><h2 id="0-6-向量-二"><a href="#0-6-向量-二" class="headerlink" title="0.6 向量(二)"></a>0.6 向量(二)</h2><p>若满足下式, 则称A可以由向量组B线性表示:</p>
+<script type="math/tex; mode=display">
+A=\left(a_{1}, a_{2}, \dots, a_{m}\right)=\left(b_{1}, b_{2}, \dots, b_{m}\right) C= BC</script><p>向量组的秩:(TODO)</p>
+<script type="math/tex; mode=display">
+\operatorname{rank}(\mathrm{A})=\mathrm{nor}(A的最大线性无关组)</script><ol>
+<li>向量组$\alpha_1, \alpha_2 … \alpha_s$线性无关等价于$\operatorname{rank}(\mathrm{\alpha_1, \alpha_2 … \alpha_s}) = s$</li>
+<li>等价的向量组具有相同的秩</li>
+<li>任意n+1个n维向量线性相关</li>
+</ol>
+<p>向量的内积:</p>
+<script type="math/tex; mode=display">
+(\mathbf{x}, \mathbf{y})=\sum_{i=1}^{n} x_{i} y_{i}=\mathbf{x}^{T} \mathbf{y}</script><p>向量的模(范数/长度):</p>
+<script type="math/tex; mode=display">
+|\mathbf{x}|=\sqrt{\mathbf{x}^{T} \mathbf{x}}</script><p>两点的距离:</p>
+<script type="math/tex; mode=display">
+d\left(\mathbf{x}_{1}, \mathbf{x}_{2}\right)=\left|\mathbf{x}_{2}-\mathbf{x}_{1}\right|=\sqrt{\left(\mathbf{x}_{2}-\mathbf{x}_{1}\right)^{T}\left(\mathbf{x}_{2}-\mathbf{x}_{1}\right)}</script><p>两个向量的夹角:</p>
+<script type="math/tex; mode=display">
+\theta=<\mathbf{x}_{1}, \mathbf{x}_{2}>=\arccos \frac{\mathbf{x}_{1}^{T} \mathbf{x}_{2}}{\left|\mathbf{x}_{1}\right|\left|\mathbf{x}_{2}\right|}</script><h2 id="0-7-向量-三"><a href="#0-7-向量-三" class="headerlink" title="0.7 向量(三)"></a>0.7 向量(三)</h2><p>两个向量正交:</p>
+<script type="math/tex; mode=display">
+(\mathbf{x}, \mathbf{y})=0, \cos (\theta)=0</script><p>若非零的n维向量$\mathbf{x}<em>{1}, \mathbf{x}</em>{2}, \dots, \mathbf{x}_{\mathrm{m}}$两两正交, 则称为<strong>正交向量组</strong>. 正交向量组队的性质:</p>
+<ol>
+<li><p>正交向量组线性无关</p>
+</li>
+<li><p>若n维向量y可以由正交向量组$\mathbf{x}<em>{1}, \mathbf{x}</em>{2}, \dots, \mathbf{x}_{\mathrm{m}}$线性表示, 则</p>
+<script type="math/tex; mode=display">
+\mathbf{y}=\frac{\mathbf{y}^{T} \mathbf{x}_{1}}{\mathbf{x}_{1}^{T} \mathbf{x}_{1}} \mathbf{x}_{1}+\frac{\mathbf{y}^{T} \mathbf{x}_{2}}{\mathbf{x}_{2}^{T} \mathbf{x}_{2}} \mathbf{x}_{2}+\cdots+\frac{\mathbf{y}^{T} \mathbf{X}_{m}}{\mathbf{x}_{m}^{T} \mathbf{x}_{m}} \mathbf{x}_{m}</script></li>
+</ol>
+<h2 id="0-8-向量-四"><a href="#0-8-向量-四" class="headerlink" title="0.8 向量(四)"></a>0.8 向量(四)</h2><p>向量空间:</p>
+<p>对加法和乘法运算均封闭的非空向量集合称为一个向量空间.</p>
+<p>向量空间$V$的基: 向量空间的任一向量都可以由线性无关的向量组$a<em>{1}, a</em>{2}, \dots, a<em>{r}$线性表示, 则称向量组$a</em>{1}, a<em>{2}, \dots, a</em>{r}$为$V$的基, $\operatorname{dim} \mathrm{V}=\mathrm{r}$</p>
+<p>向量空间$V$中的任意一个向量$z$可由它的基唯一线性表示, 有序组$\left(x<em>{1}, x</em>{2}, \ldots, x_{r}\right)$称为向量$z$在该基下的坐标.</p>
+<script type="math/tex; mode=display">
+z=x_{1} \mathbf{a}_{1}+x_{2} \mathbf{a}_{2}+\ldots+x_{r} \mathbf{a}_{r}</script><p>基变换与坐标变换:</p>
+<script type="math/tex; mode=display">
+\left(\beta_{1} \beta_{2} \ldots \beta_{r}\right)=\left(\alpha_{1} \alpha_{2} \ldots a_{r}\right) C</script><h2 id="0-9-矩阵的特征值与特征向量"><a href="#0-9-矩阵的特征值与特征向量" class="headerlink" title="0.9 矩阵的特征值与特征向量"></a>0.9 矩阵的特征值与特征向量</h2><p>方阵A的特征值$\lambda$与特征向量$\alpha$:</p>
+<script type="math/tex; mode=display">
+\mathrm{A}{\alpha}=\lambda {\alpha}</script><ol>
+<li>设α是方阵A的属于特征值λ的特征向量,则$kα$也是A的属于特征值λ的特征向量.</li>
+<li>方阵A的两个不同特征值所对应的特征向量是线性无关的</li>
+</ol>
+<p>方阵$A$的特征矩阵$A-λE$和特征多项式$|A-λE|$和特征多项式$|A-λE|$.</p>
+<p>仿真$A$的特征方程:</p>
+<script type="math/tex; mode=display">
+|A-\lambda E|=0</script><p>特征方程$|A-\lambda E|=0$的解$\lambda$为方阵$A$的特征值, 方程$(\mathrm{A}-\lambda \mathrm{E}) \mathrm{x}=0$的非零解向量就是方阵$A$的属于特征值$\lambda$的特征向量.</p>
+<h2 id="0-10-相似矩阵"><a href="#0-10-相似矩阵" class="headerlink" title="0.10 相似矩阵"></a>0.10 相似矩阵</h2><p>如果存在可逆方阵$P$,使$P^{-1} A P=B$,则称A与B相似,记作$A \sim B$</p>
+<ol>
+<li>相似关系具有反身, 对称, 传递性.</li>
+<li>相似矩阵有相同的行列式, 即$|\mathrm{A}|=|\mathrm{B}|$</li>
+<li>相似矩阵有相同的特征多项式及特征值</li>
+</ol>
+<p>n阶方阵$A$与对角矩阵$\wedge$相似的充要条件是$A$有n个线性无关的特征向量.</p>
+<p>如果$\mathrm{A} \sim \wedge$, 即有</p>
+<script type="math/tex; mode=display">
+\mathrm{P}^{-1} \mathrm{AP}=\wedge=\operatorname{diag}\left(\mathrm{d}_{1}, \mathrm{d}_{2}, \ldots, \mathrm{d}_{\mathrm{n}}\right)</script><p>, 则$\mathrm{d}<em>{1}, \mathrm{d}</em>{2}, \ldots, \mathrm{d}_{\mathrm{n}}$是$A$的$n$个特征值.</p>
+<p><strong>实对称矩阵</strong>:(TODO)</p>
+<p>如果有n阶矩阵A, 其矩阵的元素都为实数,且矩阵A的转置等于其本身($a<em>{ij} = a</em>{ji}$)(i,j为元素的脚标), 则称A为实对称矩阵</p>
+<ol>
+<li>特征值为实数, 特征向量为实向量</li>
+<li>两个相异的特征值对应的特征向量正交</li>
+<li>n阶实对称方阵$A$有n个线性无关的特征向量</li>
+<li>n阶实对称方阵$A$与对角矩阵相似, 即n阶实对称矩阵A必可对角化,且相似对角阵上的元素即为矩阵本身特征值</li>
+</ol>
+<h2 id="0-11-正交矩阵"><a href="#0-11-正交矩阵" class="headerlink" title="0.11 正交矩阵"></a>0.11 正交矩阵</h2><p>正交矩阵$A$, 有$A A^{\prime}=E$, 即$A^{-1}=A^{\prime}$</p>
+<ol>
+<li>正交矩阵$A, B$的乘积$AB$仍为正交矩阵</li>
+<li>正交矩阵$A$的行列式$|\mathrm{A}|=1$</li>
+</ol>
+<p>正交矩阵$A$的行(列)向量组为正交单位向量组, 即:</p>
+<script type="math/tex; mode=display">
+\left( \begin{array}{c}{\boldsymbol{a}_{1}} \\ {\boldsymbol{a}_{2}} \\ {\vdots} \\ {\boldsymbol{a}_{n}}\end{array}\right)\left(\boldsymbol{a}_{1}^{\prime}, \boldsymbol{a}_{2}^{\prime}, \cdots, \boldsymbol{a}_{n}^{\prime}\right)=E</script><script type="math/tex; mode=display">
+\boldsymbol{a}_{i} \boldsymbol{a}_{j}^{T}=\delta_{i j}</script><p>若$A$为实对称矩阵, 则一定存在<strong>正交矩阵$P$</strong>, 使得$P^{-1} A P=\wedge$, $\wedge$是以<strong>$A$的特征值为对角元素的对角矩阵</strong>.</p>
+<h2 id="0-12-二次型"><a href="#0-12-二次型" class="headerlink" title="0.12 二次型"></a>0.12 二次型</h2><p>二次齐次函数：</p>
+<script type="math/tex; mode=display">
+f\left(x_{1}, x_{2}, \cdots, x_{n}\right)=\sum_{i=1}^{n} a_{i j} x_{i} x_{j}, a_{i j}=a_{j i}</script><p>记$\mathbf{x}=\left(x<em>{1}, x</em>{2}, \ldots x<em>{n}\right)^{\top}$, $A=\left(a</em>{i j}\right)_{n^{*} n}$, 则有</p>
+<script type="math/tex; mode=display">
+f\left(x_{1}, x_{2}, \cdots, x_{n}\right)=\mathbf{x}^{\prime} A \mathbf{x}</script><p>二次型$f$与对称矩阵$A$存在一一对应: $A$为二次型$f$的矩阵, $f$为矩阵$A$的二次型.</p>
+<blockquote>
+<p>$A=\wedge$时为标准二次型(只含平方项)</p>
+</blockquote>
+<p>对于任何二次型, 总可以找到正交变换将$f$化为标准型</p>
+<script type="math/tex; mode=display">
+f\left(x_{1}, x_{2}, \cdots, x_{n}\right)=\mathbf{x}^{\prime} \mathbf{A} \mathbf{x}</script><script type="math/tex; mode=display">
+\mathbf{x}=C \mathbf{y}</script><script type="math/tex; mode=display">
+\wedge=C^{\prime} A C</script><script type="math/tex; mode=display">
+f=\mathbf{y}^{\prime} \wedge \mathbf{y}=\lambda_{1} y_{1}^{2}+\lambda_{2} y_{2}^{2}+\cdots \lambda_{n} y_{n}^{2}</script><h2 id="0-13-正定二次型和正定矩阵"><a href="#0-13-正定二次型和正定矩阵" class="headerlink" title="0.13 正定二次型和正定矩阵"></a>0.13 正定二次型和正定矩阵</h2><p>二次型$f\left(\mathrm{x}<em>{1}, \mathrm{x}</em>{2}, \dots, \mathrm{x}<em>{n}\right)$, 如果对于任何$\mathrm{x}</em>{1}^{2}+\mathrm{x}<em>{2}^{2}+\ldots+\mathrm{x}</em>{n}^{2} \neq 0$, 都有$f&gt;0$, 则称$f$为正定二次型.其矩阵$A$为正定矩阵($A&gt;0$).</p>
+<p>n阶方阵$A$正定的充要条件是: A的n个特征值全为正数.</p>
+<p>n阶方阵$A$, 若存在可逆矩阵$B$, 使得$A=B^{\prime} B$, 则$A$为正定矩阵.</p>
+<p>意义(TODO)</p>
+<h2 id="0-14-多元随机变量的统计特征"><a href="#0-14-多元随机变量的统计特征" class="headerlink" title="0.14 多元随机变量的统计特征"></a>0.14 多元随机变量的统计特征</h2><p>ｎ维随机变量: </p>
+<script type="math/tex; mode=display">
+\mathbf{x}=\left[x_{1}, x_{2}, \ldots, x_{n}\right]^{\mathrm{T}}</script><p>n维随机变量的(总体)均值:</p>
+<script type="math/tex; mode=display">
+\boldsymbol{\mu}=\mathrm{E}(\mathbf{x})=\int_{\mathbf{x}} \mathbf{x} p(\mathbf{x}) d \mathbf{x}</script><p>n维随机变量的(样本)均值:</p>
+<script type="math/tex; mode=display">
+\hat{\boldsymbol{\mu}}=\frac{1}{N} \sum_{i=1}^{N} \mathbf{x}_{i}</script><p>n维随机变量的(总体)相关函数矩阵:(TODO)</p>
+<script type="math/tex; mode=display">
+\mathrm{R}(\mathbf{x})=\left[r_{i j}\right]=\left[\mathrm{E}\left\{x_{i} x_{j}\right\}\right]=\mathrm{E}\left\{\mathbf{x} \mathbf{x}^{T}\right\}</script><p>n维随机变量的(样本)相关函数矩阵:</p>
+<script type="math/tex; mode=display">
+\hat{\mathrm{R}}(\mathbf{x})=\frac{1}{N} \sum_{i=1}^{N} \mathbf{x}_{i} \mathbf{x}_{i}^{T}</script><p>n维随机变量的(总体)协方差矩阵:</p>
+<script type="math/tex; mode=display">
+\mathrm{C}(\mathbf{x})=\left[c_{i j}\right]=\left[\mathrm{E}\left\{\left(x_{i}-\mu_{i}\right)\left(x_{j}-\mu_{j}\right)\right\}\right]=\mathrm{E}\left\{(\mathbf{x}-\boldsymbol{\mu})(\mathbf{x}-\boldsymbol{\mu})^{T}\right\}</script><p>n维随机变量的(样本)协方差矩阵:</p>
+<script type="math/tex; mode=display">
+\hat{\mathrm{C}}(\mathbf{x})=\frac{1}{N} \sum_{i=1}^{N}\left(\mathbf{x}_{i}-\boldsymbol{\mu}_{i}\right)\left(\mathbf{x}_{i}-\boldsymbol{\mu}_{i}\right)^{T}</script><h2 id="0-15-n维随机变量协方差矩阵的性质"><a href="#0-15-n维随机变量协方差矩阵的性质" class="headerlink" title="0.15 n维随机变量协方差矩阵的性质"></a>0.15 n维随机变量协方差矩阵的性质</h2><p>ｎ维随机变量的协方差矩阵$C$是实对称矩阵</p>
+<ol>
+<li><p>协方差矩阵$C$的特征值为实数</p>
+</li>
+<li><p>$C$有$n$个线性无关的特征向量</p>
+</li>
+<li><p>存在正交矩阵$U$, 使得$\mathrm{U}^{-1} \mathrm{CU}=\mathrm{U}^{\mathrm{T}} \mathrm{CU}=\wedge$, $\wedge$是以$C$的特征值为对角元素的对角矩阵, </p>
+<script type="math/tex; mode=display">
+\mathrm{U}=\left[\mathbf{u}_{1}, \mathbf{u}_{2}, \ldots, \mathbf{u}_{\mathrm{n}}\right], \quad \mathrm{C} \mathbf{u}_{\mathrm{i}}=\lambda_{\mathrm{i}} \mathbf{u}_{\mathrm{i}}</script></li>
+</ol>
+<h2 id="0-16-梯度下降法"><a href="#0-16-梯度下降法" class="headerlink" title="0.16 梯度下降法"></a>0.16 梯度下降法</h2><p>准则函数: $J(\mathbf{a})$</p>
+<p>最优化问题: $\mathbf{a}^{*}=\underset{\mathbf{a}}{\operatorname{argmin}} J(\mathbf{a})$</p>
+<p>求解方法: $\mathbf{a}^{*}$应满足方程:</p>
+<script type="math/tex; mode=display">
+\nabla J(\mathbf{a})=\left[ \begin{array}{cc}{\frac{\partial J}{\partial a_{1}}} & {\frac{\partial J}{\partial a_{2}}} & {\cdots} & {\frac{\partial J}{\partial a_{n}}}\end{array}\right]^{T}=0</script><p>沿梯度的负方向改变$\mathbf{a}$, 函数会很快达到极小点, 梯度趋于0.故迭代算法为:</p>
+<script type="math/tex; mode=display">
+\mathbf{a}_{k+1}=\mathbf{a}_{k}-\eta \nabla J(\mathbf{a})</script><p>流程图:</p>
+<pre><code class="hljs mermaid">graph TB;
+A(&quot;选择初始点a_0,给定容许误差ε,设定学习率η.设k&#x3D;0&quot;)--&gt;B[&quot;计算梯度▽J(a_k)&quot;];
+B--&gt;C[&quot;修改a_k: a_k+1 &#x3D; a_k - η▽J(a_k)&quot;];
+C--&gt;D&#123;&quot;计算J(a_k+1),并检验|J(a_k+1)-J(a_k)|&lt;ε&quot;&#125;;
+D--No--&gt;E&gt;&quot;k&#x3D;k+1&quot;];
+E--&gt;B;
+D--Yes--&gt;F[&quot;输出结果&quot;]
+F--&gt;G(&quot;结束&quot;)</code></pre>
+<p>Reference: 西北工业大学自动化学院张绍武教授《模式识别》课程PPT</p>
+
+            </article>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB/">模式识别</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Pattern-Recognition/">Pattern-Recognition</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Math/">Math</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/05/02/%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB%E5%85%A5%E9%97%A8-%E4%B8%80-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB%E6%A6%82%E8%AE%BA/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">模式识别入门（一） - 模式识别概论</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2019/05/02/%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB%E5%AE%9E%E8%B7%B5-KL%E5%8F%98%E6%8D%A2%E5%AE%9E%E7%8E%B0%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB/">
+                        <span class="hidden-mobile">模式识别实践 - K-L变换实现人脸识别</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: 'article.markdown-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "模式识别入门（零） - 线性代数与概率论数学基础&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.staticfile.org/mathjax/3.0.5/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/mermaid/8.5.0/mermaid.min.js" ></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({"theme":"default"});
+    }
+  </script>
+
+
+
+
+
+
+
+</body>
+</html>
