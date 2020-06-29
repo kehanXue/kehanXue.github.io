@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/success.png">
+  <link rel="icon" type="image/png" href="/img/success.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Kehan Xue">
+  <meta name="keywords" content="">
+  <title>论文阅读 - EMVS: Event-Based Multi-View Stereo - Kehan&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+  
+
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script  src="/js/utils.js" ></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Kehan's Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/assets/emvs-banner.jpeg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+  <div class="mt-3 post-meta">
+    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+    <time datetime="2020-06-10 21:45">
+      June 10, 2020 pm
+    </time>
+  </div>
+
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.2k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      18
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <article class="markdown-body">
+              <p>EMVS: Event-Based Multi-View Stereo—3D Reconstruction with an Event Camera in Real-Time 描述了一种利用 Event Camera 的高速特性，提出的一种 MVS 方法。将传统 MVS 的 Space-Sweep 方法应用到 Event-based MVS 中。<br><a id="more"></a></p>
+<h1 id="EMVS-Event-Based-Multi-View-Stereo—3D-Reconstruction-with-an-Event-Camera-in-Real-Time"><a href="#EMVS-Event-Based-Multi-View-Stereo—3D-Reconstruction-with-an-Event-Camera-in-Real-Time" class="headerlink" title="EMVS: Event-Based Multi-View Stereo—3D Reconstruction with an Event Camera in Real-Time"></a>EMVS: Event-Based Multi-View Stereo—3D Reconstruction with an Event Camera in Real-Time</h1><blockquote>
+<p>Rebecq, H., Gallego, G., Mueggler, E., Scaramuzza, D.,<br><em><a href="https://doi.org/10.1007/s11263-017-1050-6" target="_blank" rel="noopener">EMVS: Event-Based Multi-View Stereo—3D Reconstruction with an Event Camera in Real-Time</a></em>,<br>Int. J. of Computer Vision (IJCV), 126(12):1394-1414, 2018. <a href="http://rpg.ifi.uzh.ch/docs/IJCV17_Rebecq.pdf" target="_blank" rel="noopener">PDF</a>, <a href="https://youtu.be/EFpZcpd9XJ0" target="_blank" rel="noopener">YouTube</a>, <a href="https://github.com/uzh-rpg/rpg_emvs" target="_blank" rel="noopener">Code</a>.</p>
+</blockquote>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>本篇 paper 主要描述了一种利用 Event Camera 的高速特性，提出的一种 MVS 方法。将传统 MVS 的 Space-Sweep 方法应用到 Event-based MVS 中；在 Event-based 场景运用 Space-Sweep 具有天然的优势：</p>
+<ol>
+<li><p>Event Camera 本来就是检测的场景中的 edge。</p>
+</li>
+<li><p>Event Camera 相比于固定帧率的传统 Camera，viewpoints 更加的稠密。</p>
+<p><img src="/assets/image-20200614164507222.jpeg" srcset="/img/loading.gif" alt="image-20200614164507222" style="zoom:50%;" /></p>
+</li>
+</ol>
+<p>文章的整体思路简而言之，就是将“每一帧”的 Events 进行反投影得到了一束光线，通过计算经过 DSI 空间中每一个 voxel 的光线的数量，高于一个阈值即可确定为一个空间的 3D 点。具体实施起来，分为下文中的五步。</p>
+<p>完整的公式推导见原论文。</p>
+<h2 id="主要过程"><a href="#主要过程" class="headerlink" title="主要过程"></a>主要过程</h2><h3 id="Feature-Viewing-Rays-by-Event-Back-Projection"><a href="#Feature-Viewing-Rays-by-Event-Back-Projection" class="headerlink" title="Feature-Viewing Rays by Event Back-Projection"></a>Feature-Viewing Rays by Event Back-Projection</h3><p>将每一个 Event 进行反投影，得到一条光线。</p>
+<blockquote>
+<p>This higher abundance of measurements and viewpoints in the event-based setting generates many more viewing rays than in frame-based MVS, and therefore, it facilitates the detection of scene points by analyzing the regions of high ray density.</p>
+<p>A major advantage of our method is that no explicit data association is needed.</p>
+</blockquote>
+<p>不需要 Event 之间的数据关联、不需要 intensity 信息。</p>
+<h3 id="Volumetric-Ray-Counting-Creating-the-Disparity-Space-Image-DSI"><a href="#Volumetric-Ray-Counting-Creating-the-Disparity-Space-Image-DSI" class="headerlink" title="Volumetric Ray Counting. Creating the Disparity Space Image (DSI)"></a>Volumetric Ray Counting. Creating the Disparity Space Image (DSI)</h3><p>在 DSI 中进行计数。这个时候问题就来了，如何确定这个 DSI 空间呢？</p>
+<p>作者考虑到 <code>the reconstruction of large scenes in a scalable way</code>，采用了一个分批的方式，将一组 Event 归位一批，选取一个虚拟帧 RV，基于它做一个 <code>local 3D reconstruction</code>。</p>
+<p><img src="/assets/image-20200614172203728.jpeg" srcset="/img/loading.gif" alt="image-20200614172203728" style="zoom:50%;" /></p>
+<h3 id="Detection-of-Scene-Structure-by-Maximization-of-Ray-Density"><a href="#Detection-of-Scene-Structure-by-Maximization-of-Ray-Density" class="headerlink" title="Detection of Scene Structure by Maximization of Ray Density"></a>Detection of Scene Structure by Maximization of Ray Density</h3><p>Local DSI 建立好之后，就卡一个阈值，是一个 <code>local maxima</code> 的操作。一个DSI的实例以及使用 <code>local maxima</code> 而不是 <code>global maxima</code> 的原因如下：</p>
+<p><img src="/assets/image-20200614172541662.jpeg" srcset="/img/loading.gif" alt="image-20200614172541662" style="zoom:50%;" /></p>
+<p>作者使用了一个 Adaptive Gaussian 阈值函数：</p>
+<blockquote>
+<p>a pixel $(x, y)$ is selected if $c(x, y) &gt; T(x, y)$, with $T(x, y)=c(x, y) * G \sigma(x, y)-C$. In practice, we use a 5×5 neighborhood in $G \sigma(x, y)$ and $C$ = −10</p>
+</blockquote>
+<p>从 DSI 中提取结构：</p>
+<p><img src="/assets/image-20200614174118964.jpeg" srcset="/img/loading.gif" alt="image-20200614174118964" style="zoom:50%;" /></p>
+<h3 id="Merging-Depth-Maps-from-Multiple-Reference-Viewpoints"><a href="#Merging-Depth-Maps-from-Multiple-Reference-Viewpoints" class="headerlink" title="Merging Depth Maps from Multiple Reference Viewpoints"></a>Merging Depth Maps from Multiple Reference Viewpoints</h3><p>既然有了上面提到的 Local reconstruction，那么就肯定有 key frame 的概念和一次 local 的大小的确定。</p>
+<blockquote>
+<p>we select a new <em>key</em> reference view as soon as the distance to the previous <em>key</em> reference view exceeds a certain percent- age of the mean scene depth (typically a number between 15 and 40%), and use the subset of events until the next <em>key</em> ref- erence view to estimate the corresponding semi-dense depth map of the scene.</p>
+</blockquote>
+<p>然后再做滤波去除一些噪声。融合的话，有了每组 local 点云的 pose ，有很多的方法就可以选了。</p>
+<h3 id="Map-Cleaning"><a href="#Map-Cleaning" class="headerlink" title="Map Cleaning"></a>Map Cleaning</h3><p>为了得到更好的效果，又进一步做了滤波。</p>
+<blockquote>
+<p>we use a median filter on the semi-dense depth maps</p>
+<p>we also apply a radius filter (Rusu and Cousins 2011) to the final point cloud, which discards the points whose number of neighbors within a given radius is less than a threshold.</p>
+</blockquote>
+<h2 id="细节"><a href="#细节" class="headerlink" title="细节"></a>细节</h2><h3 id="实现实时、高效的-Event-反投影到-DSI-中"><a href="#实现实时、高效的-Event-反投影到-DSI-中" class="headerlink" title="实现实时、高效的 Event 反投影到 DSI 中"></a>实现实时、高效的 Event 反投影到 DSI 中</h3><p>主要思路：DSI 是由不同 depth 的平面们组成的，也就是说明只有 translation，无 rotation。那么，求出一个相机的当前帧与一个深度为 $Z_0$ 的 plane 之间的 homography，与其他 DSI 中的深度为 $Z_i$ 的 plane 的 homography 就可以很简单的来计算，可以推导为一步公式。</p>
+<p>相机平面、EV 虚拟相机平面、不同深度 $Zi$ DSI 平面之间的关系：</p>
+<script type="math/tex; mode=display">
+\left(x\left(Z_{0}\right), y\left(Z_{0}\right), 1\right)^{\top} \sim_{\mathrm{H} Z_{0}}(u, v, 1)^{\top}</script><script type="math/tex; mode=display">
+\left(x\left(Z_{i}\right), y\left(Z_{i}\right), 1\right)^{\top} \sim H_{Z_{i}} H_{Z_{0}}^{-1}\left(x\left(Z_{0}\right), y\left(Z_{0}\right), 1\right)^{\top}</script><script type="math/tex; mode=display">
+\mathrm{H}_{Z_{i}} \mathrm{H}_{Z_{0}}^{-1} \stackrel{(8)}{=}\left(\mathrm{R}+\frac{1}{Z_{i}} \mathbf{e}_{3}^{\top}\right)^{-1}\left(\mathrm{R}+\frac{1}{Z_{0}} \mathbf{e}_{3}^{\top}\right)</script><p>其中，$\mathbf{e}_{3}$为平面法向量，因为与 EV 相机平面垂直，所以为$(0, 0, 1)$，在后面的公式化简中有用到。</p>
+<p>令$\left(C<em>{x}, C</em>{y}, C<em>{z}\right)^{\top} \doteq \mathbf{C}=-R^{\top} \mathbf{t}$，通过展开、以及利用$\mathbf{e}</em>{3}$性质，</p>
+<script type="math/tex; mode=display">
+\mathrm{H}_{Z_{i}} \mathrm{H}_{Z_{0}}^{-1} \sim \mathrm{I}+\frac{Z_{0}-Z_{i}}{Z_{0}\left(Z_{i}-C_{z}\right)} \mathbf{C e}_{3}^{\top}</script><p>进一步代入上面几个平面的关系，化简得：</p>
+<script type="math/tex; mode=display">
+\begin{array}{l}
+x\left(Z_{i}\right)=\frac{Z_{0}}{Z_{i}} \delta x\left(Z_{0}\right)+\frac{1}{Z_{i}}(1-\delta) C_{x} \\
+y\left(Z_{i}\right)=\frac{Z_{0}}{Z_{i}} \delta y\left(Z_{0}\right)+\frac{1}{Z_{i}}(1-\delta) C_{y}
+\end{array}</script><p>其中$\delta=\left(Z<em>{i}-Z</em>{0}\right) /\left(Z<em>{0}-C</em>{z}\right)$。</p>
+<p>至此，计算效率就提高上来了。</p>
+<p>算法流程：</p>
+<p><img src="/assets/image-20200614203043203.jpeg" srcset="/img/loading.gif" alt="image-20200614203043203" style="zoom:50%;" /></p>
+
+            </article>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Paper-Reading/">Paper Reading</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/3D-Vision/">3D-Vision</a>
+                    
+                      <a class="hover-with-bg" href="/tags/MVS/">MVS</a>
+                    
+                      <a class="hover-with-bg" href="/tags/3D-Reconstruction/">3D-Reconstruction</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Event-Camera/">Event-Camera</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2020/03/10/CeleX5-ROS-CeleX5-MIPI-%E4%BA%8B%E4%BB%B6%E7%9B%B8%E6%9C%BA%E7%9A%84%E4%B8%80%E4%B8%AA%E5%AE%8C%E5%96%84%E7%9A%84ROS%E5%B7%A5%E5%85%B7%E5%8C%85/">
+                        <span class="hidden-mobile">CeleX5-ROS: CeleX5-MIPI 事件相机的一个完善的ROS工具包</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: 'article.markdown-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "论文阅读 - EMVS: Event-Based Multi-View Stereo&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.staticfile.org/mathjax/3.0.5/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/success.png">
+  <link rel="icon" type="image/png" href="/img/success.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Kehan Xue">
+  <meta name="keywords" content="">
+  <title>论文阅读 - DroNet: Deep learning 在无人机导航中的应用 - Kehan&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+  
+
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script  src="/js/utils.js" ></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Kehan's Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/assets/dronet-banner.jpeg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+  <div class="mt-3 post-meta">
+    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+    <time datetime="2019-06-08 23:16">
+      June 8, 2019 pm
+    </time>
+  </div>
+
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.2k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      24
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <article class="markdown-body">
+              <p>DroNet: Learning to Fly by Driving 提出了一个结构非常简单但是又非常强大的网络结构，可以通过输入的每帧图像输出当前飞行器 yaw 的目标角度值与前方障碍物的概率值，从而可以利用这两个信息推断出飞行器当前运动时的 yaw 应转角度 $\theta_k$ 与前进飞行速度 $v_k$，从而达到自主导航的目的。</p>
+<a id="more"></a>
+<h1 id="DroNet-Learning-to-Fly-by-Driving"><a href="#DroNet-Learning-to-Fly-by-Driving" class="headerlink" title="DroNet: Learning to Fly by Driving"></a>DroNet: Learning to Fly by Driving</h1><blockquote>
+<p>A. Loquercio, A.I. Maqueda, C.R. Del Blanco, D. Scaramuzza<br>DroNet: Learning to Fly by Driving,<br>IEEE Robotics and Automation Letters (RA-L), 2018.<br><a href="http://rpg.ifi.uzh.ch/docs/RAL18_Loquercio.pdf" target="_blank" rel="noopener">PDF</a> <a href="https://youtu.be/ow7aw9H4BcA" target="_blank" rel="noopener">YouTube</a> <a href="https://github.com/uzh-rpg/rpg_public_dronet" target="_blank" rel="noopener">Software and Datasets</a>.</p>
+</blockquote>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>DroNet 是一个结构非常简单但是又非常强大的网络结构，可以通过输入的每帧图像输出当前飞行器 yaw 的目标角度值与前方障碍物的概率值，从而可以利用这两个信息推断出飞行器当前运动时的 yaw 应转角度 $\theta_k$ 与前进飞行速度 $v_k$，从而达到自主导航的目的。对比论文发布当时的其他相关网络模型，达到了最好的准确度与处理速度的平衡。</p>
+<p><img src="/assets/1560001100081.png" srcset="/img/loading.gif" alt="1560001100081"></p>
+<p>该系统在非机载处理资源上运行 （Intel Core i7 2.6 GHz CPU）上可以达到 30Hz 的控制指令输出。可想如果机载选择 TX2 此类处理器, 采用 GPU 进行推理计算的话, 速度会更快。 </p>
+<p>该模型的训练数据采用室外场景下在地面交通工具上采集的数据集，比如自行车, 汽车等在城市环境内第一视角的图像与其他数据。实验结果惊奇的发现该方法不仅在室外不同视角下表现极好（5m飞行高度），在室内场景中也有极强的泛化能力。飞机可以在没有先验信息的环境中也可以有一个非常好的导航效果。</p>
+<h2 id="主要贡献"><a href="#主要贡献" class="headerlink" title="主要贡献"></a>主要贡献</h2><p>文章以“无人机应该像其他地面交通工具一样, 在 roadway 中有相同的 behavior”为出发点，通过来自于地面交通工具的数据集，做了以下主要工作：</p>
+<ul>
+<li>提出了一种 residual convolutional architecture (DroNet)，可以预测飞机要转的偏航角与前方发生与障碍物碰撞的概率，可以为飞机在城市环境中提供安全的飞行。通过来自于室外场景下汽车，自行车的数据集来训练该网络。</li>
+<li>建立了一个关于预测是前方障碍物概率的数据集。</li>
+<li>可以到到很好的 performance 和 real-time。</li>
+<li>通过一些扩展场景的检验，发现该系统的泛化能力极强，可以在没有任何先验信息的环境中正常运行，包括数据集中没有的室内走廊场景，一个高高度（视角不一样）等场景.</li>
+</ul>
+<p>文章作者还提到该方法并不是为了替代传统的 map-localize-plan 方法, 作者认为将来有一天传统方法与基于深度学习的方法会互补.</p>
+<h2 id="关于网络与训练方法"><a href="#关于网络与训练方法" class="headerlink" title="关于网络与训练方法"></a>关于网络与训练方法</h2><p><strong>网络的结构图如下:</strong></p>
+<p><img src="/assets/Screenshot from 2019-06-08 19-56-55.png" srcset="/img/loading.gif" alt=""></p>
+<p>输出的转角与障碍物信息两个功能在前面共用同一个网络结构（共享同一套参数）。输入的图像是一张200x200x1 的灰度图，通过一个 5x5 的卷积核降维后，通过三层 res block，然后经过 dropout（作者实验时设的是0.5）后再分叉,  通过 Relu 后作用于两个全连接层（节点数为 1）分别输出信息（大小范围均在0-1之间）。关于为何有这样的网络设计的想法，作者并未多提。</p>
+<blockquote>
+<p>通过代码看到最终 collision 这个全连接节点最终输出还被作用了一个 sigmod 函数，这个论文中并未提到为何。猜测是用于归一化（概率值必须大于 0 小于 1，而刚开始训练的时候 loss 大多依据（后面会讲到） steering 的 loss，可能会出现 [-1, 0] 之间的数，所以要归一化到 (0,1)） / 某种意义上的数据增强？具体只能等跑训练代码的时候看一下实际该参数的值。</p>
+<p>cnn_models.py</p>
+<pre><code class="hljs python"><span class="hljs-number">85</span>    <span class="hljs-comment"># Collision channel</span>
+<span class="hljs-number">86</span>    coll = Dense(output_dim)(x)
+<span class="hljs-number">87</span>    coll = Activation(<span class="hljs-string">'sigmoid'</span>)(coll)</code></pre>
+</blockquote>
+<p><strong>关于训练方法:</strong></p>
+<p>关于转角的预测本质是一个回归问题，关于障碍物的检测本质是一个二分类问题（虽然最后输出的是概率, 但是从数据集本质来看是一个二分类问题，这个后续详述）。该网络比较特殊（两种不同的问题模型的输出，共享网络），所以要设计出一种合理的 loss 函数. </p>
+<p>根据两类问题的本质，转角预测本质为回归问题所以采用均方误差（MSE）衡量 loss；障碍物概率预测本质为二分类问题所以采用二值交叉熵（BCE）来衡量学习到的分布与样本真实分布的差异，作为 loss。但是整个网络不能简单使用两个 loss 叠加来来作为最终的 loss，会导致特别差的收敛结果，因为回归问题和分类问题在模型刚开始训练的时候，梯度大小差异非常大<a href="https://ronan.collobert.com/pub/matos/2009_curriculum_icml.pdf" target="_blank" rel="noopener">参考文献</a>。</p>
+<p>实际中，回归问题的梯度在刚开始的时候会非常大，MSE 的梯度正比于转角的误差值。所以策略就是刚开始的时候几乎只选择用转角的 loss，后面随着 epoch 的增加慢慢增大障碍物概率检测的 loss 的权重，等到两者 loss 在一个数量级可比的时候，optimizer 就会自动为两者找到一个很好的 solution。该方式的解释也在上一个参考文献链接里，不设权重或者权重恒定的方法都会导致不好的结果或者收敛时间过长，所以依据此作者提出了下面的 loss：</p>
+<script type="math/tex; mode=display">
+L_{t o t}=L_{M S E}+\max \left(0,1-\exp ^{-d e c a y\left(e p o c h-e p o c h_{0}\right)}\right) L_{B C E}</script><p>该方式就可以达到上面所说的期望的训练过程中的 loss 函数变化情况。作者在实验时选择 $decay=\frac{1}{10}$,  $epoch_{0}=10$。</p>
+<p>optimizer 选择 Adam，初始学习率设为0.001，decay=1e-5。</p>
+<p>最后作者为 optimization 还采用了 hard negative mining 来建立负样本集, 在每一个 epoch 中选择 loss 最高的 k 个样本, 采用上面计算 loss 的式子计算整体 loss。k 会随着时间会减小。</p>
+<h2 id="数据集"><a href="#数据集" class="headerlink" title="数据集"></a>数据集</h2><p>关于转角预测（Steering angle）采用来自 Udacity’s project 的公共数据集，该数据集是基于汽车拍摄的。里面有三个摄像头以及 imu，gps，steering angle 等其他同步的数据，作者只选用前置摄像头与 steering angle 作为模型训练时所采用的数据。</p>
+<p>关于用于计算障碍物概率的数据集，由于没有合适的数据集，作者们自制了一套相关数据集，137 个场景序列中包含了 32000 张图片。根据视野障碍物是否离得特别近来标注 0（无碰撞风险）和 1（有碰撞风险）。例图如下，绿色表示无碰撞风险，红色表示有碰撞风险。</p>
+<p><img src="/assets/1560001239435.png" srcset="/img/loading.gif" alt="1560001239435"></p>
+<h2 id="飞机运动控制方法"><a href="#飞机运动控制方法" class="headerlink" title="飞机运动控制方法"></a>飞机运动控制方法</h2><p>整体的导航思路很简单，飞机一直在同一高度飞行，只控制飞机的两个自由度，机体坐标系下前进的速度 $v_k$ 和世界坐标系下的 yaw 值 $\theta_k$.</p>
+<ul>
+<li><p>根据网络输出的前方发生与障碍物碰撞的概率 $p_t$ 计算前进的速度 $v_k$:</p>
+<script type="math/tex; mode=display">
+v_{k}=(1-\alpha) v_{k-1}+\alpha\left(1-p_{t}\right) V_{\max }</script><p>公式很简单, 即前方发生碰撞概率越大, 前进的速度越低, 发生碰撞概率为 1 的时候速度为0.然后加了低通滤波使速度输出更平滑($0&lt;\alpha&lt;1$). </p>
+</li>
+<li><p>根据网络输出的 steering angle 换算成实际要转的偏航角大小。网络输出的范围为 [-1, 1]，换算成$\left[-\frac{\pi}{2}, \frac{\pi}{2}\right]$。然后也同理加了个低通滤波：</p>
+<script type="math/tex; mode=display">
+\theta_{k}=(1-\beta) \theta_{k-1}+\beta \frac{\pi}{2} s_{k}</script></li>
+</ul>
+<p>然后根据这两个值赋给飞机就可以控制飞机运动了。作者在试验中选择的 $\alpha=0.7$ 和 $\beta=0.5$。$V_{\max }$根据实验场景不同选择合适的值即可。</p>
+<h2 id="实验结果"><a href="#实验结果" class="headerlink" title="实验结果"></a>实验结果</h2><p>作者在大量场景中进行了测试，具体的测试结果这里不在赘述。</p>
+<p>DroNet 模型是一个平衡结果准确性与运算速度的最佳的模型。</p>
+
+            </article>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Paper-Reading/">Paper Reading</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Deep-Learning/">Deep-Learning</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Navigation/">Navigation</a>
+                    
+                      <a class="hover-with-bg" href="/tags/UAV/">UAV</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Robotics/">Robotics</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/07/01/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E8%AE%BE%E8%AE%A1%E4%B8%80%E4%B8%AACPU/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">计算机组成原理 - 设计一个CPU</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2019/05/08/NVIDIA-Jetson-Xavier-%E9%80%9A%E8%BF%87-USB-Ethernet-%E5%AE%9E%E7%8E%B0-ssh-%E5%8A%9F%E8%83%BD%E4%B8%8E%E9%AB%98%E5%B8%A6%E5%AE%BD%E8%BF%9B%E8%A1%8C-sftp-%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93/">
+                        <span class="hidden-mobile">NVIDIA Jetson Xavier 通过 USB Ethernet 实现 ssh 功能与高带宽进行 sftp 文件传输</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: 'article.markdown-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "论文阅读 - DroNet: Deep learning 在无人机导航中的应用&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.staticfile.org/mathjax/3.0.5/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

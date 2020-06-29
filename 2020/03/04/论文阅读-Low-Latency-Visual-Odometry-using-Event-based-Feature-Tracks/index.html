@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/success.png">
+  <link rel="icon" type="image/png" href="/img/success.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Kehan Xue">
+  <meta name="keywords" content="">
+  <title>论文阅读 - Low-Latency Visual Odometry using Event-based Feature Tracks - Kehan&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+  
+
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script  src="/js/utils.js" ></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Kehan's Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/assets/event-vo-track-banner.jpeg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+  <div class="mt-3 post-meta">
+    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+    <time datetime="2020-03-04 19:35">
+      March 4, 2020 pm
+    </time>
+  </div>
+
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.5k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      18
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <article class="markdown-body">
+              <p>Low-Latency Visual Odometry using Event-based Feature Tracks 通过手工设计的feature和feature tracking的方法，将问题转化为传统VO，但又不失Event带来的高速和异步的特性。</p>
+<a id="more"></a>
+<h1 id="Low-Latency-Visual-Odometry-using-Event-based-Feature-Tracks"><a href="#Low-Latency-Visual-Odometry-using-Event-based-Feature-Tracks" class="headerlink" title="Low-Latency Visual Odometry using Event-based Feature Tracks"></a>Low-Latency Visual Odometry using Event-based Feature Tracks</h1><blockquote>
+<p>Kueng, B., Mueggler, E., Gallego, G., Scaramuzza, D.,<br><a href="https://doi.org/10.1109/IROS.2016.7758089" target="_blank" rel="noopener">Low-Latency Visual Odometry using Event-based Feature Tracks</a>,<br>IEEE/RSJ Int. Conf. Intelligent Robots and Systems (IROS), 2016, pp. 16-23. <a href="https://www.doc.ic.ac.uk/~ajd/Publications/kim_etal_eccv2016.pdf" target="_blank" rel="noopener">PDF</a>. <a href="https://youtu.be/RDu5eldW8i8" target="_blank" rel="noopener">YouTube</a></p>
+</blockquote>
+<h2 id="本篇概要"><a href="#本篇概要" class="headerlink" title="本篇概要"></a>本篇概要</h2><p>通过手工设计的feature和feature tracking的方法，将问题转化为传统VO，但又不失Event带来的高速和异步的特性。</p>
+<p><img src="assets/Screenshot from 2020-02-26 16-48-57.png" srcset="/img/loading.gif" style="zoom:50%;" /></p>
+<h2 id="实验设置"><a href="#实验设置" class="headerlink" title="实验设置"></a>实验设置</h2><p>使用DAVIS，跟踪event-based feature从而实现一个低延迟的VO。</p>
+<p>A lowlatency visual odometry algorithm for the DAVIS sensor using event-based feature tracks. </p>
+<p><img src="assets/Screenshot from 2020-03-02 17-21-27.png" srcset="/img/loading.gif" style="zoom:80%;" /></p>
+<h2 id="主要过程"><a href="#主要过程" class="headerlink" title="主要过程"></a>主要过程</h2><p>首先在DAVIS的灰度帧中检测feature，然后利用event流进行异步的跟踪。然后这些特征被输入到VO算法中，通过最小化投影误差计算场景的local probabilistic 3D map以及做6-DoF的位姿估计。位姿估计是event-based的，所以具有低延迟的特性。</p>
+<p><img src="assets/Screenshot from 2020-02-26 17-51-41.png" srcset="/img/loading.gif" style="zoom:50%;" /></p>
+<h2 id="对比已有工作"><a href="#对比已有工作" class="headerlink" title="对比已有工作"></a>对比已有工作</h2><p>None of the previous <strong>event-based motion estimation</strong> methods is <strong>based on tracking complex, natural features in the event stream</strong>. </p>
+<h2 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h2><ul>
+<li><p><strong>特征提取与跟踪部分</strong></p>
+<p><em>算法整体流程：</em></p>
+<p><img src="assets/Screenshot from 2020-03-02 17-43-08.png" srcset="/img/loading.gif" style="zoom:80%;" /></p>
+<p><em>详细说明：</em></p>
+<ul>
+<li>通过灰度Frames进行特征提取。算法流程：</li>
+</ul>
+<ol>
+<li>通过Canny边缘提取和Harris角点检测。<ol>
+<li>在最突出、分布均匀的角点周围，再其edge图上选取一个一定大小的patch。Frame的帧率并不需要固定，这些相当于是提供初始的特征；并且在特征点丢失的情况下再补充特征点。如Fig.4的(a)-&gt;(b)图示意。这个patch中的边缘点的集合称为<strong>model point set</strong>。</li>
+</ol>
+</li>
+</ol>
+<ul>
+<li><p>通过Events数据进行feature tracking：</p>
+<ol>
+<li><p>将新产生的Event归到上一步划分的patch中。每组Events patch的里面的Events的数量和上一步检测到的边缘点的数量一致，每个patch集合中的Events称为<strong>data point set</strong>。然后维护一个队列，先进先出。每次每个patch中的Event发生更新后，就单独对更新的patch重新运行一次registration。</p>
+</li>
+<li><p>registration是通过将上述的model point set和data point set通过ICP（3D点推广到2D点）进行配准，从而找出匹配点。这一步相当于是让Events去适配目前的feature。</p>
+<p>一个典型的ICP问题：</p>
+<script type="math/tex; mode=display">
+\arg \min _{\mathbf{R}, \mathbf{t}}=\sum_{\left(\mathbf{p}_{i}, \mathbf{m}_{i}\right) \in \text { Matches }} b_{i}\left\|\mathbf{Rp}_{i}+\mathbf{t}-\mathbf{m}_{i}\right\|^{2}</script><p>这样来找出Event和Edge点的对应的匹配关系。</p>
+<p><img src="assets/Screenshot from 2020-03-02 17-43-40.png" srcset="/img/loading.gif" style="zoom:100%;" /></p>
+</li>
+<li><p>针对Tracking的一些改进</p>
+<ol>
+<li><p>由于这些Event其实都是边缘特征触发的，所以相当于是有一个结构的约束的。所以看上面的那个求解ICP的公式，那个$b_i$其实相当于加了一个约束，它的大小与data point set中后1/4的Event中落在当前Event周围3*3像素中的个数成正比。</p>
+</li>
+<li><p>为了更好的长期跟踪feature，还通过基于Event累计触发量直方图的方式，通过调整feature的位置来增加长期跟踪的鲁棒性。因为时间长的话，偏移比较大的时候，Events就无法很好的和目前的feature进行ICP了，这个时候就再去调整feature在图片上的二维坐标就OK了。比如针对这个特征，刚开始选择M1数量个Events根据触发数量合成直方图，然后用当前最近的M2个Event合成的直方图，然后定义一个$\mathbf{s}=\left(o<em>{x}, o</em>{y}\right)^{\top}$表示一个范围在$\pm 3$个像素的偏移。然后枚举所有$\mathbf{s}$的值，找出使得下面值最小的$\mathbf{s}$：</p>
+<script type="math/tex; mode=display">
+d\left(H_{1}, H_{2}, \mathbf{s}\right)=\sum_{\mathbf{x}} \min \left(H_{1}(\mathbf{x}), H_{2}(\mathbf{x}+\mathbf{s})\right)</script><p>如果$\mathbf{s}$大于一个阈值，就把他应用到feature中。M1和M2是大于N（也就是data point set的大小的），并且为了得到一个较好的初始值，M1是可以大于M2的。下图是当M2=5N的时候的直方图情况：</p>
+<p><img src="assets/Screenshot from 2020-03-03 23-59-12.png" srcset="/img/loading.gif" style="zoom:100%;" /></p>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p><strong>VO部分</strong></p>
+<p>有了上面的特征点的部分，那么接下的VO部分其实就是传统的VO了：</p>
+<ol>
+<li><p>通过深度滤波器（depth-filters），恢复出3D场景的结构。</p>
+</li>
+<li><p>通过最小化重投影误差求解出相机的位姿</p>
+<p>有个细节，这一步通过高斯牛顿法(G-N)优化、初值选用上一帧的pose就可以了，因为两帧event之间的运动是非常非常小的，使用G-N的优化速度很快，不需要使用L-M了。</p>
+<script type="math/tex; mode=display">
+\mathbf{T}_{k}=\underset{\mathbf{T}}{\operatorname{argmin}} \frac{1}{2} \sum_{i} w_{i}\left\|\mathbf{u}_{i}-\pi\left(\mathbf{T}, \mathbf{p}_{i}\right)\right\|^{2}</script><p>$w_i$是鲁棒核函数：</p>
+<script type="math/tex; mode=display">
+w_{i}=\left\{\begin{array}{ll}
+\left(1-\frac{x^{2}}{b^{2}}\right)^{2} & |x| \leq|b| \\
+0 & \text { otherwise }
+\end{array}\right.</script><p>其中$x=\left|\mathbf{u}<em>{i}-\pi\left(\mathbf{T}, \mathbf{p}</em>{i}\right)\right|$，$b=5$ pixels。</p>
+</li>
+</ol>
+<p>和SVO中的做法是一样的。</p>
+<p>具体细节就不再详述了。</p>
+</li>
+</ul>
+<h2 id="对比与实验"><a href="#对比与实验" class="headerlink" title="对比与实验"></a>对比与实验</h2><p>作者做了Feature跟踪性能的分析、VO精度的对比分析、系统运行时间消耗的分析。详细的实验数据见原论文。</p>
+<ul>
+<li><p>Feature跟踪性能的分析：</p>
+<p>patch大小为19*19时，</p>
+<ul>
+<li><p>在checkerboard-like的场景中跟踪8秒，跟踪错误的平均误差为1.5pixels；在自然场景中跟踪6秒，跟踪错误的平均误差为2.5pixels。</p>
+</li>
+<li><p>一个特征被跟踪的生命周期，经过直方图refine之后：</p>
+<p><img src="assets/Screenshot from 2020-03-04 00-55-19.png" srcset="/img/loading.gif" style="zoom:80%;" /></p>
+</li>
+</ul>
+</li>
+<li><p>VO性能分析：</p>
+<p><em>细节：当前跟踪的feature数量维持在120个左右的时候比较合适；当小于100的时候效果较差。</em></p>
+<p>Event-based VO与Ground Truth、Frame-based VO (SVO)三者的对比。可以看出，在精度上还是比传统VO（SVO）稍差。</p>
+<p><img src="assets/Screenshot from 2020-03-04 00-58-17.png" srcset="/img/loading.gif" style="zoom:100%;" /></p>
+</li>
+<li><p>运行时间分析：</p>
+<p>在Core i7-4710MQ CPU @ 2.50GHz with 8GB RAM配置的机器上、C++单线程实现的情况下，events的处理速度平均为160kevents/s。</p>
+<p><img src="assets/Screenshot from 2020-03-04 01-01-53.png" srcset="/img/loading.gif" style="zoom:80%;" /></p>
+</li>
+</ul>
+
+            </article>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Paper-Reading/">Paper Reading</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/3D-Vision/">3D-Vision</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Event-Camera/">Event-Camera</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Odomerty/">Odomerty</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/03/10/CeleX5-ROS-CeleX5-MIPI-%E4%BA%8B%E4%BB%B6%E7%9B%B8%E6%9C%BA%E7%9A%84%E4%B8%80%E4%B8%AA%E5%AE%8C%E5%96%84%E7%9A%84ROS%E5%B7%A5%E5%85%B7%E5%8C%85/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">CeleX5-ROS: CeleX5-MIPI 事件相机的一个完善的ROS工具包</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2020/02/26/LOAM%EF%BC%88A-LOAM%EF%BC%89Laser-SLAM-%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B/">
+                        <span class="hidden-mobile">LOAM（A-LOAM）Laser-SLAM 算法流程</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: 'article.markdown-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "论文阅读 - Low-Latency Visual Odometry using Event-based Feature Tracks&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.staticfile.org/mathjax/3.0.5/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/success.png">
+  <link rel="icon" type="image/png" href="/img/success.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Kehan Xue">
+  <meta name="keywords" content="">
+  <title>Event-based Camera 标定工作整理大全 - Kehan&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+  
+
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script  src="/js/utils.js" ></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Kehan's Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/img/black-bg.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+  <div class="mt-3 post-meta">
+    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+    <time datetime="2019-12-15 23:45">
+      December 15, 2019 pm
+    </time>
+  </div>
+
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      5.2k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      65
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <article class="markdown-body">
+              <p>本篇内容整理有：</p>
+<ul>
+<li>有关Event Camera Calibration一些直接相关的工作和工具包</li>
+<li>目前为止的主流的Event-Camera的数据集，整理了其中涉及多传感器外参标定的工作</li>
+<li>在Event Camera的VO/SLAM、目标检测的工作中，涉及到的多传感器、与传统CMOS相机标定的工作（<em>未完，仍在继续整理</em>）</li>
+<li>目前为止的一些基于Event的Video Synthesis相关主流工作，去模糊、提高帧率等</li>
+</ul>
+<a id="more"></a>
+<p>主要总结如下：</p>
+<ul>
+<li>大多数同时采集/使用图像帧与event数据的，大多数都是直接利用DAVIS做的</li>
+<li>有两篇利用RGB-D的depth信息与dvs做标定 <a href="#RGBD-DVS">1</a>  <a href="#rgb-dvs-2">2</a></li>
+<li><p>关于event-camera与传统相机做外参标定的文章，目前发现了三篇（两种做法，有两篇的做法是一样的）</p>
+<ul>
+<li>基于一个分束器装置和估计单应矩阵来做外参标定 <a href="#beam">1</a> <a href="#beam2">2</a></li>
+<li><strong>event与CMOS灰度摄像头的pixel进行对齐。uzh-rpg组14年发表在ICRA上的<a href="#vo-ex-cal">一篇</a>做VO工作，涉及到dvs与灰度摄像头的外参标定，且是一种自标定算法。这一篇感觉挺重要…但目前具体算法流程还未看完</strong></li>
+</ul>
+</li>
+<li><p>目前做Video Synthesis的已有工作中，多数还是基于DAVIS的灰度帧，关于彩色视频有：</p>
+<ul>
+<li>从彩色的、前景高速运动、背景静止的视频中恢复模糊帧。它的dvs和rgb相机是上面提到的利用分束器做的结合 <a href="#beam2">2</a></li>
+<li>基于学习的方法直接根据起始帧、固定周期出现的中间彩色帧和过程中的event，直接恢复。它的对应彩色帧的event数据是模仿event的产生方式仿真生成的</li>
+</ul>
+</li>
+</ul>
+<h1 id="Event-Camera外参标定相关整理"><a href="#Event-Camera外参标定相关整理" class="headerlink" title="Event Camera外参标定相关整理"></a>Event Camera外参标定相关整理</h1><h2 id="有关Event-Camera-Calibration直接相关的工作"><a href="#有关Event-Camera-Calibration直接相关的工作" class="headerlink" title="有关Event Camera Calibration直接相关的工作"></a>有关<a href="https://github.com/uzh-rpg/event-based_vision_resources#calibration" target="_blank" rel="noopener">Event Camera Calibration</a>直接相关的工作</h2><p><a href="https://github.com/uzh-rpg/event-based_vision_resources" target="_blank" rel="noopener">event-based_vision_resources</a>项目中直接提到的与DVS标定相关的一些工作如下。然而这里面目前还没有提到RGB相机与DVS的基于event的外参标定工作。这里提出的工作有<strong>DVS的内参标定、DVS和IMU的外参标定、DVS与激光雷达的外参标定、双目dvs基于event的标定、以及DAVIS基于灰度帧的与传统相机的外参标定工作</strong>。</p>
+<ul>
+<li><p><a href="https://github.com/uzh-rpg/rpg_dvs_ros/tree/master/dvs_calibration#focus-adjustment" target="_blank" rel="noopener">Lens focus adjustment</a> or <a href="https://github.com/ethz-asl/kalibr/wiki/calibrating-the-vi-sensor#2-setting-the-focus" target="_blank" rel="noopener">this other source</a>.</p>
+</li>
+<li><p>For the DAVIS: <strong>use the grayscale frames to calibrate the optics of both frames and events.</strong></p>
+<ul>
+<li>ROS camera calibrator (<a href="http://wiki.ros.org/camera_calibration/Tutorials/MonocularCalibration" target="_blank" rel="noopener">monocular</a> or <a href="http://wiki.ros.org/camera_calibration/Tutorials/StereoCalibration" target="_blank" rel="noopener">stereo</a>)</li>
+<li><a href="https://github.com/ethz-asl/kalibr/wiki/multiple-camera-calibration" target="_blank" rel="noopener">kalibr software</a> by ASL - ETH.</li>
+</ul>
+<blockquote>
+<p>这些就是利用DAVIS的灰度帧与传统相机进行标定，之前的双目标定的常用工具均可以用。</p>
+</blockquote>
+</li>
+<li><p>For the DAVIS camera and IMU calibration: <a href="https://github.com/ethz-asl/kalibr/wiki/camera-imu-calibration" target="_blank" rel="noopener">kalibr software</a> by ASL - ETH, using the grayscale frames.</p>
+<blockquote>
+<p>与IMU的外参标定，还是用的DAVIS的灰度帧。</p>
+</blockquote>
+</li>
+<li><p>For the DVS (events-only):</p>
+<ul>
+<li><p><a href="https://github.com/uzh-rpg/rpg_dvs_ros/tree/master/dvs_calibration" target="_blank" rel="noopener">Calibration using blinking LEDs or computer screens</a> by RPG - UZH.</p>
+<blockquote>
+<p>用会闪烁的屏幕或者LED灯来进行dvs内参和stereo dvs外参的标定，基于events。</p>
+</blockquote>
+</li>
+<li><p><a href="https://github.com/gorchard/DVScalibration" target="_blank" rel="noopener">DVS camera calibration</a> by G. Orchard.</p>
+</li>
+<li><p><a href="https://github.com/VLOGroup/dvs-calibration" target="_blank" rel="noopener">DVS camera calibration</a> by VLOGroup at TU Graz.</p>
+<blockquote>
+<p>这两个都是标定内参的。通过在屏幕上生成特定的图案。基于MATLAB的Caltech Camera Calibration Toolbox。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>Song, R., Jiang, Z., Li, Y., Shan, Y., Huang, K.,<br><em><a href="https://doi.org/10.1109/WRC-SARA.2018.8584215" target="_blank" rel="noopener">Calibration of Event-based Camera and 3D LiDAR</a></em>,<br>WRC Symposium on Advanced Robotics and Automation (WRC SARA), 2018.</p>
+<blockquote>
+<h3 id="标定Event-Camera和VLP-16激光雷达之间的外参"><a href="#标定Event-Camera和VLP-16激光雷达之间的外参" class="headerlink" title="标定Event Camera和VLP-16激光雷达之间的外参"></a><strong>标定Event Camera和VLP-16激光雷达之间的外参</strong></h3><p>做了一个标定装置（后面带了一个闪烁的屏幕），Event camera可以稳定的输出，雷达的3D点云也能扫出来明显的效果。作者用的设备是VLP-16和<strong>Celex</strong>04-S。</p>
+<div align="center">
+    <img src="assets/Screenshot from 2020-01-04 16-09-15.png" srcset="/img/loading.gif" style="zoom:80%;" />
+    <img src="assets/Screenshot from 2020-01-04 16-09-38.png" srcset="/img/loading.gif" style="zoom:50%;" />
+</div>
+
+<p>标定方法也就是传统的模型：</p>
+<p><img src="assets/Screenshot from 2020-01-04 16-26-56.png" srcset="/img/loading.gif" style="zoom:57%;" /></p>
+<p><strong>但是看了下公式发现它只标定了外参的$T$而没标定$R$…</strong></p>
+<div align="center">
+    <img src="assets/Screenshot from 2020-01-04 16-28-58.png" srcset="/img/loading.gif" style="zoom:37%;" />
+    <img src="assets/Screenshot from 2020-01-04 16-29-11.png" srcset="/img/loading.gif" style="zoom:37%;" />
+    <img src="assets/Screenshot from 2020-01-04 16-29-21.png" srcset="/img/loading.gif" style="zoom:43%;" />
+</div>
+
+
+
+
+</blockquote>
+</li>
+<li><p>Dominguez-Morales, M. J., Jimenez-Fernandez, A., Jimenez-Moreno, G., Conde, C., Cabello, E., Linares-Barranco, A.,<br><em><a href="https://doi.org/10.1109/ACCESS.2019.2943160" target="_blank" rel="noopener">Bio-Inspired Stereo Vision Calibration for Dynamic Vision Sensors</a></em>,<br>IEEE Access, vol. 7, pp. 138415-138425, 2019.</p>
+<blockquote>
+<p>这一篇提到了关于双目的dvs之间基于event的外参标定工作。做了一个挺麻烦的装置…他这应该是为了做一个固定的系统。也是通过LED灯、基于events进行的两者之间的外参标定</p>
+<p><img src="assets/Screenshot from 2020-01-04 17-23-52.png" srcset="/img/loading.gif" style="zoom:49%;" /></p>
+</blockquote>
+</li>
+</ul>
+<h2 id="Event-Camera相关的数据集中关于多设备和外参标定做法"><a href="#Event-Camera相关的数据集中关于多设备和外参标定做法" class="headerlink" title="Event Camera相关的数据集中关于多设备和外参标定做法"></a>Event Camera相关的数据集中关于多设备和外参标定做法</h2><h3 id="MVSEC-Dataset"><a href="#MVSEC-Dataset" class="headerlink" title="MVSEC Dataset"></a><a href="https://daniilidis-group.github.io/mvsec/" target="_blank" rel="noopener">MVSEC Dataset</a></h3><blockquote>
+<p>Zhu, A. Z., Thakur, D., Ozaslan, T., Pfrommer, B., Kumar, V., &amp; Daniilidis, K. (2018). <em>The Multivehicle Stereo Event Camera Dataset: An Event Camera Dataset for 3D Perception. IEEE Robotics and Automation Letters, 3(3), 2032–2039.</em> doi:10.1109/lra.2018.2800793 </p>
+</blockquote>
+<p>该数据集中多传感器的配置如下：</p>
+<p><img src="assets/Screenshot from 2020-01-04 21-32-46.png" srcset="/img/loading.gif" style="zoom:100%;" /></p>
+<p>对于这些传感器配置的参数的确定：</p>
+<p>相机的内参、双目的外参和相机-IMU的外参通过Kalibr工具进行标定。左DAVIS和VLP16的标定通过Camera and Range Calibration Toolbox工具进行标定，<strong>用的是DAVIS的灰度帧</strong>，并且作者根据实际情况和CAD模型对其进行了手动微调。</p>
+<div align="center">
+    <img src="assets/Screenshot from 2020-01-04 21-40-27.png" srcset="/img/loading.gif" style="zoom:47%;" />
+    <img src="assets/Screenshot from 2020-01-04 21-41-13.png" srcset="/img/loading.gif" style="zoom:50%;" />
+</div>
+
+
+
+
+<hr>
+<h3 id="Combined-Dynamic-Vision-RGB-D-Dataset"><a href="#Combined-Dynamic-Vision-RGB-D-Dataset" class="headerlink" title="Combined Dynamic Vision / RGB-D Dataset"></a><a href="http://ebvds.neurocomputing.systems/EBSLAM3D/index.html" target="_blank" rel="noopener">Combined Dynamic Vision / RGB-D Dataset</a></h3><blockquote>
+<p>David Weikersdorfer, David B. Adrian, Daniel Cremers, Jörg Conradt: <em>Event-based 3D SLAM with a depth-augmented dynamic vision sensor. International Conference on Robotics and Automation, Hong-Kong, 2014</em></p>
+</blockquote>
+<p><a name="RGBD-DVS"></a>这一篇的原文章是拿RGB-D Camera和Event Camera做3D SLAM的。顺便提出了这个数据集。</p>
+<p>作者的硬件配置长这个样子：</p>
+<p><img src="assets/Screenshot from 2020-01-04 22-08-19.png" srcset="/img/loading.gif" style="zoom:67%;" /></p>
+<p><strong>这一篇做的标定的工作感觉和咱们想要做的有点接近。已经做了通过RGB frame与dvs的对应pixel，从而将深度相机捕获的深度图中的每一个深度值与每一个event做pixel级的对齐</strong></p>
+<p>要解决这个问题，作者分了两步。首先先利用一个标定板，找出RGBD相机的彩图和DVS对应的pixel。然后利用这些匹配好的pixel对，用针孔相机模型建模（利用Depth的投影），最后将求解两个相机的内参和两者之间的外参建模成一个最小二乘问题进行求解。</p>
+<p>找出RGBD相机和DVS对应pixel的标定板：</p>
+<p><img src="assets/Screenshot from 2020-01-04 22-23-51.png" srcset="/img/loading.gif" alt=""></p>
+<p>问题求解的建模过程：</p>
+<p>畸变矩阵这里被建模成了这个简单的模型。作者提到这个简单模型对于dvs的建模已经够用了。RGBD相机在硬件上的补偿已经挺好，也够用了。</p>
+<script type="math/tex; mode=display">
+L(u)=u\left(1+\kappa_{1} r+\kappa_{2} r^{2}\right), \quad r=\|u\|</script><p>depth像素到event像素平面的模型：</p>
+<script type="math/tex; mode=display">
+u_{e}=L^{-1}\left(\mathrm{K}_{e} \mathrm{T} \mathrm{K}_{d}^{-1} u_{d}\right)</script><p>然后根据像素间的对应关系，建模最小二乘问题：</p>
+<script type="math/tex; mode=display">
+\operatorname{argmin} \sum_{i=1}^{N}\left\|u_{e, i}-L^{-1}\left(\mathrm{K}_{e} \mathrm{T} \mathrm{K}_{d}^{-1} u_{k, i}\right)\right\|^{2}</script><p>求解出$f<em>{e}, c</em>{e}, \kappa<em>{1}, \kappa</em>{2}, \mathrm{T}$即可。RGBD相机的内参可以另标定得到。</p>
+<hr>
+<h3 id="ViViD-Vision-for-Visibility-Dataset"><a href="#ViViD-Vision-for-Visibility-Dataset" class="headerlink" title="ViViD : Vision for Visibility Dataset"></a><a href="https://sites.google.com/view/dgbicra2019-vivid/" target="_blank" rel="noopener">ViViD : Vision for Visibility Dataset</a></h3><p><img src="assets/Screenshot from 2020-01-04 22-52-17-1578149580736.png" srcset="/img/loading.gif" style="zoom:100%;" /></p>
+<p>他这个用的也是DAVIS，用的灰度帧进行的外参标定。</p>
+<p><img src="assets/Screenshot from 2020-01-04 22-53-39.png" srcset="/img/loading.gif" alt=""></p>
+<p><img src="assets/Screenshot from 2020-01-04 22-54-11.png" srcset="/img/loading.gif" alt=""></p>
+<hr>
+<h3 id="The-UZH-FPV-Drone-Racing-Dataset"><a href="#The-UZH-FPV-Drone-Racing-Dataset" class="headerlink" title="The UZH-FPV Drone Racing Dataset"></a><a href="http://rpg.ifi.uzh.ch/uzh-fpv.html" target="_blank" rel="noopener">The UZH-FPV Drone Racing Dataset</a></h3><p>直接用的是DAVIS，frame和event之间的标定是做好的。其他的直接用DAVIS的frame和event的还有很多数据集，如<a href="http://rpg.ifi.uzh.ch/direct_event_camera_tracking/" target="_blank" rel="noopener">direct_event_camera_tracking dataset</a>等。</p>
+<hr>
+<h3 id="A-Dataset-for-Visual-Navigation-with-Neuromorphic-Methods"><a href="#A-Dataset-for-Visual-Navigation-with-Neuromorphic-Methods" class="headerlink" title="A Dataset for Visual Navigation with Neuromorphic Methods"></a><a href="http://atcproyectos.ugr.es/realtimeasoc/protected/evbench.html" target="_blank" rel="noopener">A Dataset for Visual Navigation with Neuromorphic Methods</a></h3><blockquote>
+<p>Barranco, F., Fermuller, C., Aloimonos, Y., &amp; Delbruck, T. (2016). <em>A Dataset for Visual Navigation with Neuromorphic Methods. Frontiers in Neuroscience, 10.</em> doi:10.3389/fnins.2016.00049 </p>
+</blockquote>
+<p><a name="rgb-dvs-2">&lt;/a&gt;这也是一个结合RGB-D（MS Kinect）和DAVIS数据的数据集。它的一个主要的工作是要将rgbd的depth图与DAVIS的灰度帧给对应起来（和<a href="#RGBD-DVS">上面那个RGBD的工作</a>有点像）。分为两步，<strong>首先获取到两个传感器的内外参的参数，然后通过转换rgbd生成的点云的坐标系并在DAVIS的成像屏幕进行投影，得到它对应的深度图。</strong></p>
+<p>关于DAVIS和RGBD的外参标定，作者论文中并没有明确提及…看描述应该是拿RGBD的RGB和DAVIS的灰度帧做的传统的外参标定。关于得到DAVIS坐标系下的深度图，作者将RGBD的点云通过两者的外参转换到DAVIS的坐标系下，然后再做个投影即可。</p>
+<div align="center">
+    <img src="assets/Screenshot from 2020-01-06 18-38-57.png" srcset="/img/loading.gif" style="zoom:50%;" />
+    <img src="assets/Screenshot from 2020-01-06 18-33-17.png" srcset="/img/loading.gif" style="zoom:60%;" />
+    <img src="assets/Screenshot from 2020-01-06 18-33-27.png" srcset="/img/loading.gif" style="zoom:80%;" />
+</div>
+
+
+<hr>
+<h3 id="Color-DAVIS346-Datasets"><a href="#Color-DAVIS346-Datasets" class="headerlink" title="Color-DAVIS346 Datasets"></a><a href="http://rpg.ifi.uzh.ch/CED.html" target="_blank" rel="noopener">Color-DAVIS346 Datasets</a></h3><blockquote>
+<p>C. Scheerlinck<em>, H. Rebecq</em>, T. Stoffregen, N. Barnes, R. Mahony, D. Scaramuzza, <em>CED: Color Event Camera Dataset, IEEE Conference on Computer Vision and Pattern Recognition Workshops (CVPRW), 2019.</em></p>
+</blockquote>
+<p>这是一个带有彩色fame的Event数据集，但它直接拿DAVIS346相机录制的…它可以直接输出彩色图像与event。</p>
+<p><img src="assets/Screenshot from 2020-01-07 01-11-43.png" srcset="/img/loading.gif" style="zoom:60%;" /></p>
+<p><img src="assets/Screenshot from 2020-01-07 01-11-33-1578330731656.png" srcset="/img/loading.gif" style="zoom:37%;" /></p>
+<p><em>到此数据集方面整理的也差不多了，其他的Event数据集获取图像也基本都是通过DAVIS直接读取的，而不牵扯多传感器和外参。</em></p>
+<hr>
+<h3 id="DDD17"><a href="#DDD17" class="headerlink" title="DDD17"></a><a href="http://sensors.ini.uzh.ch/news_page/DDD17.html" target="_blank" rel="noopener">DDD17</a></h3><blockquote>
+<p>Binas, J., Neil, D., Liu, S.-C., and Delbruck, T. (2017). DDD17: End-To-End DAVIS Driving Dataset. <em>arXiv:1711.01458 [cs]</em>. Available at: <a href="http://arxiv.org/abs/1711.01458" target="_blank" rel="noopener">http://arxiv.org/abs/1711.01458</a>. <em>(available online)</em></p>
+</blockquote>
+<p>一个包含了DAVIS的灰度帧和event数据、和车辆的一些运动信息比如速度等，场景大多为街区场景，为构建端到端的无人驾驶数据集做准备。</p>
+<hr>
+<h3 id="Large-scale-multimodal-event-based-dataset"><a href="#Large-scale-multimodal-event-based-dataset" class="headerlink" title="Large-scale multimodal event-based dataset"></a><a href="https://www.spiedigitallibrary.org/conference-proceedings-of-spie/10639/2305504/Toward-a-large-scale-multimodal-event-based-dataset-for-neuromorphic/10.1117/12.2305504.short?SSO=1&amp;tab=ArticleLink" target="_blank" rel="noopener">Large-scale multimodal event-based dataset</a></h3><blockquote>
+<p>Leung, S., Shamwell, J., Maxey, C., Nothwang, W. D.,<br><a href="https://doi.org/10.1117/12.2305504" target="_blank" rel="noopener">Toward a large-scale multimodal event-based dataset for neuromorphic deep learning applications</a>,<br>Proc. SPIE 10639, Micro- and Nanotechnology Sensors, Systems, and Applications X, 106391T. <a href="https://www.researchgate.net/publication/325939343" target="_blank" rel="noopener">PDF</a></p>
+</blockquote>
+<p>这一篇论文下载不下来…看不了，sci-hub里也没有。但看摘要，它是通过两个DAVIS240C和一个深度相机录制的。里面可能会有关于几者之间外参标定。</p>
+<hr>
+<h2 id="Event-Camera-一些应用中标定相关的工作"><a href="#Event-Camera-一些应用中标定相关的工作" class="headerlink" title="Event Camera 一些应用中标定相关的工作"></a>Event Camera 一些应用中标定相关的工作</h2><h3 id="Object-Tracking"><a href="#Object-Tracking" class="headerlink" title="Object Tracking"></a>Object Tracking</h3><blockquote>
+<p>D. Saner, O. Wang, S. Heinzle, Y. Pritch, A. Smolic, A. Sorkine-Hornung, M. Gross,<br><em><a href="http://dx.doi.org/10.2312/vmv.20141280" target="_blank" rel="noopener">High-Speed Object Tracking Using an Asynchronous Temporal Contrast Sensor</a></em>,<br>Vision, Modeling and Visualization (Darmstadt, Germany, October 8-10, 2014), pp. 87-94. <a href="http://ahornung.net/files/pub/2014-vmv-siliconretina-saner.pdf" target="_blank" rel="noopener">PDF</a></p>
+</blockquote>
+<p><a name="beam"></a> 这是一篇做Object Tracking的工作。它利用event数据在彩色帧中跟踪快速运动的物体，所以需要将彩色图与event进行Image registration。它利用了一个分束器装置使得在在两个相机中看到的场景尽可能保持一致<em>（分束器应该是这个作用吧？那不然他后面算单应矩阵问题就会很大）</em>，然后通过一个标定板然后来求单应矩阵，将DVS坐标系映射到相机坐标系中去了。</p>
+<div align="center">
+    <img src="assets/Screenshot from 2020-01-08 10-39-27.png" srcset="/img/loading.gif" style="zoom:42%;" />
+    <img src="assets/Screenshot from 2020-01-08 10-39-54.png" srcset="/img/loading.gif" style="zoom:42%;" />
+</div>
+
+<p>分束器（beamsplitter）：</p>
+<p><img src="assets/v2-387dac22909d5485371329dfcc5f3d28_r-1578475989581-1578475992057.jpg" srcset="/img/loading.gif" alt="preview" style="zoom:67%;" /></p>
+<p><em>图片来自<a href="https://zhuanlan.zhihu.com/p/24434788" target="_blank" rel="noopener">知乎</a></em></p>
+<p>为了将单应性对应的更准确，作者手动尽可能的将两个相机的光轴对齐。与传统相机相比，DVS的分辨率较低，DVS像素将始终映射到视频图像中直径为几个像素的区域。因此，作者发现单应性映射对于作者的目的而言足够精确。</p>
+<p><img src="assets/Screenshot from 2020-01-08 10-54-45.png" srcset="/img/loading.gif" style="zoom:40%;" /></p>
+<hr>
+<h3 id="Localization-and-Ego-Motion-Estimation"><a href="#Localization-and-Ego-Motion-Estimation" class="headerlink" title="Localization and Ego-Motion Estimation"></a>Localization and Ego-Motion Estimation</h3><blockquote>
+<p>Mueggler, E., Huber, B., Scaramuzza, D.,<br><em><a href="https://doi.org/10.1109/IROS.2014.6942940" target="_blank" rel="noopener">Event-based, 6-DOF Pose Tracking for High-Speed Maneuvers</a></em>,<br>IEEE/RSJ Int. Conf. Intelligent Robots and Systems (IROS), Chicago, IL, 2014, pp. 2761-2768. <a href="http://rpg.ifi.uzh.ch/docs/IROS14_Mueggler.pdf" target="_blank" rel="noopener">PDF</a>, <a href="https://youtu.be/LauQ6LWTkxM" target="_blank" rel="noopener">YouTube</a></p>
+</blockquote>
+<p>涉及到DVS内参的标定</p>
+<p><img src="assets/Screenshot from 2020-01-09 21-11-05.png" srcset="/img/loading.gif" style="zoom:60%;" /></p>
+<p><img src="assets/Screenshot from 2020-01-09 21-10-39.png" srcset="/img/loading.gif" style="zoom:67%;" /></p>
+<p><img src="assets/Screenshot from 2020-01-09 21-11-18.png" srcset="/img/loading.gif" style="zoom:67%;" /></p>
+<h3 id="VO-SLAM-VIO-VI-SLAM"><a href="#VO-SLAM-VIO-VI-SLAM" class="headerlink" title="VO/SLAM (VIO/VI-SLAM)"></a>VO/SLAM (VIO/VI-SLAM)</h3><blockquote>
+<p>Censi, A. and Scaramuzza, D.,<br><em><a href="https://doi.org/10.1109/ICRA.2014.6906931" target="_blank" rel="noopener">Low-latency Event-based Visual Odometry</a></em>,<br>IEEE Int. Conf. Robotics and Automation (ICRA), 2014, pp. 703-710. <a href="http://rpg.ifi.uzh.ch/docs/ICRA14_Censi.pdf" target="_blank" rel="noopener">PDF</a>, <a href="https://censi.science/pub/research/2013-dvsd/201405-icra15-dvsd.pdf" target="_blank" rel="noopener">Slides</a></p>
+</blockquote>
+<p><a name="vo-ex-cal"></a>这一篇是同时通过一个灰度的camera和DVS来同时做的VO。需要camera提供的绝对光强，所以需要将camera和DVS进行Pixel级别的对应。</p>
+<p><img src="assets/Screenshot from 2020-01-08 22-34-03.png" srcset="/img/loading.gif" style="zoom:80%;" /></p>
+<p>该标定算法涉及时间同步和pixel(空间)的对齐。主要思路都是放置一段时间，然后利用两者捕获的光强变化作对比从而进行时间与空间的标定。</p>
+<ul>
+<li><p>时间标定：</p>
+<p>要将dvs与camera的数据流的时间戳对齐，首先先将两者放置使其可以看到差不多的场景（see the same “changes”）。然后定义出一个可以表征两者观察到change而触发的信号，累积一段时间后将两者进行对比，从而判断出时移。由于累计的时间足够长，所以即使两者看到的场景并不完全一致，结果仍比较鲁棒。</p>
+<p>由于这两个数据流的频率不一致，因此需要将它们重新采样为相同的采样率$\Delta$。</p>
+<p>定义dvs的信号$f_t$为在时间间隔$[t-\Delta, t+\Delta]$内检测到的event数量：</p>
+<p><img src="assets/Screenshot from 2020-01-09 16-16-28.png" srcset="/img/loading.gif" style="zoom:80%;" /></p>
+<p>定义表征camera图像光强变化的信号$g_t$：</p>
+<p>来自camera的数据可以被看做一个二元组$\left\langle t<em>{i}, y</em>{i}\right\rangle$，$t<em>{i}$是时间戳，$y</em>{i}$代表整张图像（$y<em>{i}: \mathbb{S}^{2} \rightarrow \mathbb{R}$  is the image<br>, here defined as a function on the visual sphere）。计算其离散的导数$\dot{y}</em>{i}=\left(y<em>{i+1}-y</em>{i-1} /\left(t<em>{i+1}-t</em>{i-1}\right)\right.$，从而得出总的光强变化$c<em>i$，$c_i$是$\dot{y}</em>{i}$的一范数$c<em>{i}=\int</em>{\mathbb{S}^{2}}\left|\dot{y}_{i}(s)\right| \mathrm{d} s$。从而定义表征camera图像在时间间隔$[t-\Delta, t+\Delta]$的光强变化的信号$g_t$：</p>
+<p><img src="assets/Screenshot from 2020-01-09 16-28-46.png" srcset="/img/loading.gif" style="zoom:78%;" /></p>
+<p>然后分析一段时间的两者信号，找出时移$\tau$:</p>
+<p><img src="assets/Screenshot from 2020-01-09 16-31-12.png" srcset="/img/loading.gif" style="zoom:67%;" /></p>
+<p>同样，这种方法可以推广到只要能找到相互关系的、需要时间同步的两个系统中。</p>
+<p><img src="assets/Screenshot from 2020-01-09 16-32-28.png" srcset="/img/loading.gif" style="zoom:77%;" /></p>
+</li>
+<li><p>pixel对齐（空间标定）的主要流程是：</p>
+<ol>
+<li><p><strong>将两个相机组成的装置放在环境中静止，环境中会出现动态物体</strong></p>
+</li>
+<li><p><strong>统计一段时间内，dvs的每个pixel的触发的event的数量，以及每个camera pixel的累计光强变化</strong></p>
+<p>用下标 a ∈ A 来表示每个DVS pixel, 用下标 b ∈ B 表示每个 camera pixel。与上面时间标定类似($f_t$表示整张图像的触发event数量)，定义$f_t(a)$表示每个dvs像素在时间间隔$[t-\Delta, t+\Delta]$的触发event数量。$g_t(b)$同理，表示某个camera像素的。</p>
+</li>
+<li><p><strong>将每一个dvs pixel分别与每一个camera pixel根据在一段时间内的触发的情况，进行相似性度量</strong></p>
+<p>定义$S(a,b)$表示$f_t(a)$和$g_t(b)$的相关性：</p>
+<script type="math/tex; mode=display">
+S(a, b)=\operatorname{corr}\left(f_{t}(a), g_{t}(b)\right)</script><p><img src="assets/Screenshot from 2020-01-09 16-51-17.png" srcset="/img/loading.gif" style="zoom:80%;" /></p>
+<p>对每个dvs pixel，将其与每个camera pixel遍历与对比。所以数据量的量级是$\mathcal{O}\left(\rho<em>{1}^{2} \rho</em>{2}^{2}\right)$($\rho<em>{1}$, $\rho</em>{2}$是两个相机的分辨率)。这是一个很恐怖的量级，甚至可能都不能完整加载到内存中…所以作者在实验的时候对dvs的分辨率进行了下采样，从128×128降到了16*16…</p>
+</li>
+<li><p><strong>选出每一个dvs pixel与其相似度最高的相机pixel，并通过计算置信度去除外点。</strong></p>
+<p>对于每个a（dvs中的pixel），对应于camera frame中的pixel b：</p>
+<script type="math/tex; mode=display">
+\hat{b}(a)=\arg \max _{b \in B} S(a, b)</script><p>如果触发的event在camera的视野外，则按道理是无法在camera中对应上的。所以为了解决这个情况，又定义了一个简单的置信度计算公式：</p>
+<script type="math/tex; mode=display">
+w^{a}=S(a, \hat{b}(a)) / \sum_{b} S(a, b)</script><p>卡一个阈值即可区分是否真的有对应关系，从而去除在camera中观测不到的点。</p>
+<p>至此得到dvs和camera的初步的对应关系。</p>
+</li>
+<li><p><strong>根据几何约束（正方形网格），对dvs pixel在相机像素平面上的排列情况进行再调整</strong></p>
+<p>由于是每个dvs pixel都是单独进行对应的，所以受到噪声对结果的影响还蛮大的。所以再对两者pixel的对应关系进行微调，加入dvs的pixel是网格几何分布的约束。下图是微调后的效果：</p>
+<p><img src="assets/Screenshot from 2020-01-09 17-12-02.png" srcset="/img/loading.gif" style="zoom:80%;" /></p>
+<p>定义了一个能量函数：</p>
+<script type="math/tex; mode=display">
+E=E_{\text {data }}+\alpha E_{\text {model }}</script><p>其中$E<em>{\text {data }}$是上一步中找到的对应关系；$E</em>{\text {model}}$是指dvs pixel尽可能的符合正方形网格模型。$\alpha &gt; 0$是对模型的置信度。</p>
+<p>设$p^a$为优化后的、dvs pixel应该对应的camera pixel的位置。</p>
+<p>$E_{\text {data }}$：设$p_0^{a}$为上一步估算出的dvs pixel的对应camera pixel的位置。$w^a$为上一步计算出的置信度。</p>
+<script type="math/tex; mode=display">
+E_{\text {data }}\left(\left\{\boldsymbol{p}^{a}\right\}\right)=\sum_{a \in A} w^{a}\left\|\boldsymbol{p}^{a}-\boldsymbol{p}_{0}^{a}\right\|^{2}</script><p>$E_{\text {model}}$：dvs pixel的分布应该为正方形栅格的形状。为了表达这一约束可以有很多种形式来表述。作者用了一个dvs pixel与其前邻居dvs pixel的距离应该是相等的这一约束。</p>
+<p>$a<em>{1}, a</em>{2} \in \operatorname{neig}(a)$，有$\left|\boldsymbol{p}^{a<em>{1}}-\boldsymbol{p}^{a}\right|=\left|\boldsymbol{p}^{a</em>{2}}-\boldsymbol{p}^{a}\right|$</p>
+<p>得出</p>
+<script type="math/tex; mode=display">
+E_{\text {model }}\left(\left\{\boldsymbol{p}^{a}\right\}\right)=\sum_{a \in A} \sum_{a_{1}, a_{2} \in \operatorname{neig}(a)}\left\|\boldsymbol{p}^{a_{1}}-\boldsymbol{p}^{a}\right\|^{2}-\left\|\boldsymbol{p}^{a_{2}}-\boldsymbol{p}^{a}\right\|^{2} |</script><p>将E最小化即可。使用quasi-Newton BFGS算法来优化它。</p>
+<p>作者实验中选择的是$\alpha$ = 0.1，25次迭代。</p>
+</li>
+<li><p><strong>对dvs降采样后的pixel进行插值，得到全部的dvs pixel对应到camera frame中</strong></p>
+<p><img src="assets/Screenshot from 2020-01-09 19-08-26.png" srcset="/img/loading.gif" style="zoom:70%;" /></p>
+</li>
+</ol>
+</li>
+</ul>
+<p>讨论：</p>
+<p>它提出的这个算法的缺陷：</p>
+<ol>
+<li><p>不能适用于高分辨率Event Camera的场景下。128×128分辨率的DVS都需要进行下采样到16×16，对齐结束后然后再进行插值恢复，这可能会丧失不少信息。</p>
+<blockquote>
+<p>如果把这个标定问题的思路放到三维求解、比如小规模SfM、解出Rt、进行重投影的方式的话，应该不受分辨率的限制。可能会得到更高的标定精度。</p>
+</blockquote>
+</li>
+<li><p>需要将整个装置放置很长一段的时间来收集数据，效率较低，且算法的时空复杂度都较高。作者在论文中提到标定过程中收集数据用了35分钟。</p>
+<blockquote>
+<p>如果能像现在标定两个普通相机外参那样的效率来标定出Event Camera和RGB Camera之间的外参，感觉会更好。</p>
+</blockquote>
+</li>
+<li><p>虽然这个算法可以自标定，也就是标定过程是全自动的，但是对场景也有一定的限制：</p>
+<p><img src="assets/Screenshot from 2020-01-09 20-43-07.png" srcset="/img/loading.gif" style="zoom:80%;" /></p>
+</li>
+</ol>
+<hr>
+<blockquote>
+<p>Rosinol Vidal, A., Rebecq, H., Horstschaefer, T., Scaramuzza, D.,<br><em><a href="https://doi.org/10.1109/LRA.2018.2793357" target="_blank" rel="noopener">Ultimate SLAM? Combining Events, Images, and IMU for Robust Visual SLAM in HDR and High Speed Scenarios</a></em>,<br>IEEE Robotics and Automation Letters (RA-L), 3(2):994-1001, Apr. 2018. <a href="http://rpg.ifi.uzh.ch/docs/RAL18_VidalRebecq.pdf" target="_blank" rel="noopener">PDF</a>, <a href="https://youtu.be/jIvJuWdmemE" target="_blank" rel="noopener">YouTube</a>, <a href="http://rpg.ifi.uzh.ch/docs/RAL18_VidalRebecq_poster.pdf" target="_blank" rel="noopener">Poster</a>, <a href="http://rpg.ifi.uzh.ch/ultimateslam.html" target="_blank" rel="noopener">Project page</a>, <a href="https://youtu.be/0hDGFFJQfmA" target="_blank" rel="noopener">ICRA18 video pitch</a>.</p>
+</blockquote>
+<p>这一篇是结合Event Frame、Standard Frame和IMU三者联合做的SLAM。</p>
+<p><img src="assets/Screenshot from 2020-01-08 23-05-10.png" srcset="/img/loading.gif" style="zoom:80%;" /></p>
+<p>作者做实验直接用了DAVIS，所以也无需考虑灰度帧与dvs的外参标定。</p>
+<div align="center">
+    <img src="assets/Screenshot from 2020-01-08 23-10-00.png" srcset="/img/loading.gif" style="zoom:50%;" />
+    <img src="assets/Screenshot from 2020-01-08 23-06-08.png" srcset="/img/loading.gif" style="zoom:55%;" />
+</div>
+---
+
+> Kueng, B., Mueggler, E., Gallego, G., Scaramuzza, D.,
+> *[Low-Latency Visual Odometry using Event-based Feature Tracks](https://doi.org/10.1109/IROS.2016.7758089)*,
+> IEEE/RSJ Int. Conf. Intelligent Robots and Systems (IROS), 2016, pp. 16-23. [PDF](http://rpg.ifi.uzh.ch/docs/IROS16_Kueng.pdf). [YouTube](https://youtu.be/RDu5eldW8i8)
+
+作者做实验直接用了DAVIS，所以也无需考虑灰度帧与dvs的外参标定。
+
+<div>
+<img src="assets/Screenshot from 2020-01-09 21-22-47.png" srcset="/img/loading.gif" style="zoom:90%;" />
+<img src="assets/Screenshot from 2020-01-09 21-14-58.png" srcset="/img/loading.gif" style="zoom:80%;" />
+<img src="assets/Screenshot from 2020-01-09 21-14-48.png" srcset="/img/loading.gif" style="zoom:67%;" />
+</div>
+
+
+<h2 id="Video-Synthesis-的一些目前相关工作工作"><a href="#Video-Synthesis-的一些目前相关工作工作" class="headerlink" title="Video Synthesis 的一些目前相关工作工作"></a>Video Synthesis 的一些目前相关工作工作</h2><p><em>以下仅从实验设置方面整理</em></p>
+<p>Event Camera 的标定中有很多工作是与传统 Camera 相结合的。那么直接从单 Event Camera 中恢复出 frame 信息也是一个重要的工作领域。</p>
+<hr>
+<blockquote>
+<p>Brandli, C., Muller, L., Delbruck, T.,<br><em><a href="https://doi.org/10.1109/ISCAS.2014.6865228" target="_blank" rel="noopener">Real-time, high-speed video decompression using a frame- and event-based DAVIS sensor</a></em>,<br>IEEE Int. Symp. on Circuits and Systems (ISCAS), 2014, pp. 686-689.</p>
+</blockquote>
+<p>这一篇是第一篇从event流中恢复视频帧的工作。<strong>直接利用DAVIS获取灰度帧和event数据，重建出灰度视频序列</strong>。</p>
+<div align="center">
+    <img src="assets/Screenshot from 2020-01-07 11-57-16.png" srcset="/img/loading.gif" style="zoom:55%;" />
+    <img src="assets/Screenshot from 2020-01-07 11-57-23.png" srcset="/img/loading.gif" style="zoom:53%;" />
+</div>
+
+<p><img src="assets/Screenshot from 2020-01-07 12-00-22.png" srcset="/img/loading.gif" style="zoom:80%;" /></p>
+<p>算法主要步骤（待深究）：</p>
+<p><img src="assets/Screenshot from 2020-01-07 16-40-05.png" srcset="/img/loading.gif" style="zoom:67%;" /></p>
+<p><img src="assets/Screenshot from 2020-01-07 16-40-21.png" srcset="/img/loading.gif" style="zoom:60%;" /></p>
+<hr>
+<blockquote>
+<p>Liu HC., Zhang FL., Marshall D., Shi L., Hu SM.,<br><em><a href="https://link.springer.com/article/10.1007/s00371-017-1372-y" target="_blank" rel="noopener">High-speed Video Generation with an Event Camera</a></em>,<br>The Visual Computer, 2017. <a href="https://cg.cs.tsinghua.edu.cn/papers/TVC-2017-HS-Video.pdf" target="_blank" rel="noopener">PDF</a>.</p>
+</blockquote>
+<p><a name="beam2">&lt;/a&gt;这一篇是从”<strong>前景高速运动、背景静止(应用场景限制)</strong>”的彩色视频序列中恢复超高帧率的视频。同时采集彩色视频与event流的装置与<a href="#beam">上面的做目标识别的一篇文章</a>相同，都是采用一个光学分束器。</p>
+<p><img src="assets/Screenshot from 2020-01-08 11-21-27.png" srcset="/img/loading.gif" style="zoom:67%;" /></p>
+<p><img src="assets/Screenshot from 2020-01-08 11-28-32.png" srcset="/img/loading.gif" style="zoom:80%;" /></p>
+<hr>
+<blockquote>
+<p>Shedligeri, P.A., Shah, K., Kumar, D., Mitra, K.,<br><em><a href="https://arxiv.org/pdf/1805.06140.pdf" target="_blank" rel="noopener">Photorealistic Image Reconstruction from Hybrid Intensity and Event based Sensor</a></em>,<br>arXiv:1805.06140, 2018.</p>
+</blockquote>
+<p>仅仅使用DAVIS的灰度帧和event进行的图像重建。考虑了event camera的突然运动和噪声的情况，效果更鲁棒。</p>
+<p><img src="assets/Screenshot from 2020-01-08 11-45-33.png" srcset="/img/loading.gif" style="zoom:50%;" /></p>
+<p><div align="center"><br>    <img src="assets/Screenshot from 2020-01-08 11-45-53.png" srcset="/img/loading.gif" style="zoom:52%;" /><br>    <img src="assets/Screenshot from 2020-01-08 11-46-02.png" srcset="/img/loading.gif" style="zoom:28%;" /></p>
+<h2 id="lt-div-gt"><a href="#lt-div-gt" class="headerlink" title="&lt;/div&gt;"></a>&lt;/div&gt;</h2><blockquote>
+<p>Wang, Z., Jiang, W., Katsaggelos, A., Cossairt, O.,<br><em><a href="https://arxiv.org/abs/1902.09680" target="_blank" rel="noopener">Event-driven Video Frame Synthesis</a></em>,<br>arXiv:1902.09680, 2019.</p>
+</blockquote>
+<p>基于学习的方法来做的。实验是直接选择的DAVIS数据集。</p>
+<p><div align="center"><br>    <img src="assets/Screenshot from 2020-01-08 12-03-59.png" srcset="/img/loading.gif" style="zoom:80%;" /><br>    <img src="assets/Screenshot from 2020-01-08 12-04-06.png" srcset="/img/loading.gif" style="zoom:53%;" /><br>    <img src="assets/Screenshot from 2020-01-08 12-04-20.png" srcset="/img/loading.gif" style="zoom:67%;" /></p>
+<h2 id="lt-div-gt-1"><a href="#lt-div-gt-1" class="headerlink" title="&lt;/div&gt;"></a>&lt;/div&gt;</h2><blockquote>
+<p>Pan, L., Scheerlinck, C., Yu, X., Hartley, R., Liu, M., Dai, Y.,<br><em><a href="http://openaccess.thecvf.com/content_CVPR_2019/papers/Pan_Bringing_a_Blurry_Frame_Alive_at_High_Frame-Rate_With_an_CVPR_2019_paper.pdf" target="_blank" rel="noopener">Bringing a Blurry Frame Alive at High Frame-Rate with an Event Camera</a></em>,<br>IEEE Conf. Computer Vision and Pattern Recognition (CVPR), 2019. <a href="https://arxiv.org/pdf/1811.10180.pdf" target="_blank" rel="noopener">PDF</a>. <a href="http://rpg.ifi.uzh.ch/docs/CVPR19workshop/CVPRW19_Yuchao_Dai.pdf" target="_blank" rel="noopener">Slides</a>, <a href="https://drive.google.com/file/d/1NscnUF2QxK0of4ZW7T8kneJTH1X76l2u/view" target="_blank" rel="noopener">Video CVPR</a>, <a href="https://youtu.be/JcgboJ_7JAE" target="_blank" rel="noopener">Video CVPRW</a>, <a href="https://github.com/panpanfei/Bringing-a-Blurry-Frame-Alive-at-High-Frame-Rate-with-an-Event-Camera" target="_blank" rel="noopener">Code</a></p>
+</blockquote>
+<p>实验设置：利用的是DAVIS的灰度帧和event，灰度帧的去模糊。</p>
+<p><img src="assets/Screenshot from 2020-01-08 16-58-30.png" srcset="/img/loading.gif" style="zoom:70%;" /></p>
+<p>EDI在今年还有其扩展版本mEDI，arXiv:1903.06531v2。</p>
+<p><img src="assets/Screenshot from 2020-01-08 17-00-27.png" srcset="/img/loading.gif" style="zoom:55%;" /></p>
+<hr>
+<blockquote>
+<p>Pini, S., Borghi, G., Vezzani, R., Cucchiara, R.,<br><em><a href="https://doi.org/10.1007/978-3-030-30642-7_28" target="_blank" rel="noopener">Video synthesis from Intensity and Event Frames</a></em>,<br>Int. Conf. Image Analysis and Processing (ICIAP), 2019. Lecture Notes in Computer Science, vol 11751. <a href="https://iris.unimore.it/retrieve/handle/11380/1178955/224434/ICIAP19_Event_Cameras.pdf" target="_blank" rel="noopener">PDF</a></p>
+</blockquote>
+<p>这是一篇基于学习的方法来做的。使用DDD17数据集，基于<strong>灰度帧和积分后的event frame</strong>。做的是通过初始帧和后续的event数据流来估计接下来的帧。</p>
+<p><img src="assets/Screenshot from 2020-01-08 17-11-38.png" srcset="/img/loading.gif" style="zoom:50%;" /></p>
+<hr>
+<blockquote>
+<p>Pini S., Borghi G., Vezzani R.,<br><em><a href="http://hdl.handle.net/11380/1185831" target="_blank" rel="noopener">Learn to See by Events: Color Frame Synthesis from Event and RGB Cameras</a></em>,<br>Int. Joint Conf. on Computer Vision, Imaging and Computer Graphics Theory and Applications (VISAPP) 2020. <a href="https://arxiv.org/pdf/1812.02041" target="_blank" rel="noopener">PDF</a></p>
+</blockquote>
+<p>这也是一篇基于学习的方法来做的。这一篇通过event恢复彩色的视频流。通过初始帧和一定周期内出现的彩色帧，以及过程中的event，恢复出彩色帧。</p>
+<p>作者提出的模型可以同时恢复彩色帧和灰度帧。作者通过一些通用数据集比如KITTI，根据event的产生方式，通过彩色图，生成仿真的event数据流来进行对模型的训练；此外还用的两个Event Camera的数据集，都是采集的DAVIS的灰度帧。</p>
+<p><img src="assets/Screenshot from 2020-01-08 20-01-16.png" srcset="/img/loading.gif" style="zoom:80%;" /></p>
+<p><img src="assets/Screenshot from 2020-01-08 20-01-28.png" srcset="/img/loading.gif" style="zoom:67%;" /></p>
+<p><img src="assets/Screenshot from 2020-01-08 20-02-44.png" srcset="/img/loading.gif" alt=""></p>
+<p><img src="assets/Screenshot from 2020-01-08 20-02-20.png" srcset="/img/loading.gif" style="zoom:80%;" /></p>
+<p>@author 薛轲翰</p>
+<p>@e-mail kehan.xue@gmail.com</p>
+
+            </article>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Paper-Reading/">Paper Reading</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Event-Camera/">Event-Camera</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Calibration/">Calibration</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Multi-Sensors/">Multi-Sensors</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/02/26/LOAM%EF%BC%88A-LOAM%EF%BC%89Laser-SLAM-%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">LOAM（A-LOAM）Laser-SLAM 算法流程</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2019/12/07/Cartographer%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B%E8%A7%A3%E6%9E%90%E4%B8%8E%E8%B0%83%E4%BC%98/">
+                        <span class="hidden-mobile">Cartographer Laser-SLAM 算法流程解析与调优</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: 'article.markdown-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "Event-based Camera 标定工作整理大全&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.staticfile.org/mathjax/3.0.5/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

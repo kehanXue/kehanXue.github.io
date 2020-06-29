@@ -1,0 +1,2227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/success.png">
+  <link rel="icon" type="image/png" href="/img/success.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Kehan Xue">
+  <meta name="keywords" content="">
+  <title>计算机组成原理 - 设计一个CPU - Kehan&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+  
+
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script  src="/js/utils.js" ></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Kehan's Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/img/black-bg.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+  <div class="mt-3 post-meta">
+    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+    <time datetime="2019-07-01 20:46">
+      July 1, 2019 pm
+    </time>
+  </div>
+
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.8k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      52
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <article class="markdown-body">
+              <p>计算机组成原理课程的一个大作业：设计一个符合下列要求的 CPU。完整项目请移步：<a href="https://github.com/kehanXue/Design-A-CPU。" target="_blank" rel="noopener">https://github.com/kehanXue/Design-A-CPU。</a></p>
+<a id="more"></a>
+<h1 id="CPU-设计要求"><a href="#CPU-设计要求" class="headerlink" title="CPU 设计要求"></a>CPU 设计要求</h1><h2 id="基本要求"><a href="#基本要求" class="headerlink" title="基本要求"></a>基本要求</h2><ul>
+<li>CPU 字长为 8 位，8 个程序员可见的寄存器，分别命名为 r0, . . . , r7</li>
+<li>地址总线、数据总线各为 8 位，可访问 28 字节的地址空间</li>
+<li>数据采用补码表示，只需支持定点运算</li>
+<li>采用定长三级时序，每个指令周期包含 3 个机器周期(取指周期、间址周期和执行周 期)，每个机器周期由 3 个节拍构成</li>
+<li>系统时钟频率为 130MHZ</li>
+<li>为减低成本，采用 TTL 74181a作为运算器</li>
+</ul>
+<h2 id="指令集特点"><a href="#指令集特点" class="headerlink" title="指令集特点"></a>指令集特点</h2><ul>
+<li>支持零操作数、单操作数和双操作数三种指令</li>
+<li>所有指令的两个操作数不能同时为内存操作数</li>
+<li>支持立即寻址、直接寻址、寄存器直接寻址和相对寻址四种寻址方式</li>
+<li>采用 1 字节或者 2 字节变长指令字，操作码采用定长格式</li>
+</ul>
+<h2 id="支持的指令"><a href="#支持的指令" class="headerlink" title="支持的指令"></a>支持的指令</h2><p><img src="DesignCPUbyMyself.assets/Instructions-Set.png" srcset="/img/loading.gif" alt=""></p>
+<h2 id="要完成的任务"><a href="#要完成的任务" class="headerlink" title="要完成的任务"></a>要完成的任务</h2><ul>
+<li>请设计符合要求的指令格式</li>
+<li>给出所设计 CPU 的逻辑框图</li>
+<li>给出基于硬布线设计控制器的逻辑表达式</li>
+<li>给出基于微程序设计控制器的微指令及控存中的微程序</li>
+</ul>
+<h1 id="指令系统设计"><a href="#指令系统设计" class="headerlink" title="指令系统设计"></a>指令系统设计</h1><p>由于指令的操作数与寻址方式不同, 根据作业中所要求实现的指令类型, 以以下思路设计指令系统.</p>
+<h2 id="分析寻址类型需求"><a href="#分析寻址类型需求" class="headerlink" title="分析寻址类型需求"></a>分析寻址类型需求</h2><ol>
+<li>由于存在$8=2^3$种不同操作指令, 所以可以用3bit的操作码来区分该8种不同操作指令</li>
+</ol>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>mov</th>
+<th>add</th>
+<th>sub</th>
+<th>and</th>
+<th>or</th>
+<th>not</th>
+<th>jmp</th>
+<th>hlt</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>000</td>
+<td>001</td>
+<td>010</td>
+<td>011</td>
+<td>100</td>
+<td>101</td>
+<td>110</td>
+<td>111</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>   其中mov, add, sub, and, or为双操作数指令, not和jmp为单操作数指令, hlt为零操作数指令</p>
+<ol>
+<li><p>所有指令的两个操作数不能同时为内存操作数. 该CPU需支持立即寻址, 直接寻址, 寄存器直接寻址和相对寻址.</p>
+<p>其中有以下约束:</p>
+<ul>
+<li>目的操作数不能为立即寻址方式</li>
+<li>相对寻址一般用于转移指令, 所以本大作业设计中不在其他类型指令中出现</li>
+<li>指令字长为单字节或双字节</li>
+</ul>
+<p>设定每一条指令的左操作数为目的操作数, 右操作数为源操作数.</p>
+<p>为了区分不同的寻址方式, 需要在操作数前面加上寻址特征. </p>
+<p>本题目中双操作数指令的寻址方式均有4种, 设定寻址特征如下:</p>
+</li>
+</ol>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>寻址方式</th>
+<th>寄存器直接寻址-立即数寻址</th>
+<th>寄存器直接寻址-寄存器直接寻址</th>
+<th>寄存器直接寻址-直接寻址</th>
+<th>直接寻址-寄存器直接寻址</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>寻址特征</td>
+<td>00</td>
+<td>01</td>
+<td>10</td>
+<td>11</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>   单操作数not指令的寻址方式有两种, 直接寻址与寄存器直接寻址. not为单操作数指令, 操作数可以为直接寻址与寄存器直接寻址两种方式. 因为指令的位数够用, 为了保持指令格式的整齐, 仍采用2位的寻址特征. </p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>寻址方式</th>
+<th>寄存器直接寻址</th>
+<th>直接寻址</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>寻址特征</td>
+<td>00</td>
+<td>01</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>   单操作数jmp指令是转移类指令, 有相对偏移与绝对偏移两种方式. 相对偏移的方式即为相对寻址, 跳转后的地址为PC当前值+jmp指令的操作数. 绝对偏移即为立即寻址, 直接跳转到jmp指令的操作数代表的地址.</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>寻址方式</th>
+<th>相对寻址</th>
+<th>立即寻址</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>寻址特征</td>
+<td>00</td>
+<td>01</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>   确定各种指令中不同操作数的长度:</p>
+<ul>
+<li>立即数寻址取决于剩下的指令位数</li>
+<li>$8=2^3$个程序员可见寄存器, 寄存器寻址操作数长度为3</li>
+<li>$2^8$字节的地址空间, 直接寻址操作数的长度为8</li>
+</ul>
+<h2 id="设计指令系统"><a href="#设计指令系统" class="headerlink" title="设计指令系统"></a>设计指令系统</h2><h3 id="mov"><a href="#mov" class="headerlink" title="mov"></a><strong><em>mov</em></strong></h3><p>分为以下几种情况:</p>
+<p><strong>movRI</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>操作码</th>
+<th>寻址特征</th>
+<th>左操作数:寄存器编号(3位)</th>
+<th>右操作数:立即数(8位)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>000</td>
+<td>00</td>
+<td>xxx</td>
+<td>xxxxxxxx</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>movRR</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>操作码</th>
+<th>寻址特征</th>
+<th>空码</th>
+<th>左操作数:寄存器编号(3位)</th>
+<th>右操作数:寄存器编号(3位)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>000</td>
+<td>01</td>
+<td>00000</td>
+<td>xxx</td>
+<td>xxx</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>movRM</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>操作码</th>
+<th>寻址特征</th>
+<th>左操作数:寄存器编号(3位)</th>
+<th>右操作数:主存地址编号(8位)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>000</td>
+<td>10</td>
+<td>xxx</td>
+<td>xxxxxxxx</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>movMR</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>操作码</th>
+<th>寻址特征</th>
+<th>左操作数:主存地址编号(8位)</th>
+<th>右操作数:寄存器编号(3位)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>000</td>
+<td>11</td>
+<td>xxxxxxxx</td>
+<td>xxx</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="add"><a href="#add" class="headerlink" title="add"></a><strong><em>add</em></strong></h3><p>同mov, 分为以下几种情况:</p>
+<p><strong>addRI</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>操作码</th>
+<th>寻址特征</th>
+<th>左操作数:寄存器编号(3位)</th>
+<th>右操作数:立即数(8位)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>001</td>
+<td>00</td>
+<td>xxx</td>
+<td>xxxxxxxx</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>addRR</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>操作码</th>
+<th>寻址特征</th>
+<th>空码</th>
+<th>左操作数:寄存器编号(3位)</th>
+<th>右操作数:寄存器编号(3位)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>001</td>
+<td>01</td>
+<td>00000</td>
+<td>xxx</td>
+<td>xxx</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>addRM</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>操作码</th>
+<th>寻址特征</th>
+<th>左操作数:寄存器编号(3位)</th>
+<th>右操作数:主存地址编号(8位)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>001</td>
+<td>10</td>
+<td>xxx</td>
+<td>xxxxxxxx</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>addMR</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>操作码</th>
+<th>寻址特征</th>
+<th>左操作数:主存地址编号(8位)</th>
+<th>右操作数:寄存器编号(3位)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>001</td>
+<td>11</td>
+<td>xxxxxxxx</td>
+<td>xxx</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="sub"><a href="#sub" class="headerlink" title="sub"></a><strong><em>sub</em></strong></h3><p>同mov, 分为以下几种情况:</p>
+<p><strong>subRI</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>操作码</th>
+<th>寻址特征</th>
+<th>左操作数:寄存器编号(3位)</th>
+<th>右操作数:立即数(8位)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>010</td>
+<td>00</td>
+<td>xxx</td>
+<td>xxxxxxxx</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>subRR</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>操作码</th>
+<th>寻址特征</th>
+<th>空码</th>
+<th>左操作数:寄存器编号(3位)</th>
+<th>右操作数:寄存器编号(3位)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>010</td>
+<td>01</td>
+<td>00000</td>
+<td>xxx</td>
+<td>xxx</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>subRM</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>操作码</th>
+<th>寻址特征</th>
+<th>左操作数:寄存器编号(3位)</th>
+<th>右操作数:主存地址编号(8位)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>010</td>
+<td>10</td>
+<td>xxx</td>
+<td>xxxxxxxx</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>subMR</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>操作码</th>
+<th>寻址特征</th>
+<th>左操作数:主存地址编号(8位)</th>
+<th>右操作数:寄存器编号(3位)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>010</td>
+<td>11</td>
+<td>xxxxxxxx</td>
+<td>xxx</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="and"><a href="#and" class="headerlink" title="and"></a><strong><em>and</em></strong></h3><p>同mov, 分为以下几种情况:</p>
+<p><strong>andRI</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>操作码</th>
+<th>寻址特征</th>
+<th>左操作数:寄存器编号(3位)</th>
+<th>右操作数:立即数(8位)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>011</td>
+<td>00</td>
+<td>xxx</td>
+<td>xxxxxxxx</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>andRR</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>操作码</th>
+<th>寻址特征</th>
+<th>空码</th>
+<th>左操作数:寄存器编号(3位)</th>
+<th>右操作数:寄存器编号(3位)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>011</td>
+<td>01</td>
+<td>00000</td>
+<td>xxx</td>
+<td>xxx</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>andRM</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>操作码</th>
+<th>寻址特征</th>
+<th>左操作数:寄存器编号(3位)</th>
+<th>右操作数:主存地址编号(8位)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>011</td>
+<td>10</td>
+<td>xxx</td>
+<td>xxxxxxxx</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>andMR</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>操作码</th>
+<th>寻址特征</th>
+<th>左操作数:主存地址编号(8位)</th>
+<th>右操作数:寄存器编号(3位)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>011</td>
+<td>11</td>
+<td>xxxxxxxx</td>
+<td>xxx</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="or"><a href="#or" class="headerlink" title="or"></a><strong><em>or</em></strong></h3><p>同mov, 分为以下几种情况:</p>
+<p><strong>orRI</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>操作码</th>
+<th>寻址特征</th>
+<th>左操作数:寄存器编号(3位)</th>
+<th>右操作数:立即数(8位)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>100</td>
+<td>00</td>
+<td>xxx</td>
+<td>xxxxxxxx</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>orRR</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>操作码</th>
+<th>寻址特征</th>
+<th>空码</th>
+<th>左操作数:寄存器编号(3位)</th>
+<th>右操作数:寄存器编号(3位)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>100</td>
+<td>01</td>
+<td>00000</td>
+<td>xxx</td>
+<td>xxx</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>orRM</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>操作码</th>
+<th>寻址特征</th>
+<th>左操作数:寄存器编号(3位)</th>
+<th>右操作数:主存地址编号(8位)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>100</td>
+<td>10</td>
+<td>xxx</td>
+<td>xxxxxxxx</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>orMR</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>操作码</th>
+<th>寻址特征</th>
+<th>左操作数:主存地址编号(8位)</th>
+<th>右操作数:寄存器编号(3位)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>100</td>
+<td>11</td>
+<td>xxxxxxxx</td>
+<td>xxx</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="not"><a href="#not" class="headerlink" title="not"></a><strong><em>not</em></strong></h3><p><strong>notR</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>操作码</th>
+<th>寻址特征</th>
+<th>操作数:寄存器编号(3位)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>101</td>
+<td>00</td>
+<td>xxx</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>notM</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>操作码</th>
+<th>寻址特征</th>
+<th>空码</th>
+<th>操作数:主存地址编号(8位)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>101</td>
+<td>01</td>
+<td>xxx</td>
+<td>xxxxxxxx</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="jmp"><a href="#jmp" class="headerlink" title="jmp"></a><strong><em>jmp</em></strong></h3><p><strong>jmpR</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>操作码</th>
+<th>寻址特征</th>
+<th>空码</th>
+<th>操作数:主存地址编号(8位)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>110</td>
+<td>00</td>
+<td>000</td>
+<td>xxxxxxxx</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>jmpD</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>操作码</th>
+<th>寻址特征</th>
+<th>空码</th>
+<th>操作数:主存地址编号(8位)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>110</td>
+<td>01</td>
+<td>000</td>
+<td>xxxxxxxx</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="hlt"><a href="#hlt" class="headerlink" title="hlt"></a><strong><em>hlt</em></strong></h3><p>无操作数</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>操作码</th>
+<th>空码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>111</td>
+<td>00000</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="CPU逻辑框图"><a href="#CPU逻辑框图" class="headerlink" title="CPU逻辑框图"></a>CPU逻辑框图</h1><p><img src="DesignCPUbyMyself.assets/CPUlogic-1561474520649.jpg" srcset="/img/loading.gif" alt=""></p>
+<h1 id="基于硬布线方式的控制器设计"><a href="#基于硬布线方式的控制器设计" class="headerlink" title="基于硬布线方式的控制器设计"></a>基于硬布线方式的控制器设计</h1><p>由于采用定长三级时序, 每个指令周期包含三个机器周期(取指周期, 间址周期和执行周期), 每个周期由三个节拍构成:</p>
+<ul>
+<li>命名取指周期为FF, 间址周期命名为IND, 执行周期命名为EX</li>
+<li><p>三个节拍分别命名为$T_0, T_1, T_2$</p>
+</li>
+<li><p>I为间址标志. 若FF周期的$T_2$时刻测得I=1, 则IND触发器置”1”, 标志进入间址周期. 若I=0, 则EX触发器置”1”, 标志进入执行周期. 若在IND时期的$T_2$时刻测得IND=0, 则EX置”1”, 表示进入执行周期, 表示只有一次间址; 若IND=1, 则表示多次间址, 继续进行间址寻址操作.</p>
+</li>
+</ul>
+<p>根据每一条指令的节拍安排, 总结出表(见附件DesignCPUHard.xls, 由于表格太大了, 文档里放不下)</p>
+<p>化简得出以下微操作命令的表达式:</p>
+<p><img src="DesignCPUbyMyself.assets\IMG_7317.JPG" srcset="/img/loading.gif" alt=""></p>
+<p><img src="DesignCPUbyMyself.assets\IMG_7318.JPG" srcset="/img/loading.gif" alt="IMG_7318"></p>
+<p><img src="DesignCPUbyMyself.assets\IMG_7319.JPG" srcset="/img/loading.gif" alt="IMG_7319"></p>
+<p><img src="DesignCPUbyMyself.assets\IMG_7320.JPG" srcset="/img/loading.gif" alt="IMG_7320"></p>
+<p><img src="DesignCPUbyMyself.assets\IMG_7321.JPG" srcset="/img/loading.gif" alt="IMG_7321"></p>
+<h1 id="基于微程序方式的控制器设计"><a href="#基于微程序方式的控制器设计" class="headerlink" title="基于微程序方式的控制器设计"></a>基于微程序方式的控制器设计</h1><p>微程序，将一条机器指令编写成一个微程序，每个微程序包括若干条微指令，每一条微指令对应一个或几个微操作命令。然后把这些微程序存到一个控制寄存器中，用寻找用户程序机器指令的方法来寻找每个微程序中的微指令。<br>微程序设计省去了组合逻辑设计中队逻辑表达式的化简步骤，无需考虑逻辑门级数等，用规整的存储逻辑代替不规则的硬接线逻辑来实现计算机控制器的技术。</p>
+<h2 id="微指令格式设计"><a href="#微指令格式设计" class="headerlink" title="微指令格式设计"></a>微指令格式设计</h2><table>
+    <tr>
+        <td style='text-align:center;'>2位</td>
+        <td style='text-align:center;'>2位</td>
+        <td style='text-align:center;'>5位</td>
+        <td style='text-align:center;'>7位</td>
+    </tr>
+    <tr>
+        <td colspan="3" style='text-align:center;'>控制操作字段</td>
+        <td style='text-align:center;'>顺序操作字段</td>
+    </tr>
+</table>
+
+<p>微指令的操作字段采用字段直接编码方式，该字段发出各种控制信号。顺序控制字段仅在微程序的最后指向取值微程序，它可指出下条微指令的地址（简称下地址），以控制微指令序列的执行顺序。</p>
+<p>前2位存放取值微程序相关的微操作</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">00</th>
+<th style="text-align:center">无操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">01</td>
+<td style="text-align:center">PC-&gt;MAR</td>
+</tr>
+<tr>
+<td style="text-align:center">10</td>
+<td style="text-align:center">M(MAR)-&gt;MDR</td>
+</tr>
+<tr>
+<td style="text-align:center">11</td>
+<td style="text-align:center">MDR-&gt;IR</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>中间2位存放一些读、写信号的置有效和程序计算器等微操作</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">000</th>
+<th style="text-align:center">无操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">001</td>
+<td style="text-align:center">1-&gt;R</td>
+</tr>
+<tr>
+<td style="text-align:center">010</td>
+<td style="text-align:center">(PC)+1-&gt;PC</td>
+</tr>
+<tr>
+<td style="text-align:center">011</td>
+<td style="text-align:center">1-&gt;W</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>中间5位存放转移、加减和取反等操作</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">00000</td>
+<td style="text-align:center">无操作</td>
+</tr>
+<tr>
+<td style="text-align:center">00001</td>
+<td style="text-align:center">MDR-&gt;ACC</td>
+</tr>
+<tr>
+<td style="text-align:center">00010</td>
+<td style="text-align:center">JDR-&gt;ACC</td>
+</tr>
+<tr>
+<td style="text-align:center">00011</td>
+<td style="text-align:center">AD(IR)-&gt;MAR</td>
+</tr>
+<tr>
+<td style="text-align:center">00100</td>
+<td style="text-align:center">AD(IR)-&gt;JAR</td>
+</tr>
+<tr>
+<td style="text-align:center">00101</td>
+<td style="text-align:center">M(JAR)-&gt;JDR</td>
+</tr>
+<tr>
+<td style="text-align:center">00110</td>
+<td style="text-align:center">M(MAR)-&gt;MDR</td>
+</tr>
+<tr>
+<td style="text-align:center">00111</td>
+<td style="text-align:center">MDR-&gt;M(JAR)</td>
+</tr>
+<tr>
+<td style="text-align:center">01000</td>
+<td style="text-align:center">JDR-&gt;M(MAR)</td>
+</tr>
+<tr>
+<td style="text-align:center">01001</td>
+<td style="text-align:center">ACC-&gt;M(MAR)</td>
+</tr>
+<tr>
+<td style="text-align:center">01010</td>
+<td style="text-align:center">ACC-&gt;M(JAR)</td>
+</tr>
+<tr>
+<td style="text-align:center">01011</td>
+<td style="text-align:center">LATCH-&gt;M(MAR)</td>
+</tr>
+<tr>
+<td style="text-align:center">01100</td>
+<td style="text-align:center">LATCH-&gt;M(JAR)</td>
+</tr>
+<tr>
+<td style="text-align:center">01101</td>
+<td style="text-align:center">MDR+(ACC)-&gt;LATCH</td>
+</tr>
+<tr>
+<td style="text-align:center">01110</td>
+<td style="text-align:center">JDR+(ACC)-&gt;LATCH</td>
+</tr>
+<tr>
+<td style="text-align:center">01111</td>
+<td style="text-align:center">MDR-(ACC)-&gt;LATCH</td>
+</tr>
+<tr>
+<td style="text-align:center">10000</td>
+<td style="text-align:center">JDR-(ACC)-&gt;LATCH</td>
+</tr>
+<tr>
+<td style="text-align:center">10001</td>
+<td style="text-align:center">MDR&amp;(ACC)-&gt;LATCH</td>
+</tr>
+<tr>
+<td style="text-align:center">10010</td>
+<td style="text-align:center">JDR&amp;(ACC)-&gt;LATCH</td>
+</tr>
+<tr>
+<td style="text-align:center">10011</td>
+<td style="text-align:center">MDR(ACC)-&gt;LATCH”</td>
+</tr>
+<tr>
+<td style="text-align:center">10100</td>
+<td style="text-align:center">JDR(ACC)-&gt;LATCH”</td>
+</tr>
+<tr>
+<td style="text-align:center">10101</td>
+<td style="text-align:center">LATCH-&gt;M(MAR)</td>
+</tr>
+<tr>
+<td style="text-align:center">10110</td>
+<td style="text-align:center">LATCH-&gt;M(JAR)</td>
+</tr>
+<tr>
+<td style="text-align:center">10111</td>
+<td style="text-align:center">!(ACC)-&gt;LATCH</td>
+</tr>
+<tr>
+<td style="text-align:center">11000</td>
+<td style="text-align:center">(PC)+AD(IR)-&gt;EAR</td>
+</tr>
+<tr>
+<td style="text-align:center">11001</td>
+<td style="text-align:center">EAR-&gt;PC</td>
+</tr>
+<tr>
+<td style="text-align:center">11010</td>
+<td style="text-align:center">AD(IR)-&gt;PC</td>
+</tr>
+<tr>
+<td style="text-align:center">11011</td>
+<td style="text-align:center">无效</td>
+</tr>
+<tr>
+<td style="text-align:center">11100</td>
+<td style="text-align:center">无效</td>
+</tr>
+<tr>
+<td style="text-align:center">11101</td>
+<td style="text-align:center">无效</td>
+</tr>
+<tr>
+<td style="text-align:center">11110</td>
+<td style="text-align:center">无效</td>
+</tr>
+<tr>
+<td style="text-align:center">11111</td>
+<td style="text-align:center">无效</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="微程序"><a href="#微程序" class="headerlink" title="微程序"></a>微程序</h2><p><img src="DesignCPUbyMyself.assets\IMG_7322.JPG" srcset="/img/loading.gif" alt=""></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">PC-&gt;BUS-&gt;MAR,1-&gt;R</th>
+<th style="text-align:center">M+1</th>
+<th style="text-align:center">M</th>
+<th style="text-align:center">取值周期微程序</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">M(MAR)-&gt;MDR,(PC)+1-&gt;PC</td>
+<td style="text-align:center">M+2</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">MDR-&gt;BUS-&gt;IR</td>
+<td style="text-align:center">M+2</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">OP(IR)-&gt;BUS-&gt;ID</td>
+<td style="text-align:center">M+3</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">AD(IR)-&gt;BUS-&gt;JAR</td>
+<td style="text-align:center">A+1</td>
+<td style="text-align:center">A</td>
+<td style="text-align:center">movRI周期微程序</td>
+</tr>
+<tr>
+<td style="text-align:center">DA(IR)-&gt;BUS-&gt;M(JAR)</td>
+<td style="text-align:center">M</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">AD(IR)-&gt;BUS-&gt;JAR</td>
+<td style="text-align:center">B+1</td>
+<td style="text-align:center">B</td>
+<td style="text-align:center">movRR周期微程序</td>
+</tr>
+<tr>
+<td style="text-align:center">M(JAR)-&gt;JDR</td>
+<td style="text-align:center">B+2</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">AD(IR)-&gt;JAR</td>
+<td style="text-align:center">B+3</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">JDR-&gt;M(JAR)</td>
+<td style="text-align:center">M</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">AD(IR)-&gt;BUS-&gt;MAR，1-&gt;R</td>
+<td style="text-align:center">C+1</td>
+<td style="text-align:center">C</td>
+<td style="text-align:center">movRM周期微程序  (间址)</td>
+</tr>
+<tr>
+<td style="text-align:center">M(MAR)-&gt;MDR</td>
+<td style="text-align:center">C+2</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">（间址）</td>
+</tr>
+<tr>
+<td style="text-align:center">AD(IR)-&gt;BUS-&gt;JAR</td>
+<td style="text-align:center">C+3</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">MDR-&gt;M(JAR)</td>
+<td style="text-align:center">M</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">AD(IR)-&gt;BUS-&gt;JAR</td>
+<td style="text-align:center">D+1</td>
+<td style="text-align:center">D</td>
+<td style="text-align:center">movMR周期微程序</td>
+</tr>
+<tr>
+<td style="text-align:center">M(JAR)-&gt;JDR</td>
+<td style="text-align:center">D+2</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">AD(IR)-&gt;BUS-&gt;MAR</td>
+<td style="text-align:center">D+3</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">M(MAR)-&gt;BUS-&gt;JDR</td>
+<td style="text-align:center">M</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">DA(IR)-&gt;BUS-&gt;ACC</td>
+<td style="text-align:center">E+1</td>
+<td style="text-align:center">E</td>
+<td style="text-align:center">addRI周期微程序</td>
+</tr>
+<tr>
+<td style="text-align:center">AD(IR)-&gt;BUS-&gt;JAR</td>
+<td style="text-align:center">E+2</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">M(JAR)-&gt;MDR</td>
+<td style="text-align:center">E+3</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">MDR+(ACC)-&gt;LATCH</td>
+<td style="text-align:center">E+4</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">LATCH-&gt;BUS-&gt;M(JAR)</td>
+<td style="text-align:center">M</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">AD(IR)-&gt;BUS-&gt;JAR</td>
+<td style="text-align:center">F+1</td>
+<td style="text-align:center">F</td>
+<td style="text-align:center">addRR周期微程序</td>
+</tr>
+<tr>
+<td style="text-align:center">M(JAR)-&gt;JDR</td>
+<td style="text-align:center">F+2</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">JDR-&gt;BUS-&gt;ACC</td>
+<td style="text-align:center">F+3</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">AD(IR)-&gt;BUS-&gt;JAR</td>
+<td style="text-align:center">F+4</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">M(JAR)-&gt;JDR</td>
+<td style="text-align:center">F+5</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">JDR+(ACC)-&gt;LATCH</td>
+<td style="text-align:center">F+6</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">LATCH-&gt;BUS-&gt;M(JAR)</td>
+<td style="text-align:center">M</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">AD(IR)-&gt;BUS-&gt;MAR</td>
+<td style="text-align:center">G+1</td>
+<td style="text-align:center">G</td>
+<td style="text-align:center">addRM周期微程序(间址)</td>
+</tr>
+<tr>
+<td style="text-align:center">M(MAR)-&gt;BUS-&gt;MDR</td>
+<td style="text-align:center">G+2</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">（间址)</td>
+</tr>
+<tr>
+<td style="text-align:center">MDR-&gt;BUS-&gt;ACC</td>
+<td style="text-align:center">G+3</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">AD(IR)-&gt;BUS-&gt;JAR</td>
+<td style="text-align:center">G+4</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">M(JAR)-&gt;JDR</td>
+<td style="text-align:center">G+5</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">JDR+(ACC)-&gt;LATCH</td>
+<td style="text-align:center">G+6</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">LATCH-&gt;BUS-&gt;M(MAR)</td>
+<td style="text-align:center">M</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">AD(IR)-&gt;BUS-&gt;JAR</td>
+<td style="text-align:center">H+1</td>
+<td style="text-align:center">H</td>
+<td style="text-align:center">addMR周期微程序</td>
+</tr>
+<tr>
+<td style="text-align:center">AD(IR)-&gt;BUS-&gt;MAR</td>
+<td style="text-align:center">H+2</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">(间址)</td>
+</tr>
+<tr>
+<td style="text-align:center">M(MAR)-&gt;MDR</td>
+<td style="text-align:center">H+3</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">(间址)</td>
+</tr>
+<tr>
+<td style="text-align:center">M(JAR)-&gt;JDR</td>
+<td style="text-align:center">H+4</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">JDR-&gt;BUS-&gt;ACC</td>
+<td style="text-align:center">H+5</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">MDR+(ACC)-&gt;LATCH</td>
+<td style="text-align:center">H+6</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">LATCH-&gt;BUS-&gt;M(JAR)</td>
+<td style="text-align:center">M</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">DA(IR)-&gt;BUS-&gt;ACC</td>
+<td style="text-align:center">I+1</td>
+<td style="text-align:center">I</td>
+<td style="text-align:center">subRI周期微程序</td>
+</tr>
+<tr>
+<td style="text-align:center">AD(IR)-&gt;BUS-&gt;JAR</td>
+<td style="text-align:center">I+2</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">M(JAR)-&gt;MDR</td>
+<td style="text-align:center">I+3</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">MDR-(ACC)-&gt;LATCH</td>
+<td style="text-align:center">I+4</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">LATCH-&gt;BUS-&gt;M(JAR)</td>
+<td style="text-align:center">M</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">AD(IR)-&gt;BUS-&gt;JAR</td>
+<td style="text-align:center">J+1</td>
+<td style="text-align:center">J</td>
+<td style="text-align:center">subRR周期微程序</td>
+</tr>
+<tr>
+<td style="text-align:center">M(JAR)-&gt;JDR</td>
+<td style="text-align:center">J+2</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">JDR-&gt;BUS-&gt;ACC</td>
+<td style="text-align:center">J+3</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">AD(IR)-&gt;BUS-&gt;JAR</td>
+<td style="text-align:center">J+4</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">M(JAR)-&gt;JDR</td>
+<td style="text-align:center">J+5</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">JDR-(ACC)-&gt;LATCH</td>
+<td style="text-align:center">J+6</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">LATCH-&gt;BUS-&gt;M(JAR)</td>
+<td style="text-align:center">M</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">AD(IR)-&gt;BUS-&gt;MAR</td>
+<td style="text-align:center">K+1</td>
+<td style="text-align:center">K</td>
+<td style="text-align:center">subRM周期微程序(间址)</td>
+</tr>
+<tr>
+<td style="text-align:center">M(MAR)-&gt;BUS-&gt;MDR</td>
+<td style="text-align:center">K+2</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">（间址)</td>
+</tr>
+<tr>
+<td style="text-align:center">MDR-&gt;BUS-&gt;ACC</td>
+<td style="text-align:center">K+3</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">ID(IR)-&gt;BUS-&gt;JAR</td>
+<td style="text-align:center">K+4</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">M(JAR)-&gt;JDR</td>
+<td style="text-align:center">K+5</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">JDR-(ACC)-&gt;LATCH</td>
+<td style="text-align:center">K+6</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">LATCH-&gt;BUS-&gt;M(MAR)</td>
+<td style="text-align:center">M</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">AD(IR)-&gt;BUS-&gt;JAR</td>
+<td style="text-align:center">L+1</td>
+<td style="text-align:center">L</td>
+<td style="text-align:center">subMR周期微程序</td>
+</tr>
+<tr>
+<td style="text-align:center">M(JAR)-&gt;JDR</td>
+<td style="text-align:center">L+2</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">JDR-&gt;BUS-&gt;ACC</td>
+<td style="text-align:center">L+3</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">AD(IR)-&gt;BUS-&gt;MAR</td>
+<td style="text-align:center">L+4</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">(间址)</td>
+</tr>
+<tr>
+<td style="text-align:center">M(MAR)-&gt;MDR</td>
+<td style="text-align:center">L+5</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">(间址)</td>
+</tr>
+<tr>
+<td style="text-align:center">MDR-(ACC)-&gt;LATCH</td>
+<td style="text-align:center">L+6</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">LATCH-&gt;M(JAR)</td>
+<td style="text-align:center">M</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">DA(IR)-&gt;BUS-&gt;ACC</td>
+<td style="text-align:center">N+1</td>
+<td style="text-align:center">N</td>
+<td style="text-align:center">andRI周期微程序</td>
+</tr>
+<tr>
+<td style="text-align:center">AD(IR)-&gt;BUS-&gt;JAR</td>
+<td style="text-align:center">N+2</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">M(JAR)-&gt;MDR</td>
+<td style="text-align:center">N+3</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">MDR&amp;(ACC)-&gt;LATCH</td>
+<td style="text-align:center">N+4</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">LATCH-&gt;BUS-&gt;M(JAR)</td>
+<td style="text-align:center">M</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">AD(IR)-&gt;BUS-&gt;JAR</td>
+<td style="text-align:center">O+1</td>
+<td style="text-align:center">O</td>
+<td style="text-align:center">andRR周期微程序</td>
+</tr>
+<tr>
+<td style="text-align:center">M(JAR)-&gt;JDR</td>
+<td style="text-align:center">O+2</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">JDR-&gt;BUS-&gt;ACC</td>
+<td style="text-align:center">O+3</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">AD(IR)-&gt;BUS-&gt;JAR</td>
+<td style="text-align:center">O+4</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">M(JAR)-&gt;JDR</td>
+<td style="text-align:center">O+5</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">JDR&amp;(ACC)-&gt;LATCH</td>
+<td style="text-align:center">O+6</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">LATCH-&gt;BUS-&gt;M(JAR)</td>
+<td style="text-align:center">M</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">AD(IR)-&gt;BUS-&gt;MAR</td>
+<td style="text-align:center">P+1</td>
+<td style="text-align:center">P</td>
+<td style="text-align:center">andRM周期微程序(间址)</td>
+</tr>
+<tr>
+<td style="text-align:center">M(MAR)-&gt;BUS-&gt;MDR</td>
+<td style="text-align:center">P+2</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">（间址)</td>
+</tr>
+<tr>
+<td style="text-align:center">MDR-&gt;BUS-&gt;ACC</td>
+<td style="text-align:center">P+3</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">ID(IR)-&gt;BUS-&gt;JAR</td>
+<td style="text-align:center">P+4</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">M(JAR)-&gt;JDR</td>
+<td style="text-align:center">P+5</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">JDR&amp;(ACC)-&gt;LATCH</td>
+<td style="text-align:center">P+6</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">LATCH-&gt;BUS-&gt;M(MAR)</td>
+<td style="text-align:center">M</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">AD(IR)-&gt;BUS-&gt;JAR</td>
+<td style="text-align:center">Q+1</td>
+<td style="text-align:center">Q</td>
+<td style="text-align:center">andMR周期微程序</td>
+</tr>
+<tr>
+<td style="text-align:center">M(JAR)-&gt;JDR</td>
+<td style="text-align:center">Q+2</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">JDR-&gt;BUS-&gt;ACC</td>
+<td style="text-align:center">Q+3</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">AD(IR)-&gt;BUS-&gt;MAR</td>
+<td style="text-align:center">Q+4</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">(间址)</td>
+</tr>
+<tr>
+<td style="text-align:center">M(MAR)-&gt;MDR</td>
+<td style="text-align:center">Q+5</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">(间址)</td>
+</tr>
+<tr>
+<td style="text-align:center">MDR&amp;(ACC)-&gt;LATCH</td>
+<td style="text-align:center">Q+6</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">LATCH-&gt;M(JAR)</td>
+<td style="text-align:center">M</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">DA(IR)-&gt;BUS-&gt;ACC</td>
+<td style="text-align:center">R+1</td>
+<td style="text-align:center">R</td>
+<td style="text-align:center">orRI周期微程序</td>
+</tr>
+<tr>
+<td style="text-align:center">AD(IR)-&gt;BUS-&gt;JAR</td>
+<td style="text-align:center">R+2</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">M(JAR)-&gt;MDR</td>
+<td style="text-align:center">R+3</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">MDR\</td>
+<td style="text-align:center">(ACC)-&gt;LATCH</td>
+<td style="text-align:center">R+4</td>
+<td style="text-align:center"></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:center">LATCH-&gt;BUS-&gt;M(JAR)</td>
+<td style="text-align:center">M</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">AD(IR)-&gt;BUS-&gt;JAR</td>
+<td style="text-align:center">S+1</td>
+<td style="text-align:center">S</td>
+<td style="text-align:center">orRR周期微程序</td>
+</tr>
+<tr>
+<td style="text-align:center">M(JAR)-&gt;JDR</td>
+<td style="text-align:center">S+2</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">JDR-&gt;BUS-&gt;ACC</td>
+<td style="text-align:center">S+3</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">AD(IR)-&gt;BUS-&gt;JAR</td>
+<td style="text-align:center">S+4</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">M(JAR)-&gt;JDR</td>
+<td style="text-align:center">S+5</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">JDR\</td>
+<td style="text-align:center">(ACC)-&gt;LATCH</td>
+<td style="text-align:center">S+6</td>
+<td style="text-align:center"></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:center">LATCH-&gt;BUS-&gt;M(JAR)</td>
+<td style="text-align:center">M</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">AD(IR)-&gt;BUS-&gt;MAR</td>
+<td style="text-align:center">T+1</td>
+<td style="text-align:center">T</td>
+<td style="text-align:center">orRM周期微程序(间址)</td>
+</tr>
+<tr>
+<td style="text-align:center">M(MAR)-&gt;BUS-&gt;MDR</td>
+<td style="text-align:center">T+2</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">（间址)</td>
+</tr>
+<tr>
+<td style="text-align:center">MDR-&gt;BUS-&gt;ACC</td>
+<td style="text-align:center">T+3</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">ID(IR)-&gt;BUS-&gt;JAR</td>
+<td style="text-align:center">T+4</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">M(JAR)-&gt;JDR</td>
+<td style="text-align:center">T+5</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">JDR\</td>
+<td style="text-align:center">(ACC)-&gt;LATCH</td>
+<td style="text-align:center">T+6</td>
+<td style="text-align:center"></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:center">LATCH-&gt;BUS-&gt;M(MAR)</td>
+<td style="text-align:center">M</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">AD(IR)-&gt;BUS-&gt;MAR</td>
+<td style="text-align:center">U+1</td>
+<td style="text-align:center">U</td>
+<td style="text-align:center">orMR周期微程序(间址)</td>
+</tr>
+<tr>
+<td style="text-align:center">M(MAR)-&gt;MDR</td>
+<td style="text-align:center">U+2</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">(间址)</td>
+</tr>
+<tr>
+<td style="text-align:center">AD(IR)-&gt;BUS-&gt;JAR</td>
+<td style="text-align:center">U+3</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">M(JAR)-&gt;JDR</td>
+<td style="text-align:center">U+4</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">JDR-&gt;BUS-&gt;ACC</td>
+<td style="text-align:center">U+5</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">MDR\</td>
+<td style="text-align:center">(ACC)-&gt;LATCH</td>
+<td style="text-align:center">U+6</td>
+<td style="text-align:center"></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:center">LATCH-&gt;M(JAR)</td>
+<td style="text-align:center">M</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">AD(IR)-&gt;BUS-&gt;JAR</td>
+<td style="text-align:center">V+1</td>
+<td style="text-align:center">V</td>
+<td style="text-align:center">notR周期微程序</td>
+</tr>
+<tr>
+<td style="text-align:center">M(JAR)-&gt;JDR</td>
+<td style="text-align:center">V+2</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">JDR-&gt;BUS-&gt;ACC</td>
+<td style="text-align:center">V+3</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">!(ACC)-&gt;LATCH</td>
+<td style="text-align:center">V+4</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">LATCH-&gt;BUS-&gt;M(JAR)</td>
+<td style="text-align:center">M</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">AD(IR)-&gt;BUS-&gt;MAR</td>
+<td style="text-align:center">W+1</td>
+<td style="text-align:center">W</td>
+<td style="text-align:center">notM周期微程序(间址)</td>
+</tr>
+<tr>
+<td style="text-align:center">M(MAR)-&gt;MDR</td>
+<td style="text-align:center">W+2</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">（间址）</td>
+</tr>
+<tr>
+<td style="text-align:center">MDR-&gt;BUS-&gt;ACC</td>
+<td style="text-align:center">W+3</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">!(ACC)-&gt;LATCH</td>
+<td style="text-align:center">W+4</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">LATCH-&gt;Bus-&gt;M(MAR)</td>
+<td style="text-align:center">M</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">(PC)+AD(IR)-&gt;EAR</td>
+<td style="text-align:center">X+1</td>
+<td style="text-align:center">X</td>
+<td style="text-align:center">jmpR周期微程序</td>
+</tr>
+<tr>
+<td style="text-align:center">EAR-&gt;BUS-&gt;PC</td>
+<td style="text-align:center">M</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">AD(IR)-&gt;PC</td>
+<td style="text-align:center">M</td>
+<td style="text-align:center">Y</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">M</td>
+<td style="text-align:center">Z</td>
+<td style="text-align:center">htl周期微程序</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>authors：薛轲翰，谢其骏</p>
+
+            </article>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">计算机组成原理</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/CPU/">CPU</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Course/">Course</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/10/20/VINS-Mono-%E6%95%B4%E4%BD%93%E6%A1%86%E6%9E%B6%E6%A6%82%E8%BF%B0/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">VINS-Mono 整体框架概述</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2019/06/08/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Deep-Learning%E5%9C%A8%E6%97%A0%E4%BA%BA%E6%9C%BA%E5%AF%BC%E8%88%AA%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/">
+                        <span class="hidden-mobile">论文阅读 - DroNet: Deep learning 在无人机导航中的应用</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: 'article.markdown-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "计算机组成原理 - 设计一个CPU&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.staticfile.org/mathjax/3.0.5/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
