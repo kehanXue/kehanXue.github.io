@@ -363,8 +363,7 @@ TRAJECTORY_BUILDER_2D.min_z</code></pre>
 <span class="hljs-attr">TRAJECTORY_BUILDER_nD.imu_gravity_time_constant</span> = <span class="hljs-number">10.0</span></code></pre>
 <p>下文 imu 数据还在 Global optimization 中的应用.</p>
 <h2 id="Local-SLAM"><a href="#Local-SLAM" class="headerlink" title="Local SLAM"></a>Local SLAM</h2><p>Once a scan has been assembled and filtered from multiple range data, it is ready for the local SLAM algorithm. Local SLAM可以利用来自与pose extrapolator的输出信息作为一个先验，把一帧新的scans通过scan matching的方法插入到当下的submap中。使用pose extrapolator的idea是，通过除了激光雷达以外的传感器的数据来预测当前scan插入到submap的位置，比如里程计信息、IMU等。</p>
-<h2 id="Two-scan-matching-strategies"><a href="#Two-scan-matching-strategies" class="headerlink" title="Two scan matching strategies"></a>Two scan matching strategies</h2><p>CeresScanMatcher 以及 RealTimeCorrelativeScanMatcher</p>
-<ul>
+<h3 id="Two-scan-matching-strategies"><a href="#Two-scan-matching-strategies" class="headerlink" title="Two scan matching strategies"></a>Two scan matching strategies</h3><h4 id="CeresScanMatcher-以及-RealTimeCorrelativeScanMatcher"><a href="#CeresScanMatcher-以及-RealTimeCorrelativeScanMatcher" class="headerlink" title="CeresScanMatcher 以及 RealTimeCorrelativeScanMatcher"></a>CeresScanMatcher 以及 RealTimeCorrelativeScanMatcher</h4><ul>
 <li><p>CeresScanMatcher 利用上面说的先验 initial guess ,寻找 scan 与当前的 submap 最匹配的位置。通过对 submap 进行插值然后与 scan 进行对齐（It does this by interpolating the submap and sub-pixel aligning the scan）。这种做法比较快速，但是无法修复远大于子图分辨率的误差。如果你的传感器的设置与累积的那个时间区间都是合理的话,仅仅使用 CeresScanMatcher 通常是最好的选择。</p>
 <p>CeresScanMatcher 可以为每一个输入源配置一个权重weight，权重就是对其数据的信任度，可以把它视为静态协方差。这个weight是无量纲的，并且是不能相互比较的。weight越大，Cartographer在进行scan matching的时候就对他更关注。数据来源可以包括 occupied space (points from the scan), translation and rotation from the pose extrapolator (or <code>RealTimeCorrelativeScanMatcher</code>)</p>
 <pre><code class="hljs css"><span class="hljs-selector-tag">TRAJECTORY_BUILDER_3D</span><span class="hljs-selector-class">.ceres_scan_matcher</span><span class="hljs-selector-class">.occupied_space_weight</span>
@@ -422,7 +421,7 @@ TRAJECTORY_BUILDER_nD.real_time_correlative_scan_matcher.rotation_delta_cost_wei
 &#125;</code></pre>
 </li>
 </ul>
-<h2 id="motion-filter"><a href="#motion-filter" class="headerlink" title="motion_filter"></a>motion_filter</h2><p>为避免将过多的 scan 插入到 submap 里，当两个 scan 成功 match 后，会得到两个 match 之间的运动关系。当两者运动关系不明显的话,这个 match 结果就不会被插入到 submap 中去。这个操作通过运动滤波器中卡time,distance以及angle的阈值来实现。</p>
+<h3 id="motion-filter"><a href="#motion-filter" class="headerlink" title="motion_filter"></a>motion_filter</h3><p>为避免将过多的 scan 插入到 submap 里，当两个 scan 成功 match 后，会得到两个 match 之间的运动关系。当两者运动关系不明显的话,这个 match 结果就不会被插入到 submap 中去。这个操作通过运动滤波器中卡time,distance以及angle的阈值来实现。</p>
 <pre><code class="hljs css"><span class="hljs-selector-tag">TRAJECTORY_BUILDER_nD</span><span class="hljs-selector-class">.motion_filter</span><span class="hljs-selector-class">.max_time_seconds</span>
 <span class="hljs-selector-tag">TRAJECTORY_BUILDER_nD</span><span class="hljs-selector-class">.motion_filter</span><span class="hljs-selector-class">.max_distance_meters</span>
 <span class="hljs-selector-tag">TRAJECTORY_BUILDER_nD</span><span class="hljs-selector-class">.motion_filter</span><span class="hljs-selector-class">.max_angle_radians</span></code></pre>
@@ -437,7 +436,7 @@ TRAJECTORY_BUILDER_nD.real_time_correlative_scan_matcher.rotation_delta_cost_wei
   &#125;,
   ...
 &#125;</code></pre>
-<h2 id="Submap"><a href="#Submap" class="headerlink" title="Submap"></a>Submap</h2><p>当Local SLAM接收到一定数量的range data时可认为此时当前的submap被完成了，这个即由<code>TRAJECTORY_BUILDER_nD.submaps.num_range_data</code>参数来指定。Local SLAM的结果在时间上积累后会产生漂移误差，Global SLAM可以来fix这个误差。这个Submap必须足够的小从而可以认为它是局部正确的。但从另一方面来看，他又必须足够的大从而可以做回环。</p>
+<h3 id="Submap"><a href="#Submap" class="headerlink" title="Submap"></a>Submap</h3><p>当Local SLAM接收到一定数量的range data时可认为此时当前的submap被完成了，这个即由<code>TRAJECTORY_BUILDER_nD.submaps.num_range_data</code>参数来指定。Local SLAM的结果在时间上积累后会产生漂移误差，Global SLAM可以来fix这个误差。这个Submap必须足够的小从而可以认为它是局部正确的。但从另一方面来看，他又必须足够的大从而可以做回环。</p>
 <pre><code class="hljs css"><span class="hljs-selector-tag">TRAJECTORY_BUILDER_nD</span><span class="hljs-selector-class">.submaps</span><span class="hljs-selector-class">.num_range_data</span></code></pre>
 <p>这里总结一下，雷达数据到建图的流程如下：</p>
 <p><img src="assets/CartographerLaserData-1575206288976.png" srcset="/img/loading.gif" alt="CartographerLaserData"></p>
@@ -505,7 +504,7 @@ TRAJECTORY_BUILDER_3D.low_resolution_adaptive_voxel_filter.max_range</code></pre
   &#125;,
   ...
 &#125;</code></pre>
-<h1 id="Global-SLAM"><a href="#Global-SLAM" class="headerlink" title="Global SLAM"></a>Global SLAM</h1><p>当Local SLAM成功生成submaps的同时，在后端运行着一个全局的优化程序（sparse pose adjustment）。通过调整submap的位置来保持全局一致。然后还会考虑回环优化。</p>
+<h2 id="Global-SLAM"><a href="#Global-SLAM" class="headerlink" title="Global SLAM"></a>Global SLAM</h2><p>当Local SLAM成功生成submaps的同时，在后端运行着一个全局的优化程序（sparse pose adjustment）。通过调整submap的位置来保持全局一致。然后还会考虑回环优化。</p>
 <p>每当<code>POSE_GRAPH.optimize_every_n_nodes</code>数目的node被插入地图的时候运行一次optimization。</p>
 <p>通常先将<code>POSE_GRAPH.optimize_every_n_nodes</code> 置零来关闭Global SLAM，然后专心的来调Local SLAM。这通常是调试Cartographer的第一步。</p>
 <p>我们把估计出来的一个Scan的绝对位姿称为trajectory上的一个节点(Node)，那么节点与节点的彼此之间的相对位姿就可以称为一个约束(Constraint)。<a href="https://zhuanlan.zhihu.com/p/50055546" target="_blank" rel="noopener">参考链接</a></p>
@@ -728,17 +727,17 @@ POSE_GRAPH.optimization_problem.ceres_solver_options</code></pre>
     <img src="assets/Screenshot from 2019-12-07 21-31-48.png" srcset="/img/loading.gif" style="zoom:100%;" />
 </div>
 
-<h2 id="全局优化时对于IMU数据的处理"><a href="#全局优化时对于IMU数据的处理" class="headerlink" title="全局优化时对于IMU数据的处理"></a>全局优化时对于IMU数据的处理</h2><p>Global optimization 对 imu 的 pose 信息提供了更多的灵活性。默认的 Ceres 会优化你 IMU 和 tracking frame 之间的外参。如果你不信任你的 imu 的数据的话, Ceres’ global optimization 的结果可以被记录然后来用来优化它俩之间的外参矩阵。如果 Ceres 不能够很好的优化 IMU 的 pose (它俩之间的外参矩阵)或者你非常信任你校准的它俩之间的外参矩阵的话，可以当做常量来使用自己标定的外参矩阵。</p>
+<h3 id="全局优化时对于IMU数据的处理"><a href="#全局优化时对于IMU数据的处理" class="headerlink" title="全局优化时对于IMU数据的处理"></a>全局优化时对于IMU数据的处理</h3><p>Global optimization 对 imu 的 pose 信息提供了更多的灵活性。默认的 Ceres 会优化你 IMU 和 tracking frame 之间的外参。如果你不信任你的 imu 的数据的话, Ceres’ global optimization 的结果可以被记录然后来用来优化它俩之间的外参矩阵。如果 Ceres 不能够很好的优化 IMU 的 pose (它俩之间的外参矩阵)或者你非常信任你校准的它俩之间的外参矩阵的话，可以当做常量来使用自己标定的外参矩阵。</p>
 <pre><code class="hljs lua">POSE_GRAPH.optimization_problem.log_solver_summary
 POSE_GRAPH.optimization_problem.use_online_imu_extrinsics_in_3d</code></pre>
-<h2 id="Huber-loss"><a href="#Huber-loss" class="headerlink" title="Huber loss"></a>Huber loss</h2><p>在residuals中，采用Huber loss function 从而控制outliers的影响。Huber loss function的Huber scale是定的，通过下面参数指定。</p>
+<h3 id="Huber-loss"><a href="#Huber-loss" class="headerlink" title="Huber loss"></a>Huber loss</h3><p>在residuals中，采用Huber loss function 从而控制outliers的影响。Huber loss function的Huber scale是定的，通过下面参数指定。</p>
 <pre><code class="hljs lua">POSE_GRAPH.optimization_problem.huber_scale</code></pre>
 <p>这个值选的越大，潜在的outliers对系统的影响可能就越大。</p>
 <p>关于Huber loss <a href="https://blog.csdn.net/qq_29981283/article/details/83042231" target="_blank" rel="noopener">博客1</a> <a href="https://blog.csdn.net/lj6052317/article/details/87885658" target="_blank" rel="noopener">博客2</a>：</p>
 <p>huber loss 是一种优化平方loss的一种方式，使得loss变化没有那么大。</p>
 <p><img src="assets/20190222210736618.png" srcset="/img/loading.gif" alt="img"></p>
 <p><img src="assets/20190222210820112.png" srcset="/img/loading.gif" alt="img"></p>
-<h2 id="最终的全局优化"><a href="#最终的全局优化" class="headerlink" title="最终的全局优化"></a>最终的全局优化</h2><p>一旦 当 trajectory 完成后，Cartographer 经常会运行一个新的全局优化，迭代的次数通常比之前的要多得多。这样做的原因是要尽可能的去优化最终建图的效果，并且通常并没有实时性的要求。所以选择大量的迭代是正确的选择.</p>
+<h3 id="最终的全局优化"><a href="#最终的全局优化" class="headerlink" title="最终的全局优化"></a>最终的全局优化</h3><p>一旦 当 trajectory 完成后，Cartographer 经常会运行一个新的全局优化，迭代的次数通常比之前的要多得多。这样做的原因是要尽可能的去优化最终建图的效果，并且通常并没有实时性的要求。所以选择大量的迭代是正确的选择.</p>
 <pre><code class="hljs lua">POSE_GRAPH.max_num_final_iterations</code></pre>
 <h5 id="附-PointCloud2消息类型的数据格式"><a href="#附-PointCloud2消息类型的数据格式" class="headerlink" title="附: PointCloud2消息类型的数据格式"></a>附: PointCloud2消息类型的数据格式</h5><p><a href="http://docs.ros.org/api/sensor_msgs/html/msg/PointCloud2.html" target="_blank" rel="noopener">官方点云数据格式</a></p>
 <p><a href="https://blog.csdn.net/Fourier_Legend/article/details/83656798" target="_blank" rel="noopener">点云数据格式解释</a></p>
