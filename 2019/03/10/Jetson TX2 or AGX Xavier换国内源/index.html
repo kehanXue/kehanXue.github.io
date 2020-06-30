@@ -163,7 +163,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      658 字
+      659 字
     </span>
   
 
@@ -205,9 +205,12 @@
             
             <article class="markdown-body">
               <a id="more"></a>
-<h1 id="NVIDIA-Jetson-TX2-or-AGX-Xavier-apt-切换国内的源"><a href="#NVIDIA-Jetson-TX2-or-AGX-Xavier-apt-切换国内的源" class="headerlink" title="NVIDIA Jetson TX2 or AGX Xavier apt 切换国内的源"></a>NVIDIA Jetson TX2 or AGX Xavier apt 切换国内的源</h1><p>日期可能稍稍有些久远导致不能用，但目前还可以用。</p>
-<h2 id="1-首先备份下之前的-source-list"><a href="#1-首先备份下之前的-source-list" class="headerlink" title="1. 首先备份下之前的 source.list"></a>1. 首先备份下之前的 source.list</h2><pre><code class="hljs bash">sudo cp /etc/apt/sources.list /etc/apt/sources.list.backup</code></pre>
-<h2 id="2-修改-source-list"><a href="#2-修改-source-list" class="headerlink" title="2. 修改 source.list"></a>2. 修改 source.list</h2><p>换源需要换 <strong>ARM</strong> 的源，不要换成了 PC 平台的软件源。这里推荐的两个国内源为清华和中科大的源，将原来文件里面的内容全部替换成下面两个源之一就可以. 并且由于 TX2 的系统是16.04(xenial)的,Xavier 的系统是18.04(bionic), 所以两者的源还要换个系统版本.</p>
+<h1 id="nvidia-jetson-tx2-or-agx-xavier-apt-切换国内的源"><a class="markdownIt-Anchor" href="#nvidia-jetson-tx2-or-agx-xavier-apt-切换国内的源"></a> NVIDIA Jetson TX2 or AGX Xavier apt 切换国内的源</h1>
+<p>日期可能稍稍有些久远导致不能用，但目前还可以用。</p>
+<h2 id="1-首先备份下之前的-sourcelist"><a class="markdownIt-Anchor" href="#1-首先备份下之前的-sourcelist"></a> 1. 首先备份下之前的 source.list</h2>
+<pre><code class="hljs bash">sudo cp /etc/apt/sources.list /etc/apt/sources.list.backup</code></pre>
+<h2 id="2-修改-sourcelist"><a class="markdownIt-Anchor" href="#2-修改-sourcelist"></a> 2. 修改 source.list</h2>
+<p>换源需要换 <strong>ARM</strong> 的源，不要换成了 PC 平台的软件源。这里推荐的两个国内源为清华和中科大的源，将原来文件里面的内容全部替换成下面两个源之一就可以. 并且由于 TX2 的系统是16.04(xenial)的,Xavier 的系统是18.04(bionic), 所以两者的源还要换个系统版本.</p>
 <p>Xavier清华的:</p>
 <pre><code class="hljs bash">deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ bionic-updates main restricted universe multiverse
 deb-src http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ bionic-updates main restricted universe multiverse
@@ -268,7 +271,7 @@ deb-src http://mirrors.ustc.edu.cn/ubuntu-ports/ xenial main universe restricted
                 
               </div>
               
-                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！<a href="https://blog.kehan.site/about">联系作者。</a></p>
               
               
                 <div class="post-prevnext row">
@@ -284,6 +287,12 @@ deb-src http://mirrors.ustc.edu.cn/ubuntu-ports/ xenial main universe restricted
                   </div>
                   <div class="post-next col-6">
                     
+                    
+                      <a href="/2019/02/23/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-ESRGAN-%E5%A2%9E%E5%BC%BA%E7%89%88%E7%9A%84-SRGAN/">
+                        <span class="hidden-mobile">论文阅读 - ESRGAN 增强版的 SRGAN</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
                     
                   </div>
                 </div>
@@ -484,40 +493,8 @@ deb-src http://mirrors.ustc.edu.cn/ubuntu-ports/ xenial main universe restricted
   
 
   
-    <!-- MathJax -->
-    <script>
-      MathJax = {
-        tex: {
-          inlineMath: [['$', '$'], ['\\(', '\\)']]
-        },
-        options: {
-          renderActions: {
-            findScript: [10, doc => {
-              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
-                const display = !!node.type.match(/; *mode=display/);
-                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
-                const text = document.createTextNode('');
-                node.parentNode.replaceChild(text, node);
-                math.start = { node: text, delim: '', n: 0 };
-                math.end = { node: text, delim: '', n: 0 };
-                doc.math.push(math);
-              });
-            }, '', false],
-            insertedScript: [200, () => {
-              document.querySelectorAll('mjx-container').forEach(node => {
-                let target = node.parentNode;
-                if (target.nodeName.toLowerCase() === 'li') {
-                  target.parentNode.classList.add('has-jax');
-                }
-              });
-            }, '', false]
-          }
-        }
-      };
-    </script>
-
-    <script async src="https://cdn.staticfile.org/mathjax/3.0.5/es5/tex-svg.js" ></script>
-
+    <!-- KaTeX -->
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/KaTeX/0.11.1/katex.min.css" />
   
 
 

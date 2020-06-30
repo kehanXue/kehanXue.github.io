@@ -163,7 +163,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      282 字
+      284 字
     </span>
   
 
@@ -208,7 +208,7 @@
 <a id="more"></a>
 <ol>
 <li>首先当然通过那个 type-C 的口把 Xavier 和你的电脑连起来.</li>
-<li>然后你会看到你的 Network Manager中就会多出来两个”网卡”, 然后在 NVIDIA 的那个下面建立网络.类型选择正常的 Ethernet 即可. 配置DHCP(自动配置ip) 和手动都可以,手动配置的时候注意一下配置好 netmask 和 gateway. Xavier那边的 ip 是192.168.55.1, 觉得手动麻烦的话最好 DHCP 方式即可.建立好连接后就可以用 Xavier 的192.168.55.1这个 ip 即可.ssh 和 scp 都可以正常用.(scp时的带宽是真的大…瞬间几十M甚至可能上百M)</li>
+<li>然后你会看到你的 Network Manager中就会多出来两个&quot;网卡&quot;, 然后在 NVIDIA 的那个下面建立网络.类型选择正常的 Ethernet 即可. 配置DHCP(自动配置ip) 和手动都可以,手动配置的时候注意一下配置好 netmask 和 gateway. Xavier那边的 ip 是192.168.55.1, 觉得手动麻烦的话最好 DHCP 方式即可.建立好连接后就可以用 Xavier 的192.168.55.1这个 ip 即可.ssh 和 scp 都可以正常用.(scp时的带宽是真的大…瞬间几十M甚至可能上百M)</li>
 </ol>
 <p>发现的bug:</p>
 <p>连着这个 usb 网络时不能正常 ssh 登录其他 Jetson 设备…比如登另一块 TX2 的时候就一直 Permission denied…文档里好像说这个问题了,解决办法待更新.</p>
@@ -235,7 +235,7 @@
                 
               </div>
               
-                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！<a href="https://blog.kehan.site/about">联系作者。</a></p>
               
               
                 <div class="post-prevnext row">
@@ -457,40 +457,8 @@
   
 
   
-    <!-- MathJax -->
-    <script>
-      MathJax = {
-        tex: {
-          inlineMath: [['$', '$'], ['\\(', '\\)']]
-        },
-        options: {
-          renderActions: {
-            findScript: [10, doc => {
-              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
-                const display = !!node.type.match(/; *mode=display/);
-                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
-                const text = document.createTextNode('');
-                node.parentNode.replaceChild(text, node);
-                math.start = { node: text, delim: '', n: 0 };
-                math.end = { node: text, delim: '', n: 0 };
-                doc.math.push(math);
-              });
-            }, '', false],
-            insertedScript: [200, () => {
-              document.querySelectorAll('mjx-container').forEach(node => {
-                let target = node.parentNode;
-                if (target.nodeName.toLowerCase() === 'li') {
-                  target.parentNode.classList.add('has-jax');
-                }
-              });
-            }, '', false]
-          }
-        }
-      };
-    </script>
-
-    <script async src="https://cdn.staticfile.org/mathjax/3.0.5/es5/tex-svg.js" ></script>
-
+    <!-- KaTeX -->
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/KaTeX/0.11.1/katex.min.css" />
   
 
 

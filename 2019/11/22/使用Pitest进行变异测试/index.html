@@ -204,15 +204,18 @@
           <div class="post-content mx-auto" id="post">
             
             <article class="markdown-body">
-              <h1 id="使用Pitest进行变异测试"><a href="#使用Pitest进行变异测试" class="headerlink" title="使用Pitest进行变异测试"></a>使用Pitest进行变异测试</h1><h2 id="变异测试-Mutation-Testing"><a href="#变异测试-Mutation-Testing" class="headerlink" title="变异测试(Mutation Testing)"></a>变异测试(Mutation Testing)</h2><p>变异测试是软件测试方法中的一个重要测试方法。变异测试旨在找出有效的测试用例。简单来说，就是对代码做一些简单的修改（变异），然后用同样的测试用例进行输入，看输出是否会发生改变。如果输出发生变化，即该变异(mutation)被kill掉，该test case就是有效的test case；若所有测试用例扔进去跑一遍，该mutation还没有被kill掉，则说明这时候test case的有效覆盖还不够完善。</p>
+              <h1 id="使用pitest进行变异测试"><a class="markdownIt-Anchor" href="#使用pitest进行变异测试"></a> 使用Pitest进行变异测试</h1>
+<h2 id="变异测试mutation-testing"><a class="markdownIt-Anchor" href="#变异测试mutation-testing"></a> 变异测试(Mutation Testing)</h2>
+<p>变异测试是软件测试方法中的一个重要测试方法。变异测试旨在找出有效的测试用例。简单来说，就是对代码做一些简单的修改（变异），然后用同样的测试用例进行输入，看输出是否会发生改变。如果输出发生变化，即该变异(mutation)被kill掉，该test case就是有效的test case；若所有测试用例扔进去跑一遍，该mutation还没有被kill掉，则说明这时候test case的有效覆盖还不够完善。</p>
 <p>变异分为strong mutation和weak mutation。具体详细定义和二者之间的好处见该<a href="assets/mutation-test.pdf">pdf</a>的16-19。</p>
 <p>变异测试的主要流程：</p>
-<p><img src="assets/Screenshot from 2019-11-20 15-44-36.png" srcset="/img/loading.gif" alt=""></p>
+<p><img src="assets/Screenshot%20from%202019-11-20%2015-44-36.png" srcset="/img/loading.gif" alt="" /></p>
 <p>后面的那个自动化测试的步骤，就可以由pitest来完成。</p>
 <p>具体的变异手段有以下：</p>
-<p><img src="assets/Screenshot from 2019-11-20 15-49-46.png" srcset="/img/loading.gif" alt=""></p>
+<p><img src="assets/Screenshot%20from%202019-11-20%2015-49-46.png" srcset="/img/loading.gif" alt="" /></p>
 <p>具体每一个啥意思，也很容易明白，看一眼例子就行了。见<a href="assets/mutation-test.pdf">pdf</a>第22-32页。</p>
-<h2 id="Pitest的使用"><a href="#Pitest的使用" class="headerlink" title="Pitest的使用"></a>Pitest的使用</h2><p>然后就可以开始进行变异测试了。<a href="https://pitest.org/" target="_blank" rel="noopener">Pitest</a>是一个基于Junit4的工具包。</p>
+<h2 id="pitest的使用"><a class="markdownIt-Anchor" href="#pitest的使用"></a> Pitest的使用</h2>
+<p>然后就可以开始进行变异测试了。<a href="https://pitest.org/" target="_blank" rel="noopener">Pitest</a>是一个基于Junit4的工具包。</p>
 <p>在基于maven的使用pitest的方式下，首先在pom.xml中添加如下字段：</p>
 <pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">plugin</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.pitest<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
@@ -220,9 +223,9 @@
     <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>LATEST<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
  <span class="hljs-tag">&lt;/<span class="hljs-name">plugin</span>&gt;</span></code></pre>
 <p>在写好待测试类和基于Junit4的测试用例后，就可以通过指令<code>mvn org.pitest:pitest-maven:mutationCoverage</code>，就会生成对应测试报告，里面提供的信息包括了它自动做了哪些变异以及测试用例的覆盖情况，会给出一个打分。</p>
-<p><img src="assets/Screenshot from 2019-11-20 16-04-03.png" srcset="/img/loading.gif" alt=""></p>
+<p><img src="assets/Screenshot%20from%202019-11-20%2016-04-03.png" srcset="/img/loading.gif" alt="" /></p>
 <p>进行的mutation具体操作详情和mutation是否被kill掉的情况，从而可以判断出test case的覆盖情况。</p>
-<p><img src="assets/Screenshot from 2019-11-20 16-04-57.png" srcset="/img/loading.gif" alt=""></p>
+<p><img src="assets/Screenshot%20from%202019-11-20%2016-04-57.png" srcset="/img/loading.gif" alt="" /></p>
 <p>它默认的会测试你整个工程代码。当然你也可以在配置文件中指定想要测试的类和测试用例：</p>
 <pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">plugin</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.pitest<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
@@ -261,16 +264,16 @@
                 
               </div>
               
-                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！<a href="https://blog.kehan.site/about">联系作者。</a></p>
               
               
                 <div class="post-prevnext row">
                   <div class="post-prev col-6">
                     
                     
-                      <a href="/2019/12/07/Cartographer%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B%E8%A7%A3%E6%9E%90%E4%B8%8E%E8%B0%83%E4%BC%98/">
+                      <a href="/2019/11/25/VINS-Mono-%E4%B8%AD%E7%9A%84%E8%BE%B9%E7%BC%98%E5%8C%96%E6%93%8D%E4%BD%9C%E7%90%86%E8%A7%A3/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Cartographer Laser-SLAM 算法流程解析与调优</span>
+                        <span class="hidden-mobile">VINS-Mono 中的边缘化操作理解</span>
                         <span class="visible-mobile">Previous</span>
                       </a>
                     
@@ -278,8 +281,8 @@
                   <div class="post-next col-6">
                     
                     
-                      <a href="/2019/10/20/VINS-Mono-%E6%95%B4%E4%BD%93%E6%A1%86%E6%9E%B6%E6%A6%82%E8%BF%B0/">
-                        <span class="hidden-mobile">VINS-Mono 整体框架概述</span>
+                      <a href="/2019/10/25/VINS-Mono-%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E6%80%BB%E7%BB%93/">
+                        <span class="hidden-mobile">VINS-Mono 工作流程总结</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -483,40 +486,8 @@
   
 
   
-    <!-- MathJax -->
-    <script>
-      MathJax = {
-        tex: {
-          inlineMath: [['$', '$'], ['\\(', '\\)']]
-        },
-        options: {
-          renderActions: {
-            findScript: [10, doc => {
-              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
-                const display = !!node.type.match(/; *mode=display/);
-                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
-                const text = document.createTextNode('');
-                node.parentNode.replaceChild(text, node);
-                math.start = { node: text, delim: '', n: 0 };
-                math.end = { node: text, delim: '', n: 0 };
-                doc.math.push(math);
-              });
-            }, '', false],
-            insertedScript: [200, () => {
-              document.querySelectorAll('mjx-container').forEach(node => {
-                let target = node.parentNode;
-                if (target.nodeName.toLowerCase() === 'li') {
-                  target.parentNode.classList.add('has-jax');
-                }
-              });
-            }, '', false]
-          }
-        }
-      };
-    </script>
-
-    <script async src="https://cdn.staticfile.org/mathjax/3.0.5/es5/tex-svg.js" ></script>
-
+    <!-- KaTeX -->
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/KaTeX/0.11.1/katex.min.css" />
   
 
 

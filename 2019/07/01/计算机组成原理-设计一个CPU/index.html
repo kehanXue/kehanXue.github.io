@@ -163,7 +163,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      3.8k 字
+      3.9k 字
     </span>
   
 
@@ -173,7 +173,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      52
+      53
        分钟
     </span>
   
@@ -204,9 +204,11 @@
           <div class="post-content mx-auto" id="post">
             
             <article class="markdown-body">
-              <p>计算机组成原理课程的一个大作业：设计一个符合下列要求的 CPU。完整项目请移步：<a href="https://github.com/kehanXue/Design-A-CPU。" target="_blank" rel="noopener">https://github.com/kehanXue/Design-A-CPU。</a></p>
+              <p>计算机组成原理课程的一个大作业：设计一个符合下列要求的 CPU。完整项目请移步：<a href="https://github.com/kehanXue/Design-A-CPU%E3%80%82" target="_blank" rel="noopener">https://github.com/kehanXue/Design-A-CPU。</a></p>
 <a id="more"></a>
-<h1 id="CPU-设计要求"><a href="#CPU-设计要求" class="headerlink" title="CPU 设计要求"></a>CPU 设计要求</h1><h2 id="基本要求"><a href="#基本要求" class="headerlink" title="基本要求"></a>基本要求</h2><ul>
+<h1 id="cpu-设计要求"><a class="markdownIt-Anchor" href="#cpu-设计要求"></a> CPU 设计要求</h1>
+<h2 id="基本要求"><a class="markdownIt-Anchor" href="#基本要求"></a> 基本要求</h2>
+<ul>
 <li>CPU 字长为 8 位，8 个程序员可见的寄存器，分别命名为 r0, . . . , r7</li>
 <li>地址总线、数据总线各为 8 位，可访问 28 字节的地址空间</li>
 <li>数据采用补码表示，只需支持定点运算</li>
@@ -214,24 +216,28 @@
 <li>系统时钟频率为 130MHZ</li>
 <li>为减低成本，采用 TTL 74181a作为运算器</li>
 </ul>
-<h2 id="指令集特点"><a href="#指令集特点" class="headerlink" title="指令集特点"></a>指令集特点</h2><ul>
+<h2 id="指令集特点"><a class="markdownIt-Anchor" href="#指令集特点"></a> 指令集特点</h2>
+<ul>
 <li>支持零操作数、单操作数和双操作数三种指令</li>
 <li>所有指令的两个操作数不能同时为内存操作数</li>
 <li>支持立即寻址、直接寻址、寄存器直接寻址和相对寻址四种寻址方式</li>
 <li>采用 1 字节或者 2 字节变长指令字，操作码采用定长格式</li>
 </ul>
-<h2 id="支持的指令"><a href="#支持的指令" class="headerlink" title="支持的指令"></a>支持的指令</h2><p><img src="DesignCPUbyMyself.assets/Instructions-Set.png" srcset="/img/loading.gif" alt=""></p>
-<h2 id="要完成的任务"><a href="#要完成的任务" class="headerlink" title="要完成的任务"></a>要完成的任务</h2><ul>
+<h2 id="支持的指令"><a class="markdownIt-Anchor" href="#支持的指令"></a> 支持的指令</h2>
+<p><img src="DesignCPUbyMyself.assets/Instructions-Set.png" srcset="/img/loading.gif" alt="" /></p>
+<h2 id="要完成的任务"><a class="markdownIt-Anchor" href="#要完成的任务"></a> 要完成的任务</h2>
+<ul>
 <li>请设计符合要求的指令格式</li>
 <li>给出所设计 CPU 的逻辑框图</li>
 <li>给出基于硬布线设计控制器的逻辑表达式</li>
 <li>给出基于微程序设计控制器的微指令及控存中的微程序</li>
 </ul>
-<h1 id="指令系统设计"><a href="#指令系统设计" class="headerlink" title="指令系统设计"></a>指令系统设计</h1><p>由于指令的操作数与寻址方式不同, 根据作业中所要求实现的指令类型, 以以下思路设计指令系统.</p>
-<h2 id="分析寻址类型需求"><a href="#分析寻址类型需求" class="headerlink" title="分析寻址类型需求"></a>分析寻址类型需求</h2><ol>
-<li>由于存在$8=2^3$种不同操作指令, 所以可以用3bit的操作码来区分该8种不同操作指令</li>
+<h1 id="指令系统设计"><a class="markdownIt-Anchor" href="#指令系统设计"></a> 指令系统设计</h1>
+<p>由于指令的操作数与寻址方式不同, 根据作业中所要求实现的指令类型, 以以下思路设计指令系统.</p>
+<h2 id="分析寻址类型需求"><a class="markdownIt-Anchor" href="#分析寻址类型需求"></a> 分析寻址类型需求</h2>
+<ol>
+<li>由于存在<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>8</mn><mo>=</mo><msup><mn>2</mn><mn>3</mn></msup></mrow><annotation encoding="application/x-tex">8=2^3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">8</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span></span></span></span>种不同操作指令, 所以可以用3bit的操作码来区分该8种不同操作指令</li>
 </ol>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -258,10 +264,10 @@
 </tr>
 </tbody>
 </table>
-</div>
-<p>   其中mov, add, sub, and, or为双操作数指令, not和jmp为单操作数指令, hlt为零操作数指令</p>
-<ol>
-<li><p>所有指令的两个操作数不能同时为内存操作数. 该CPU需支持立即寻址, 直接寻址, 寄存器直接寻址和相对寻址.</p>
+<p>其中mov, add, sub, and, or为双操作数指令, not和jmp为单操作数指令, hlt为零操作数指令</p>
+<ol start="2">
+<li>
+<p>所有指令的两个操作数不能同时为内存操作数. 该CPU需支持立即寻址, 直接寻址, 寄存器直接寻址和相对寻址.</p>
 <p>其中有以下约束:</p>
 <ul>
 <li>目的操作数不能为立即寻址方式</li>
@@ -269,11 +275,10 @@
 <li>指令字长为单字节或双字节</li>
 </ul>
 <p>设定每一条指令的左操作数为目的操作数, 右操作数为源操作数.</p>
-<p>为了区分不同的寻址方式, 需要在操作数前面加上寻址特征. </p>
+<p>为了区分不同的寻址方式, 需要在操作数前面加上寻址特征.</p>
 <p>本题目中双操作数指令的寻址方式均有4种, 设定寻址特征如下:</p>
 </li>
 </ol>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -294,9 +299,7 @@
 </tr>
 </tbody>
 </table>
-</div>
-<p>   单操作数not指令的寻址方式有两种, 直接寻址与寄存器直接寻址. not为单操作数指令, 操作数可以为直接寻址与寄存器直接寻址两种方式. 因为指令的位数够用, 为了保持指令格式的整齐, 仍采用2位的寻址特征. </p>
-<div class="table-container">
+<p>单操作数not指令的寻址方式有两种, 直接寻址与寄存器直接寻址. not为单操作数指令, 操作数可以为直接寻址与寄存器直接寻址两种方式. 因为指令的位数够用, 为了保持指令格式的整齐, 仍采用2位的寻址特征.</p>
 <table>
 <thead>
 <tr>
@@ -313,9 +316,7 @@
 </tr>
 </tbody>
 </table>
-</div>
-<p>   单操作数jmp指令是转移类指令, 有相对偏移与绝对偏移两种方式. 相对偏移的方式即为相对寻址, 跳转后的地址为PC当前值+jmp指令的操作数. 绝对偏移即为立即寻址, 直接跳转到jmp指令的操作数代表的地址.</p>
-<div class="table-container">
+<p>单操作数jmp指令是转移类指令, 有相对偏移与绝对偏移两种方式. 相对偏移的方式即为相对寻址, 跳转后的地址为PC当前值+jmp指令的操作数. 绝对偏移即为立即寻址, 直接跳转到jmp指令的操作数代表的地址.</p>
 <table>
 <thead>
 <tr>
@@ -332,16 +333,16 @@
 </tr>
 </tbody>
 </table>
-</div>
-<p>   确定各种指令中不同操作数的长度:</p>
+<p>确定各种指令中不同操作数的长度:</p>
 <ul>
 <li>立即数寻址取决于剩下的指令位数</li>
-<li>$8=2^3$个程序员可见寄存器, 寄存器寻址操作数长度为3</li>
-<li>$2^8$字节的地址空间, 直接寻址操作数的长度为8</li>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>8</mn><mo>=</mo><msup><mn>2</mn><mn>3</mn></msup></mrow><annotation encoding="application/x-tex">8=2^3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">8</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span></span></span></span>个程序员可见寄存器, 寄存器寻址操作数长度为3</li>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mn>2</mn><mn>8</mn></msup></mrow><annotation encoding="application/x-tex">2^8</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">8</span></span></span></span></span></span></span></span></span></span></span>字节的地址空间, 直接寻址操作数的长度为8</li>
 </ul>
-<h2 id="设计指令系统"><a href="#设计指令系统" class="headerlink" title="设计指令系统"></a>设计指令系统</h2><h3 id="mov"><a href="#mov" class="headerlink" title="mov"></a><strong><em>mov</em></strong></h3><p>分为以下几种情况:</p>
+<h2 id="设计指令系统"><a class="markdownIt-Anchor" href="#设计指令系统"></a> 设计指令系统</h2>
+<h3 id="mov"><a class="markdownIt-Anchor" href="#mov"></a> <em><strong>mov</strong></em></h3>
+<p>分为以下几种情况:</p>
 <p><strong>movRI</strong></p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -360,9 +361,7 @@
 </tr>
 </tbody>
 </table>
-</div>
 <p><strong>movRR</strong></p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -383,9 +382,7 @@
 </tr>
 </tbody>
 </table>
-</div>
 <p><strong>movRM</strong></p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -404,9 +401,7 @@
 </tr>
 </tbody>
 </table>
-</div>
 <p><strong>movMR</strong></p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -425,10 +420,9 @@
 </tr>
 </tbody>
 </table>
-</div>
-<h3 id="add"><a href="#add" class="headerlink" title="add"></a><strong><em>add</em></strong></h3><p>同mov, 分为以下几种情况:</p>
+<h3 id="add"><a class="markdownIt-Anchor" href="#add"></a> <em><strong>add</strong></em></h3>
+<p>同mov, 分为以下几种情况:</p>
 <p><strong>addRI</strong></p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -447,9 +441,7 @@
 </tr>
 </tbody>
 </table>
-</div>
 <p><strong>addRR</strong></p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -470,9 +462,7 @@
 </tr>
 </tbody>
 </table>
-</div>
 <p><strong>addRM</strong></p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -491,9 +481,7 @@
 </tr>
 </tbody>
 </table>
-</div>
 <p><strong>addMR</strong></p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -512,10 +500,9 @@
 </tr>
 </tbody>
 </table>
-</div>
-<h3 id="sub"><a href="#sub" class="headerlink" title="sub"></a><strong><em>sub</em></strong></h3><p>同mov, 分为以下几种情况:</p>
+<h3 id="sub"><a class="markdownIt-Anchor" href="#sub"></a> <em><strong>sub</strong></em></h3>
+<p>同mov, 分为以下几种情况:</p>
 <p><strong>subRI</strong></p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -534,9 +521,7 @@
 </tr>
 </tbody>
 </table>
-</div>
 <p><strong>subRR</strong></p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -557,9 +542,7 @@
 </tr>
 </tbody>
 </table>
-</div>
 <p><strong>subRM</strong></p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -578,9 +561,7 @@
 </tr>
 </tbody>
 </table>
-</div>
 <p><strong>subMR</strong></p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -599,10 +580,9 @@
 </tr>
 </tbody>
 </table>
-</div>
-<h3 id="and"><a href="#and" class="headerlink" title="and"></a><strong><em>and</em></strong></h3><p>同mov, 分为以下几种情况:</p>
+<h3 id="and"><a class="markdownIt-Anchor" href="#and"></a> <em><strong>and</strong></em></h3>
+<p>同mov, 分为以下几种情况:</p>
 <p><strong>andRI</strong></p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -621,9 +601,7 @@
 </tr>
 </tbody>
 </table>
-</div>
 <p><strong>andRR</strong></p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -644,9 +622,7 @@
 </tr>
 </tbody>
 </table>
-</div>
 <p><strong>andRM</strong></p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -665,9 +641,7 @@
 </tr>
 </tbody>
 </table>
-</div>
 <p><strong>andMR</strong></p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -686,10 +660,9 @@
 </tr>
 </tbody>
 </table>
-</div>
-<h3 id="or"><a href="#or" class="headerlink" title="or"></a><strong><em>or</em></strong></h3><p>同mov, 分为以下几种情况:</p>
+<h3 id="or"><a class="markdownIt-Anchor" href="#or"></a> <em><strong>or</strong></em></h3>
+<p>同mov, 分为以下几种情况:</p>
 <p><strong>orRI</strong></p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -708,9 +681,7 @@
 </tr>
 </tbody>
 </table>
-</div>
 <p><strong>orRR</strong></p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -731,9 +702,7 @@
 </tr>
 </tbody>
 </table>
-</div>
 <p><strong>orRM</strong></p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -752,9 +721,7 @@
 </tr>
 </tbody>
 </table>
-</div>
 <p><strong>orMR</strong></p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -773,9 +740,8 @@
 </tr>
 </tbody>
 </table>
-</div>
-<h3 id="not"><a href="#not" class="headerlink" title="not"></a><strong><em>not</em></strong></h3><p><strong>notR</strong></p>
-<div class="table-container">
+<h3 id="not"><a class="markdownIt-Anchor" href="#not"></a> <em><strong>not</strong></em></h3>
+<p><strong>notR</strong></p>
 <table>
 <thead>
 <tr>
@@ -792,9 +758,7 @@
 </tr>
 </tbody>
 </table>
-</div>
 <p><strong>notM</strong></p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -813,9 +777,8 @@
 </tr>
 </tbody>
 </table>
-</div>
-<h3 id="jmp"><a href="#jmp" class="headerlink" title="jmp"></a><strong><em>jmp</em></strong></h3><p><strong>jmpR</strong></p>
-<div class="table-container">
+<h3 id="jmp"><a class="markdownIt-Anchor" href="#jmp"></a> <em><strong>jmp</strong></em></h3>
+<p><strong>jmpR</strong></p>
 <table>
 <thead>
 <tr>
@@ -834,9 +797,7 @@
 </tr>
 </tbody>
 </table>
-</div>
 <p><strong>jmpD</strong></p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -855,9 +816,8 @@
 </tr>
 </tbody>
 </table>
-</div>
-<h3 id="hlt"><a href="#hlt" class="headerlink" title="hlt"></a><strong><em>hlt</em></strong></h3><p>无操作数</p>
-<div class="table-container">
+<h3 id="hlt"><a class="markdownIt-Anchor" href="#hlt"></a> <em><strong>hlt</strong></em></h3>
+<p>无操作数</p>
 <table>
 <thead>
 <tr>
@@ -872,40 +832,46 @@
 </tr>
 </tbody>
 </table>
-</div>
-<h1 id="CPU逻辑框图"><a href="#CPU逻辑框图" class="headerlink" title="CPU逻辑框图"></a>CPU逻辑框图</h1><p><img src="DesignCPUbyMyself.assets/CPUlogic-1561474520649.jpg" srcset="/img/loading.gif" alt=""></p>
-<h1 id="基于硬布线方式的控制器设计"><a href="#基于硬布线方式的控制器设计" class="headerlink" title="基于硬布线方式的控制器设计"></a>基于硬布线方式的控制器设计</h1><p>由于采用定长三级时序, 每个指令周期包含三个机器周期(取指周期, 间址周期和执行周期), 每个周期由三个节拍构成:</p>
+<h1 id="cpu逻辑框图"><a class="markdownIt-Anchor" href="#cpu逻辑框图"></a> CPU逻辑框图</h1>
+<p><img src="DesignCPUbyMyself.assets/CPUlogic-1561474520649.jpg" srcset="/img/loading.gif" alt="" /></p>
+<h1 id="基于硬布线方式的控制器设计"><a class="markdownIt-Anchor" href="#基于硬布线方式的控制器设计"></a> 基于硬布线方式的控制器设计</h1>
+<p>由于采用定长三级时序, 每个指令周期包含三个机器周期(取指周期, 间址周期和执行周期), 每个周期由三个节拍构成:</p>
 <ul>
-<li>命名取指周期为FF, 间址周期命名为IND, 执行周期命名为EX</li>
-<li><p>三个节拍分别命名为$T_0, T_1, T_2$</p>
+<li>
+<p>命名取指周期为FF, 间址周期命名为IND, 执行周期命名为EX</p>
 </li>
-<li><p>I为间址标志. 若FF周期的$T_2$时刻测得I=1, 则IND触发器置”1”, 标志进入间址周期. 若I=0, 则EX触发器置”1”, 标志进入执行周期. 若在IND时期的$T_2$时刻测得IND=0, 则EX置”1”, 表示进入执行周期, 表示只有一次间址; 若IND=1, 则表示多次间址, 继续进行间址寻址操作.</p>
+<li>
+<p>三个节拍分别命名为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>T</mi><mn>0</mn></msub><mo separator="true">,</mo><msub><mi>T</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>T</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">T_0, T_1, T_2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></p>
+</li>
+<li>
+<p>I为间址标志. 若FF周期的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>T</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">T_2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>时刻测得I=1, 则IND触发器置&quot;1&quot;, 标志进入间址周期. 若I=0, 则EX触发器置&quot;1&quot;, 标志进入执行周期. 若在IND时期的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>T</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">T_2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>时刻测得IND=0, 则EX置&quot;1&quot;, 表示进入执行周期, 表示只有一次间址; 若IND=1, 则表示多次间址, 继续进行间址寻址操作.</p>
 </li>
 </ul>
 <p>根据每一条指令的节拍安排, 总结出表(见附件DesignCPUHard.xls, 由于表格太大了, 文档里放不下)</p>
 <p>化简得出以下微操作命令的表达式:</p>
-<p><img src="DesignCPUbyMyself.assets\IMG_7317.JPG" srcset="/img/loading.gif" alt=""></p>
-<p><img src="DesignCPUbyMyself.assets\IMG_7318.JPG" srcset="/img/loading.gif" alt="IMG_7318"></p>
-<p><img src="DesignCPUbyMyself.assets\IMG_7319.JPG" srcset="/img/loading.gif" alt="IMG_7319"></p>
-<p><img src="DesignCPUbyMyself.assets\IMG_7320.JPG" srcset="/img/loading.gif" alt="IMG_7320"></p>
-<p><img src="DesignCPUbyMyself.assets\IMG_7321.JPG" srcset="/img/loading.gif" alt="IMG_7321"></p>
-<h1 id="基于微程序方式的控制器设计"><a href="#基于微程序方式的控制器设计" class="headerlink" title="基于微程序方式的控制器设计"></a>基于微程序方式的控制器设计</h1><p>微程序，将一条机器指令编写成一个微程序，每个微程序包括若干条微指令，每一条微指令对应一个或几个微操作命令。然后把这些微程序存到一个控制寄存器中，用寻找用户程序机器指令的方法来寻找每个微程序中的微指令。<br>微程序设计省去了组合逻辑设计中队逻辑表达式的化简步骤，无需考虑逻辑门级数等，用规整的存储逻辑代替不规则的硬接线逻辑来实现计算机控制器的技术。</p>
-<h2 id="微指令格式设计"><a href="#微指令格式设计" class="headerlink" title="微指令格式设计"></a>微指令格式设计</h2><table>
-    <tr>
-        <td style='text-align:center;'>2位</td>
-        <td style='text-align:center;'>2位</td>
-        <td style='text-align:center;'>5位</td>
-        <td style='text-align:center;'>7位</td>
-    </tr>
-    <tr>
-        <td colspan="3" style='text-align:center;'>控制操作字段</td>
-        <td style='text-align:center;'>顺序操作字段</td>
-    </tr>
+<p><img src="DesignCPUbyMyself.assets%5CIMG_7317.JPG" srcset="/img/loading.gif" alt="" /></p>
+<p><img src="DesignCPUbyMyself.assets%5CIMG_7318.JPG" srcset="/img/loading.gif" alt="IMG_7318" /></p>
+<p><img src="DesignCPUbyMyself.assets%5CIMG_7319.JPG" srcset="/img/loading.gif" alt="IMG_7319" /></p>
+<p><img src="DesignCPUbyMyself.assets%5CIMG_7320.JPG" srcset="/img/loading.gif" alt="IMG_7320" /></p>
+<p><img src="DesignCPUbyMyself.assets%5CIMG_7321.JPG" srcset="/img/loading.gif" alt="IMG_7321" /></p>
+<h1 id="基于微程序方式的控制器设计"><a class="markdownIt-Anchor" href="#基于微程序方式的控制器设计"></a> 基于微程序方式的控制器设计</h1>
+<p>微程序，将一条机器指令编写成一个微程序，每个微程序包括若干条微指令，每一条微指令对应一个或几个微操作命令。然后把这些微程序存到一个控制寄存器中，用寻找用户程序机器指令的方法来寻找每个微程序中的微指令。<br />
+微程序设计省去了组合逻辑设计中队逻辑表达式的化简步骤，无需考虑逻辑门级数等，用规整的存储逻辑代替不规则的硬接线逻辑来实现计算机控制器的技术。</p>
+<h2 id="微指令格式设计"><a class="markdownIt-Anchor" href="#微指令格式设计"></a> 微指令格式设计</h2>
+<table>
+	<tr>
+		<td style='text-align:center;'>2位</td>
+		<td style='text-align:center;'>2位</td>
+		<td style='text-align:center;'>5位</td>
+		<td style='text-align:center;'>7位</td>
+	</tr>
+	<tr>
+		<td colspan="3" style='text-align:center;'>控制操作字段</td>
+		<td style='text-align:center;'>顺序操作字段</td>
+	</tr>
 </table>
-
 <p>微指令的操作字段采用字段直接编码方式，该字段发出各种控制信号。顺序控制字段仅在微程序的最后指向取值微程序，它可指出下条微指令的地址（简称下地址），以控制微指令序列的执行顺序。</p>
 <p>前2位存放取值微程序相关的微操作</p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -928,9 +894,7 @@
 </tr>
 </tbody>
 </table>
-</div>
 <p>中间2位存放一些读、写信号的置有效和程序计算器等微操作</p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -953,9 +917,7 @@
 </tr>
 </tbody>
 </table>
-</div>
 <p>中间5位存放转移、加减和取反等操作</p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -1042,11 +1004,11 @@
 </tr>
 <tr>
 <td style="text-align:center">10011</td>
-<td style="text-align:center">MDR(ACC)-&gt;LATCH”</td>
+<td style="text-align:center">MDR(ACC)-&gt;LATCH&quot;</td>
 </tr>
 <tr>
 <td style="text-align:center">10100</td>
-<td style="text-align:center">JDR(ACC)-&gt;LATCH”</td>
+<td style="text-align:center">JDR(ACC)-&gt;LATCH&quot;</td>
 </tr>
 <tr>
 <td style="text-align:center">10101</td>
@@ -1094,9 +1056,8 @@
 </tr>
 </tbody>
 </table>
-</div>
-<h2 id="微程序"><a href="#微程序" class="headerlink" title="微程序"></a>微程序</h2><p><img src="DesignCPUbyMyself.assets\IMG_7322.JPG" srcset="/img/loading.gif" alt=""></p>
-<div class="table-container">
+<h2 id="微程序"><a class="markdownIt-Anchor" href="#微程序"></a> 微程序</h2>
+<p><img src="DesignCPUbyMyself.assets%5CIMG_7322.JPG" srcset="/img/loading.gif" alt="" /></p>
 <table>
 <thead>
 <tr>
@@ -1696,11 +1657,10 @@
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">MDR\</td>
-<td style="text-align:center">(ACC)-&gt;LATCH</td>
+<td style="text-align:center">MDR|(ACC)-&gt;LATCH</td>
 <td style="text-align:center">R+4</td>
 <td style="text-align:center"></td>
-<td></td>
+<td style="text-align:center"></td>
 </tr>
 <tr>
 <td style="text-align:center">LATCH-&gt;BUS-&gt;M(JAR)</td>
@@ -1739,11 +1699,10 @@
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">JDR\</td>
-<td style="text-align:center">(ACC)-&gt;LATCH</td>
+<td style="text-align:center">JDR|(ACC)-&gt;LATCH</td>
 <td style="text-align:center">S+6</td>
 <td style="text-align:center"></td>
-<td></td>
+<td style="text-align:center"></td>
 </tr>
 <tr>
 <td style="text-align:center">LATCH-&gt;BUS-&gt;M(JAR)</td>
@@ -1782,11 +1741,10 @@
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">JDR\</td>
-<td style="text-align:center">(ACC)-&gt;LATCH</td>
+<td style="text-align:center">JDR|(ACC)-&gt;LATCH</td>
 <td style="text-align:center">T+6</td>
 <td style="text-align:center"></td>
-<td></td>
+<td style="text-align:center"></td>
 </tr>
 <tr>
 <td style="text-align:center">LATCH-&gt;BUS-&gt;M(MAR)</td>
@@ -1825,11 +1783,10 @@
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">MDR\</td>
-<td style="text-align:center">(ACC)-&gt;LATCH</td>
+<td style="text-align:center">MDR|(ACC)-&gt;LATCH</td>
 <td style="text-align:center">U+6</td>
 <td style="text-align:center"></td>
-<td></td>
+<td style="text-align:center"></td>
 </tr>
 <tr>
 <td style="text-align:center">LATCH-&gt;M(JAR)</td>
@@ -1923,7 +1880,6 @@
 </tr>
 </tbody>
 </table>
-</div>
 <p>authors：薛轲翰，谢其骏</p>
 
             </article>
@@ -1950,7 +1906,7 @@
                 
               </div>
               
-                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！<a href="https://blog.kehan.site/about">联系作者。</a></p>
               
               
                 <div class="post-prevnext row">
@@ -1967,8 +1923,8 @@
                   <div class="post-next col-6">
                     
                     
-                      <a href="/2019/06/08/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Deep-Learning%E5%9C%A8%E6%97%A0%E4%BA%BA%E6%9C%BA%E5%AF%BC%E8%88%AA%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/">
-                        <span class="hidden-mobile">论文阅读 - DroNet: Deep learning 在无人机导航中的应用</span>
+                      <a href="/2019/06/14/%E6%97%8B%E7%BF%BC%E6%97%A0%E4%BA%BA%E6%9C%BA%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA%E6%96%B9%E6%A1%88/">
+                        <span class="hidden-mobile">旋翼无人机平台搭建方案</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -2172,40 +2128,8 @@
   
 
   
-    <!-- MathJax -->
-    <script>
-      MathJax = {
-        tex: {
-          inlineMath: [['$', '$'], ['\\(', '\\)']]
-        },
-        options: {
-          renderActions: {
-            findScript: [10, doc => {
-              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
-                const display = !!node.type.match(/; *mode=display/);
-                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
-                const text = document.createTextNode('');
-                node.parentNode.replaceChild(text, node);
-                math.start = { node: text, delim: '', n: 0 };
-                math.end = { node: text, delim: '', n: 0 };
-                doc.math.push(math);
-              });
-            }, '', false],
-            insertedScript: [200, () => {
-              document.querySelectorAll('mjx-container').forEach(node => {
-                let target = node.parentNode;
-                if (target.nodeName.toLowerCase() === 'li') {
-                  target.parentNode.classList.add('has-jax');
-                }
-              });
-            }, '', false]
-          }
-        }
-      };
-    </script>
-
-    <script async src="https://cdn.staticfile.org/mathjax/3.0.5/es5/tex-svg.js" ></script>
-
+    <!-- KaTeX -->
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/KaTeX/0.11.1/katex.min.css" />
   
 
 
