@@ -17,7 +17,7 @@
   <meta name="description" content="">
   <meta name="author" content="Kehan Xue">
   <meta name="keywords" content="">
-  <title>计算机组成原理 - 设计一个CPU - Kehan&#39;s Blog</title>
+  <title>计算机组成原理 - 设计一个 CPU - Kehan&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 
@@ -163,7 +163,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      3.9k 字
+      3.8k 字
     </span>
   
 
@@ -212,9 +212,9 @@
 <li>CPU 字长为 8 位，8 个程序员可见的寄存器，分别命名为 r0, . . . , r7</li>
 <li>地址总线、数据总线各为 8 位，可访问 28 字节的地址空间</li>
 <li>数据采用补码表示，只需支持定点运算</li>
-<li>采用定长三级时序，每个指令周期包含 3 个机器周期(取指周期、间址周期和执行周 期)，每个机器周期由 3 个节拍构成</li>
+<li>采用定长三级时序，每个指令周期包含 3 个机器周期 (取指周期、间址周期和执行周 期)，每个机器周期由 3 个节拍构成</li>
 <li>系统时钟频率为 130MHZ</li>
-<li>为减低成本，采用 TTL 74181a作为运算器</li>
+<li>为减低成本，采用 TTL 74181a 作为运算器</li>
 </ul>
 <h2 id="指令集特点"><a class="markdownIt-Anchor" href="#指令集特点"></a> 指令集特点</h2>
 <ul>
@@ -233,10 +233,10 @@
 <li>给出基于微程序设计控制器的微指令及控存中的微程序</li>
 </ul>
 <h1 id="指令系统设计"><a class="markdownIt-Anchor" href="#指令系统设计"></a> 指令系统设计</h1>
-<p>由于指令的操作数与寻址方式不同, 根据作业中所要求实现的指令类型, 以以下思路设计指令系统.</p>
+<p>由于指令的操作数与寻址方式不同，根据作业中所要求实现的指令类型，以以下思路设计指令系统.</p>
 <h2 id="分析寻址类型需求"><a class="markdownIt-Anchor" href="#分析寻址类型需求"></a> 分析寻址类型需求</h2>
 <ol>
-<li>由于存在<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>8</mn><mo>=</mo><msup><mn>2</mn><mn>3</mn></msup></mrow><annotation encoding="application/x-tex">8=2^3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">8</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span></span></span></span>种不同操作指令, 所以可以用3bit的操作码来区分该8种不同操作指令</li>
+<li>由于存在 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>8</mn><mo>=</mo><msup><mn>2</mn><mn>3</mn></msup></mrow><annotation encoding="application/x-tex">8=2^3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">8</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span></span></span></span> 种不同操作指令，所以可以用 3bit 的操作码来区分该 8 种不同操作指令</li>
 </ol>
 <table>
 <thead>
@@ -264,29 +264,29 @@
 </tr>
 </tbody>
 </table>
-<p>其中mov, add, sub, and, or为双操作数指令, not和jmp为单操作数指令, hlt为零操作数指令</p>
+<p>其中 mov, add, sub, and, or 为双操作数指令，not 和 jmp 为单操作数指令，hlt 为零操作数指令</p>
 <ol start="2">
 <li>
-<p>所有指令的两个操作数不能同时为内存操作数. 该CPU需支持立即寻址, 直接寻址, 寄存器直接寻址和相对寻址.</p>
+<p>所有指令的两个操作数不能同时为内存操作数。该 CPU 需支持立即寻址，直接寻址，寄存器直接寻址和相对寻址.</p>
 <p>其中有以下约束:</p>
 <ul>
 <li>目的操作数不能为立即寻址方式</li>
-<li>相对寻址一般用于转移指令, 所以本大作业设计中不在其他类型指令中出现</li>
+<li>相对寻址一般用于转移指令，所以本大作业设计中不在其他类型指令中出现</li>
 <li>指令字长为单字节或双字节</li>
 </ul>
-<p>设定每一条指令的左操作数为目的操作数, 右操作数为源操作数.</p>
-<p>为了区分不同的寻址方式, 需要在操作数前面加上寻址特征.</p>
-<p>本题目中双操作数指令的寻址方式均有4种, 设定寻址特征如下:</p>
+<p>设定每一条指令的左操作数为目的操作数，右操作数为源操作数.</p>
+<p>为了区分不同的寻址方式，需要在操作数前面加上寻址特征.</p>
+<p>本题目中双操作数指令的寻址方式均有 4 种，设定寻址特征如下:</p>
 </li>
 </ol>
 <table>
 <thead>
 <tr>
 <th>寻址方式</th>
-<th>寄存器直接寻址-立即数寻址</th>
-<th>寄存器直接寻址-寄存器直接寻址</th>
-<th>寄存器直接寻址-直接寻址</th>
-<th>直接寻址-寄存器直接寻址</th>
+<th>寄存器直接寻址 - 立即数寻址</th>
+<th>寄存器直接寻址 - 寄存器直接寻址</th>
+<th>寄存器直接寻址 - 直接寻址</th>
+<th>直接寻址 - 寄存器直接寻址</th>
 </tr>
 </thead>
 <tbody>
@@ -299,7 +299,7 @@
 </tr>
 </tbody>
 </table>
-<p>单操作数not指令的寻址方式有两种, 直接寻址与寄存器直接寻址. not为单操作数指令, 操作数可以为直接寻址与寄存器直接寻址两种方式. 因为指令的位数够用, 为了保持指令格式的整齐, 仍采用2位的寻址特征.</p>
+<p>单操作数 not 指令的寻址方式有两种，直接寻址与寄存器直接寻址. not 为单操作数指令，操作数可以为直接寻址与寄存器直接寻址两种方式。因为指令的位数够用，为了保持指令格式的整齐，仍采用 2 位的寻址特征.</p>
 <table>
 <thead>
 <tr>
@@ -316,7 +316,7 @@
 </tr>
 </tbody>
 </table>
-<p>单操作数jmp指令是转移类指令, 有相对偏移与绝对偏移两种方式. 相对偏移的方式即为相对寻址, 跳转后的地址为PC当前值+jmp指令的操作数. 绝对偏移即为立即寻址, 直接跳转到jmp指令的操作数代表的地址.</p>
+<p>单操作数 jmp 指令是转移类指令，有相对偏移与绝对偏移两种方式。相对偏移的方式即为相对寻址，跳转后的地址为 PC 当前值 + jmp 指令的操作数。绝对偏移即为立即寻址，直接跳转到 jmp 指令的操作数代表的地址.</p>
 <table>
 <thead>
 <tr>
@@ -336,8 +336,8 @@
 <p>确定各种指令中不同操作数的长度:</p>
 <ul>
 <li>立即数寻址取决于剩下的指令位数</li>
-<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>8</mn><mo>=</mo><msup><mn>2</mn><mn>3</mn></msup></mrow><annotation encoding="application/x-tex">8=2^3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">8</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span></span></span></span>个程序员可见寄存器, 寄存器寻址操作数长度为3</li>
-<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mn>2</mn><mn>8</mn></msup></mrow><annotation encoding="application/x-tex">2^8</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">8</span></span></span></span></span></span></span></span></span></span></span>字节的地址空间, 直接寻址操作数的长度为8</li>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>8</mn><mo>=</mo><msup><mn>2</mn><mn>3</mn></msup></mrow><annotation encoding="application/x-tex">8=2^3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">8</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span></span></span></span> 个程序员可见寄存器，寄存器寻址操作数长度为 3</li>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mn>2</mn><mn>8</mn></msup></mrow><annotation encoding="application/x-tex">2^8</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">8</span></span></span></span></span></span></span></span></span></span></span> 字节的地址空间，直接寻址操作数的长度为 8</li>
 </ul>
 <h2 id="设计指令系统"><a class="markdownIt-Anchor" href="#设计指令系统"></a> 设计指令系统</h2>
 <h3 id="mov"><a class="markdownIt-Anchor" href="#mov"></a> <em><strong>mov</strong></em></h3>
@@ -348,8 +348,8 @@
 <tr>
 <th>操作码</th>
 <th>寻址特征</th>
-<th>左操作数:寄存器编号(3位)</th>
-<th>右操作数:立即数(8位)</th>
+<th>左操作数：寄存器编号 (3 位)</th>
+<th>右操作数：立即数 (8 位)</th>
 </tr>
 </thead>
 <tbody>
@@ -368,8 +368,8 @@
 <th>操作码</th>
 <th>寻址特征</th>
 <th>空码</th>
-<th>左操作数:寄存器编号(3位)</th>
-<th>右操作数:寄存器编号(3位)</th>
+<th>左操作数：寄存器编号 (3 位)</th>
+<th>右操作数：寄存器编号 (3 位)</th>
 </tr>
 </thead>
 <tbody>
@@ -388,8 +388,8 @@
 <tr>
 <th>操作码</th>
 <th>寻址特征</th>
-<th>左操作数:寄存器编号(3位)</th>
-<th>右操作数:主存地址编号(8位)</th>
+<th>左操作数：寄存器编号 (3 位)</th>
+<th>右操作数：主存地址编号 (8 位)</th>
 </tr>
 </thead>
 <tbody>
@@ -407,8 +407,8 @@
 <tr>
 <th>操作码</th>
 <th>寻址特征</th>
-<th>左操作数:主存地址编号(8位)</th>
-<th>右操作数:寄存器编号(3位)</th>
+<th>左操作数：主存地址编号 (8 位)</th>
+<th>右操作数：寄存器编号 (3 位)</th>
 </tr>
 </thead>
 <tbody>
@@ -421,15 +421,15 @@
 </tbody>
 </table>
 <h3 id="add"><a class="markdownIt-Anchor" href="#add"></a> <em><strong>add</strong></em></h3>
-<p>同mov, 分为以下几种情况:</p>
+<p>同 mov, 分为以下几种情况:</p>
 <p><strong>addRI</strong></p>
 <table>
 <thead>
 <tr>
 <th>操作码</th>
 <th>寻址特征</th>
-<th>左操作数:寄存器编号(3位)</th>
-<th>右操作数:立即数(8位)</th>
+<th>左操作数：寄存器编号 (3 位)</th>
+<th>右操作数：立即数 (8 位)</th>
 </tr>
 </thead>
 <tbody>
@@ -448,8 +448,8 @@
 <th>操作码</th>
 <th>寻址特征</th>
 <th>空码</th>
-<th>左操作数:寄存器编号(3位)</th>
-<th>右操作数:寄存器编号(3位)</th>
+<th>左操作数：寄存器编号 (3 位)</th>
+<th>右操作数：寄存器编号 (3 位)</th>
 </tr>
 </thead>
 <tbody>
@@ -468,8 +468,8 @@
 <tr>
 <th>操作码</th>
 <th>寻址特征</th>
-<th>左操作数:寄存器编号(3位)</th>
-<th>右操作数:主存地址编号(8位)</th>
+<th>左操作数：寄存器编号 (3 位)</th>
+<th>右操作数：主存地址编号 (8 位)</th>
 </tr>
 </thead>
 <tbody>
@@ -487,8 +487,8 @@
 <tr>
 <th>操作码</th>
 <th>寻址特征</th>
-<th>左操作数:主存地址编号(8位)</th>
-<th>右操作数:寄存器编号(3位)</th>
+<th>左操作数：主存地址编号 (8 位)</th>
+<th>右操作数：寄存器编号 (3 位)</th>
 </tr>
 </thead>
 <tbody>
@@ -501,15 +501,15 @@
 </tbody>
 </table>
 <h3 id="sub"><a class="markdownIt-Anchor" href="#sub"></a> <em><strong>sub</strong></em></h3>
-<p>同mov, 分为以下几种情况:</p>
+<p>同 mov, 分为以下几种情况:</p>
 <p><strong>subRI</strong></p>
 <table>
 <thead>
 <tr>
 <th>操作码</th>
 <th>寻址特征</th>
-<th>左操作数:寄存器编号(3位)</th>
-<th>右操作数:立即数(8位)</th>
+<th>左操作数：寄存器编号 (3 位)</th>
+<th>右操作数：立即数 (8 位)</th>
 </tr>
 </thead>
 <tbody>
@@ -528,8 +528,8 @@
 <th>操作码</th>
 <th>寻址特征</th>
 <th>空码</th>
-<th>左操作数:寄存器编号(3位)</th>
-<th>右操作数:寄存器编号(3位)</th>
+<th>左操作数：寄存器编号 (3 位)</th>
+<th>右操作数：寄存器编号 (3 位)</th>
 </tr>
 </thead>
 <tbody>
@@ -548,8 +548,8 @@
 <tr>
 <th>操作码</th>
 <th>寻址特征</th>
-<th>左操作数:寄存器编号(3位)</th>
-<th>右操作数:主存地址编号(8位)</th>
+<th>左操作数：寄存器编号 (3 位)</th>
+<th>右操作数：主存地址编号 (8 位)</th>
 </tr>
 </thead>
 <tbody>
@@ -567,8 +567,8 @@
 <tr>
 <th>操作码</th>
 <th>寻址特征</th>
-<th>左操作数:主存地址编号(8位)</th>
-<th>右操作数:寄存器编号(3位)</th>
+<th>左操作数：主存地址编号 (8 位)</th>
+<th>右操作数：寄存器编号 (3 位)</th>
 </tr>
 </thead>
 <tbody>
@@ -581,15 +581,15 @@
 </tbody>
 </table>
 <h3 id="and"><a class="markdownIt-Anchor" href="#and"></a> <em><strong>and</strong></em></h3>
-<p>同mov, 分为以下几种情况:</p>
+<p>同 mov, 分为以下几种情况:</p>
 <p><strong>andRI</strong></p>
 <table>
 <thead>
 <tr>
 <th>操作码</th>
 <th>寻址特征</th>
-<th>左操作数:寄存器编号(3位)</th>
-<th>右操作数:立即数(8位)</th>
+<th>左操作数：寄存器编号 (3 位)</th>
+<th>右操作数：立即数 (8 位)</th>
 </tr>
 </thead>
 <tbody>
@@ -608,8 +608,8 @@
 <th>操作码</th>
 <th>寻址特征</th>
 <th>空码</th>
-<th>左操作数:寄存器编号(3位)</th>
-<th>右操作数:寄存器编号(3位)</th>
+<th>左操作数：寄存器编号 (3 位)</th>
+<th>右操作数：寄存器编号 (3 位)</th>
 </tr>
 </thead>
 <tbody>
@@ -628,8 +628,8 @@
 <tr>
 <th>操作码</th>
 <th>寻址特征</th>
-<th>左操作数:寄存器编号(3位)</th>
-<th>右操作数:主存地址编号(8位)</th>
+<th>左操作数：寄存器编号 (3 位)</th>
+<th>右操作数：主存地址编号 (8 位)</th>
 </tr>
 </thead>
 <tbody>
@@ -647,8 +647,8 @@
 <tr>
 <th>操作码</th>
 <th>寻址特征</th>
-<th>左操作数:主存地址编号(8位)</th>
-<th>右操作数:寄存器编号(3位)</th>
+<th>左操作数：主存地址编号 (8 位)</th>
+<th>右操作数：寄存器编号 (3 位)</th>
 </tr>
 </thead>
 <tbody>
@@ -661,15 +661,15 @@
 </tbody>
 </table>
 <h3 id="or"><a class="markdownIt-Anchor" href="#or"></a> <em><strong>or</strong></em></h3>
-<p>同mov, 分为以下几种情况:</p>
+<p>同 mov, 分为以下几种情况:</p>
 <p><strong>orRI</strong></p>
 <table>
 <thead>
 <tr>
 <th>操作码</th>
 <th>寻址特征</th>
-<th>左操作数:寄存器编号(3位)</th>
-<th>右操作数:立即数(8位)</th>
+<th>左操作数：寄存器编号 (3 位)</th>
+<th>右操作数：立即数 (8 位)</th>
 </tr>
 </thead>
 <tbody>
@@ -688,8 +688,8 @@
 <th>操作码</th>
 <th>寻址特征</th>
 <th>空码</th>
-<th>左操作数:寄存器编号(3位)</th>
-<th>右操作数:寄存器编号(3位)</th>
+<th>左操作数：寄存器编号 (3 位)</th>
+<th>右操作数：寄存器编号 (3 位)</th>
 </tr>
 </thead>
 <tbody>
@@ -708,8 +708,8 @@
 <tr>
 <th>操作码</th>
 <th>寻址特征</th>
-<th>左操作数:寄存器编号(3位)</th>
-<th>右操作数:主存地址编号(8位)</th>
+<th>左操作数：寄存器编号 (3 位)</th>
+<th>右操作数：主存地址编号 (8 位)</th>
 </tr>
 </thead>
 <tbody>
@@ -727,8 +727,8 @@
 <tr>
 <th>操作码</th>
 <th>寻址特征</th>
-<th>左操作数:主存地址编号(8位)</th>
-<th>右操作数:寄存器编号(3位)</th>
+<th>左操作数：主存地址编号 (8 位)</th>
+<th>右操作数：寄存器编号 (3 位)</th>
 </tr>
 </thead>
 <tbody>
@@ -747,7 +747,7 @@
 <tr>
 <th>操作码</th>
 <th>寻址特征</th>
-<th>操作数:寄存器编号(3位)</th>
+<th>操作数：寄存器编号 (3 位)</th>
 </tr>
 </thead>
 <tbody>
@@ -765,7 +765,7 @@
 <th>操作码</th>
 <th>寻址特征</th>
 <th>空码</th>
-<th>操作数:主存地址编号(8位)</th>
+<th>操作数：主存地址编号 (8 位)</th>
 </tr>
 </thead>
 <tbody>
@@ -785,7 +785,7 @@
 <th>操作码</th>
 <th>寻址特征</th>
 <th>空码</th>
-<th>操作数:主存地址编号(8位)</th>
+<th>操作数：主存地址编号 (8 位)</th>
 </tr>
 </thead>
 <tbody>
@@ -804,7 +804,7 @@
 <th>操作码</th>
 <th>寻址特征</th>
 <th>空码</th>
-<th>操作数:主存地址编号(8位)</th>
+<th>操作数：主存地址编号 (8 位)</th>
 </tr>
 </thead>
 <tbody>
@@ -832,22 +832,22 @@
 </tr>
 </tbody>
 </table>
-<h1 id="cpu逻辑框图"><a class="markdownIt-Anchor" href="#cpu逻辑框图"></a> CPU逻辑框图</h1>
+<h1 id="cpu-逻辑框图"><a class="markdownIt-Anchor" href="#cpu-逻辑框图"></a> CPU 逻辑框图</h1>
 <p><img src="DesignCPUbyMyself.assets/CPUlogic-1561474520649.jpg" srcset="/img/loading.gif" alt="" /></p>
 <h1 id="基于硬布线方式的控制器设计"><a class="markdownIt-Anchor" href="#基于硬布线方式的控制器设计"></a> 基于硬布线方式的控制器设计</h1>
-<p>由于采用定长三级时序, 每个指令周期包含三个机器周期(取指周期, 间址周期和执行周期), 每个周期由三个节拍构成:</p>
+<p>由于采用定长三级时序，每个指令周期包含三个机器周期 (取指周期，间址周期和执行周期), 每个周期由三个节拍构成:</p>
 <ul>
 <li>
-<p>命名取指周期为FF, 间址周期命名为IND, 执行周期命名为EX</p>
+<p>命名取指周期为 FF, 间址周期命名为 IND, 执行周期命名为 EX</p>
 </li>
 <li>
-<p>三个节拍分别命名为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>T</mi><mn>0</mn></msub><mo separator="true">,</mo><msub><mi>T</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>T</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">T_0, T_1, T_2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></p>
+<p>三个节拍分别命名为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>T</mi><mn>0</mn></msub><mo separator="true">,</mo><msub><mi>T</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>T</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">T_0, T_1, T_2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></p>
 </li>
 <li>
-<p>I为间址标志. 若FF周期的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>T</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">T_2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>时刻测得I=1, 则IND触发器置&quot;1&quot;, 标志进入间址周期. 若I=0, 则EX触发器置&quot;1&quot;, 标志进入执行周期. 若在IND时期的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>T</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">T_2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>时刻测得IND=0, 则EX置&quot;1&quot;, 表示进入执行周期, 表示只有一次间址; 若IND=1, 则表示多次间址, 继续进行间址寻址操作.</p>
+<p>I 为间址标志。若 FF 周期的 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>T</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">T_2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 时刻测得 I=1, 则 IND 触发器置 “1”, 标志进入间址周期。若 I=0, 则 EX 触发器置 “1”, 标志进入执行周期。若在 IND 时期的 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>T</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">T_2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 时刻测得 IND=0, 则 EX 置 “1”, 表示进入执行周期，表示只有一次间址；若 IND=1, 则表示多次间址，继续进行间址寻址操作.</p>
 </li>
 </ul>
-<p>根据每一条指令的节拍安排, 总结出表(见附件DesignCPUHard.xls, 由于表格太大了, 文档里放不下)</p>
+<p>根据每一条指令的节拍安排，总结出表 (见附件 DesignCPUHard.xls, 由于表格太大了，文档里放不下)</p>
 <p>化简得出以下微操作命令的表达式:</p>
 <p><img src="DesignCPUbyMyself.assets%5CIMG_7317.JPG" srcset="/img/loading.gif" alt="" /></p>
 <p><img src="DesignCPUbyMyself.assets%5CIMG_7318.JPG" srcset="/img/loading.gif" alt="IMG_7318" /></p>
@@ -860,18 +860,18 @@
 <h2 id="微指令格式设计"><a class="markdownIt-Anchor" href="#微指令格式设计"></a> 微指令格式设计</h2>
 <table>
 	<tr>
-		<td style='text-align:center;'>2位</td>
-		<td style='text-align:center;'>2位</td>
-		<td style='text-align:center;'>5位</td>
-		<td style='text-align:center;'>7位</td>
+		<td style='text-align:center;'>2 位 </td>
+		<td style='text-align:center;'>2 位 </td>
+		<td style='text-align:center;'>5 位 </td>
+		<td style='text-align:center;'>7 位 </td>
 	</tr>
 	<tr>
-		<td colspan="3" style='text-align:center;'>控制操作字段</td>
-		<td style='text-align:center;'>顺序操作字段</td>
+		<td colspan="3" style='text-align:center;'> 控制操作字段 </td>
+		<td style='text-align:center;'> 顺序操作字段 </td>
 	</tr>
 </table>
 <p>微指令的操作字段采用字段直接编码方式，该字段发出各种控制信号。顺序控制字段仅在微程序的最后指向取值微程序，它可指出下条微指令的地址（简称下地址），以控制微指令序列的执行顺序。</p>
-<p>前2位存放取值微程序相关的微操作</p>
+<p>前 2 位存放取值微程序相关的微操作</p>
 <table>
 <thead>
 <tr>
@@ -886,7 +886,7 @@
 </tr>
 <tr>
 <td style="text-align:center">10</td>
-<td style="text-align:center">M(MAR)-&gt;MDR</td>
+<td style="text-align:center">M (MAR)-&gt;MDR</td>
 </tr>
 <tr>
 <td style="text-align:center">11</td>
@@ -894,7 +894,7 @@
 </tr>
 </tbody>
 </table>
-<p>中间2位存放一些读、写信号的置有效和程序计算器等微操作</p>
+<p>中间 2 位存放一些读、写信号的置有效和程序计算器等微操作</p>
 <table>
 <thead>
 <tr>
@@ -917,7 +917,7 @@
 </tr>
 </tbody>
 </table>
-<p>中间5位存放转移、加减和取反等操作</p>
+<p>中间 5 位存放转移、加减和取反等操作</p>
 <table>
 <thead>
 <tr>
@@ -940,43 +940,43 @@
 </tr>
 <tr>
 <td style="text-align:center">00011</td>
-<td style="text-align:center">AD(IR)-&gt;MAR</td>
+<td style="text-align:center">AD (IR)-&gt;MAR</td>
 </tr>
 <tr>
 <td style="text-align:center">00100</td>
-<td style="text-align:center">AD(IR)-&gt;JAR</td>
+<td style="text-align:center">AD (IR)-&gt;JAR</td>
 </tr>
 <tr>
 <td style="text-align:center">00101</td>
-<td style="text-align:center">M(JAR)-&gt;JDR</td>
+<td style="text-align:center">M (JAR)-&gt;JDR</td>
 </tr>
 <tr>
 <td style="text-align:center">00110</td>
-<td style="text-align:center">M(MAR)-&gt;MDR</td>
+<td style="text-align:center">M (MAR)-&gt;MDR</td>
 </tr>
 <tr>
 <td style="text-align:center">00111</td>
-<td style="text-align:center">MDR-&gt;M(JAR)</td>
+<td style="text-align:center">MDR-&gt;M (JAR)</td>
 </tr>
 <tr>
 <td style="text-align:center">01000</td>
-<td style="text-align:center">JDR-&gt;M(MAR)</td>
+<td style="text-align:center">JDR-&gt;M (MAR)</td>
 </tr>
 <tr>
 <td style="text-align:center">01001</td>
-<td style="text-align:center">ACC-&gt;M(MAR)</td>
+<td style="text-align:center">ACC-&gt;M (MAR)</td>
 </tr>
 <tr>
 <td style="text-align:center">01010</td>
-<td style="text-align:center">ACC-&gt;M(JAR)</td>
+<td style="text-align:center">ACC-&gt;M (JAR)</td>
 </tr>
 <tr>
 <td style="text-align:center">01011</td>
-<td style="text-align:center">LATCH-&gt;M(MAR)</td>
+<td style="text-align:center">LATCH-&gt;M (MAR)</td>
 </tr>
 <tr>
 <td style="text-align:center">01100</td>
-<td style="text-align:center">LATCH-&gt;M(JAR)</td>
+<td style="text-align:center">LATCH-&gt;M (JAR)</td>
 </tr>
 <tr>
 <td style="text-align:center">01101</td>
@@ -1012,11 +1012,11 @@
 </tr>
 <tr>
 <td style="text-align:center">10101</td>
-<td style="text-align:center">LATCH-&gt;M(MAR)</td>
+<td style="text-align:center">LATCH-&gt;M (MAR)</td>
 </tr>
 <tr>
 <td style="text-align:center">10110</td>
-<td style="text-align:center">LATCH-&gt;M(JAR)</td>
+<td style="text-align:center">LATCH-&gt;M (JAR)</td>
 </tr>
 <tr>
 <td style="text-align:center">10111</td>
@@ -1024,7 +1024,7 @@
 </tr>
 <tr>
 <td style="text-align:center">11000</td>
-<td style="text-align:center">(PC)+AD(IR)-&gt;EAR</td>
+<td style="text-align:center">(PC)+AD (IR)-&gt;EAR</td>
 </tr>
 <tr>
 <td style="text-align:center">11001</td>
@@ -1032,7 +1032,7 @@
 </tr>
 <tr>
 <td style="text-align:center">11010</td>
-<td style="text-align:center">AD(IR)-&gt;PC</td>
+<td style="text-align:center">AD (IR)-&gt;PC</td>
 </tr>
 <tr>
 <td style="text-align:center">11011</td>
@@ -1069,7 +1069,7 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:center">M(MAR)-&gt;MDR,(PC)+1-&gt;PC</td>
+<td style="text-align:center">M (MAR)-&gt;MDR,(PC)+1-&gt;PC</td>
 <td style="text-align:center">M+2</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
@@ -1081,109 +1081,109 @@
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">OP(IR)-&gt;BUS-&gt;ID</td>
+<td style="text-align:center">OP (IR)-&gt;BUS-&gt;ID</td>
 <td style="text-align:center">M+3</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">AD(IR)-&gt;BUS-&gt;JAR</td>
+<td style="text-align:center">AD (IR)-&gt;BUS-&gt;JAR</td>
 <td style="text-align:center">A+1</td>
 <td style="text-align:center">A</td>
-<td style="text-align:center">movRI周期微程序</td>
+<td style="text-align:center">movRI 周期微程序</td>
 </tr>
 <tr>
-<td style="text-align:center">DA(IR)-&gt;BUS-&gt;M(JAR)</td>
+<td style="text-align:center">DA (IR)-&gt;BUS-&gt;M (JAR)</td>
 <td style="text-align:center">M</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">AD(IR)-&gt;BUS-&gt;JAR</td>
+<td style="text-align:center">AD (IR)-&gt;BUS-&gt;JAR</td>
 <td style="text-align:center">B+1</td>
 <td style="text-align:center">B</td>
-<td style="text-align:center">movRR周期微程序</td>
+<td style="text-align:center">movRR 周期微程序</td>
 </tr>
 <tr>
-<td style="text-align:center">M(JAR)-&gt;JDR</td>
+<td style="text-align:center">M (JAR)-&gt;JDR</td>
 <td style="text-align:center">B+2</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">AD(IR)-&gt;JAR</td>
+<td style="text-align:center">AD (IR)-&gt;JAR</td>
 <td style="text-align:center">B+3</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">JDR-&gt;M(JAR)</td>
+<td style="text-align:center">JDR-&gt;M (JAR)</td>
 <td style="text-align:center">M</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">AD(IR)-&gt;BUS-&gt;MAR，1-&gt;R</td>
+<td style="text-align:center">AD (IR)-&gt;BUS-&gt;MAR，1-&gt;R</td>
 <td style="text-align:center">C+1</td>
 <td style="text-align:center">C</td>
-<td style="text-align:center">movRM周期微程序  (间址)</td>
+<td style="text-align:center">movRM 周期微程序  (间址)</td>
 </tr>
 <tr>
-<td style="text-align:center">M(MAR)-&gt;MDR</td>
+<td style="text-align:center">M (MAR)-&gt;MDR</td>
 <td style="text-align:center">C+2</td>
 <td style="text-align:center"></td>
 <td style="text-align:center">（间址）</td>
 </tr>
 <tr>
-<td style="text-align:center">AD(IR)-&gt;BUS-&gt;JAR</td>
+<td style="text-align:center">AD (IR)-&gt;BUS-&gt;JAR</td>
 <td style="text-align:center">C+3</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">MDR-&gt;M(JAR)</td>
+<td style="text-align:center">MDR-&gt;M (JAR)</td>
 <td style="text-align:center">M</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">AD(IR)-&gt;BUS-&gt;JAR</td>
+<td style="text-align:center">AD (IR)-&gt;BUS-&gt;JAR</td>
 <td style="text-align:center">D+1</td>
 <td style="text-align:center">D</td>
-<td style="text-align:center">movMR周期微程序</td>
+<td style="text-align:center">movMR 周期微程序</td>
 </tr>
 <tr>
-<td style="text-align:center">M(JAR)-&gt;JDR</td>
+<td style="text-align:center">M (JAR)-&gt;JDR</td>
 <td style="text-align:center">D+2</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">AD(IR)-&gt;BUS-&gt;MAR</td>
+<td style="text-align:center">AD (IR)-&gt;BUS-&gt;MAR</td>
 <td style="text-align:center">D+3</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">M(MAR)-&gt;BUS-&gt;JDR</td>
+<td style="text-align:center">M (MAR)-&gt;BUS-&gt;JDR</td>
 <td style="text-align:center">M</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">DA(IR)-&gt;BUS-&gt;ACC</td>
+<td style="text-align:center">DA (IR)-&gt;BUS-&gt;ACC</td>
 <td style="text-align:center">E+1</td>
 <td style="text-align:center">E</td>
-<td style="text-align:center">addRI周期微程序</td>
+<td style="text-align:center">addRI 周期微程序</td>
 </tr>
 <tr>
-<td style="text-align:center">AD(IR)-&gt;BUS-&gt;JAR</td>
+<td style="text-align:center">AD (IR)-&gt;BUS-&gt;JAR</td>
 <td style="text-align:center">E+2</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">M(JAR)-&gt;MDR</td>
+<td style="text-align:center">M (JAR)-&gt;MDR</td>
 <td style="text-align:center">E+3</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
@@ -1195,19 +1195,19 @@
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">LATCH-&gt;BUS-&gt;M(JAR)</td>
+<td style="text-align:center">LATCH-&gt;BUS-&gt;M (JAR)</td>
 <td style="text-align:center">M</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">AD(IR)-&gt;BUS-&gt;JAR</td>
+<td style="text-align:center">AD (IR)-&gt;BUS-&gt;JAR</td>
 <td style="text-align:center">F+1</td>
 <td style="text-align:center">F</td>
-<td style="text-align:center">addRR周期微程序</td>
+<td style="text-align:center">addRR 周期微程序</td>
 </tr>
 <tr>
-<td style="text-align:center">M(JAR)-&gt;JDR</td>
+<td style="text-align:center">M (JAR)-&gt;JDR</td>
 <td style="text-align:center">F+2</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
@@ -1219,13 +1219,13 @@
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">AD(IR)-&gt;BUS-&gt;JAR</td>
+<td style="text-align:center">AD (IR)-&gt;BUS-&gt;JAR</td>
 <td style="text-align:center">F+4</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">M(JAR)-&gt;JDR</td>
+<td style="text-align:center">M (JAR)-&gt;JDR</td>
 <td style="text-align:center">F+5</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
@@ -1237,19 +1237,19 @@
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">LATCH-&gt;BUS-&gt;M(JAR)</td>
+<td style="text-align:center">LATCH-&gt;BUS-&gt;M (JAR)</td>
 <td style="text-align:center">M</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">AD(IR)-&gt;BUS-&gt;MAR</td>
+<td style="text-align:center">AD (IR)-&gt;BUS-&gt;MAR</td>
 <td style="text-align:center">G+1</td>
 <td style="text-align:center">G</td>
-<td style="text-align:center">addRM周期微程序(间址)</td>
+<td style="text-align:center">addRM 周期微程序 (间址)</td>
 </tr>
 <tr>
-<td style="text-align:center">M(MAR)-&gt;BUS-&gt;MDR</td>
+<td style="text-align:center">M (MAR)-&gt;BUS-&gt;MDR</td>
 <td style="text-align:center">G+2</td>
 <td style="text-align:center"></td>
 <td style="text-align:center">（间址)</td>
@@ -1261,13 +1261,13 @@
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">AD(IR)-&gt;BUS-&gt;JAR</td>
+<td style="text-align:center">AD (IR)-&gt;BUS-&gt;JAR</td>
 <td style="text-align:center">G+4</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">M(JAR)-&gt;JDR</td>
+<td style="text-align:center">M (JAR)-&gt;JDR</td>
 <td style="text-align:center">G+5</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
@@ -1279,31 +1279,31 @@
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">LATCH-&gt;BUS-&gt;M(MAR)</td>
+<td style="text-align:center">LATCH-&gt;BUS-&gt;M (MAR)</td>
 <td style="text-align:center">M</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">AD(IR)-&gt;BUS-&gt;JAR</td>
+<td style="text-align:center">AD (IR)-&gt;BUS-&gt;JAR</td>
 <td style="text-align:center">H+1</td>
 <td style="text-align:center">H</td>
-<td style="text-align:center">addMR周期微程序</td>
+<td style="text-align:center">addMR 周期微程序</td>
 </tr>
 <tr>
-<td style="text-align:center">AD(IR)-&gt;BUS-&gt;MAR</td>
+<td style="text-align:center">AD (IR)-&gt;BUS-&gt;MAR</td>
 <td style="text-align:center">H+2</td>
 <td style="text-align:center"></td>
 <td style="text-align:center">(间址)</td>
 </tr>
 <tr>
-<td style="text-align:center">M(MAR)-&gt;MDR</td>
+<td style="text-align:center">M (MAR)-&gt;MDR</td>
 <td style="text-align:center">H+3</td>
 <td style="text-align:center"></td>
 <td style="text-align:center">(间址)</td>
 </tr>
 <tr>
-<td style="text-align:center">M(JAR)-&gt;JDR</td>
+<td style="text-align:center">M (JAR)-&gt;JDR</td>
 <td style="text-align:center">H+4</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
@@ -1321,25 +1321,25 @@
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">LATCH-&gt;BUS-&gt;M(JAR)</td>
+<td style="text-align:center">LATCH-&gt;BUS-&gt;M (JAR)</td>
 <td style="text-align:center">M</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">DA(IR)-&gt;BUS-&gt;ACC</td>
+<td style="text-align:center">DA (IR)-&gt;BUS-&gt;ACC</td>
 <td style="text-align:center">I+1</td>
 <td style="text-align:center">I</td>
-<td style="text-align:center">subRI周期微程序</td>
+<td style="text-align:center">subRI 周期微程序</td>
 </tr>
 <tr>
-<td style="text-align:center">AD(IR)-&gt;BUS-&gt;JAR</td>
+<td style="text-align:center">AD (IR)-&gt;BUS-&gt;JAR</td>
 <td style="text-align:center">I+2</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">M(JAR)-&gt;MDR</td>
+<td style="text-align:center">M (JAR)-&gt;MDR</td>
 <td style="text-align:center">I+3</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
@@ -1351,19 +1351,19 @@
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">LATCH-&gt;BUS-&gt;M(JAR)</td>
+<td style="text-align:center">LATCH-&gt;BUS-&gt;M (JAR)</td>
 <td style="text-align:center">M</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">AD(IR)-&gt;BUS-&gt;JAR</td>
+<td style="text-align:center">AD (IR)-&gt;BUS-&gt;JAR</td>
 <td style="text-align:center">J+1</td>
 <td style="text-align:center">J</td>
-<td style="text-align:center">subRR周期微程序</td>
+<td style="text-align:center">subRR 周期微程序</td>
 </tr>
 <tr>
-<td style="text-align:center">M(JAR)-&gt;JDR</td>
+<td style="text-align:center">M (JAR)-&gt;JDR</td>
 <td style="text-align:center">J+2</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
@@ -1375,13 +1375,13 @@
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">AD(IR)-&gt;BUS-&gt;JAR</td>
+<td style="text-align:center">AD (IR)-&gt;BUS-&gt;JAR</td>
 <td style="text-align:center">J+4</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">M(JAR)-&gt;JDR</td>
+<td style="text-align:center">M (JAR)-&gt;JDR</td>
 <td style="text-align:center">J+5</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
@@ -1393,19 +1393,19 @@
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">LATCH-&gt;BUS-&gt;M(JAR)</td>
+<td style="text-align:center">LATCH-&gt;BUS-&gt;M (JAR)</td>
 <td style="text-align:center">M</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">AD(IR)-&gt;BUS-&gt;MAR</td>
+<td style="text-align:center">AD (IR)-&gt;BUS-&gt;MAR</td>
 <td style="text-align:center">K+1</td>
 <td style="text-align:center">K</td>
-<td style="text-align:center">subRM周期微程序(间址)</td>
+<td style="text-align:center">subRM 周期微程序 (间址)</td>
 </tr>
 <tr>
-<td style="text-align:center">M(MAR)-&gt;BUS-&gt;MDR</td>
+<td style="text-align:center">M (MAR)-&gt;BUS-&gt;MDR</td>
 <td style="text-align:center">K+2</td>
 <td style="text-align:center"></td>
 <td style="text-align:center">（间址)</td>
@@ -1417,13 +1417,13 @@
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">ID(IR)-&gt;BUS-&gt;JAR</td>
+<td style="text-align:center">ID (IR)-&gt;BUS-&gt;JAR</td>
 <td style="text-align:center">K+4</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">M(JAR)-&gt;JDR</td>
+<td style="text-align:center">M (JAR)-&gt;JDR</td>
 <td style="text-align:center">K+5</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
@@ -1435,19 +1435,19 @@
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">LATCH-&gt;BUS-&gt;M(MAR)</td>
+<td style="text-align:center">LATCH-&gt;BUS-&gt;M (MAR)</td>
 <td style="text-align:center">M</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">AD(IR)-&gt;BUS-&gt;JAR</td>
+<td style="text-align:center">AD (IR)-&gt;BUS-&gt;JAR</td>
 <td style="text-align:center">L+1</td>
 <td style="text-align:center">L</td>
-<td style="text-align:center">subMR周期微程序</td>
+<td style="text-align:center">subMR 周期微程序</td>
 </tr>
 <tr>
-<td style="text-align:center">M(JAR)-&gt;JDR</td>
+<td style="text-align:center">M (JAR)-&gt;JDR</td>
 <td style="text-align:center">L+2</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
@@ -1459,13 +1459,13 @@
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">AD(IR)-&gt;BUS-&gt;MAR</td>
+<td style="text-align:center">AD (IR)-&gt;BUS-&gt;MAR</td>
 <td style="text-align:center">L+4</td>
 <td style="text-align:center"></td>
 <td style="text-align:center">(间址)</td>
 </tr>
 <tr>
-<td style="text-align:center">M(MAR)-&gt;MDR</td>
+<td style="text-align:center">M (MAR)-&gt;MDR</td>
 <td style="text-align:center">L+5</td>
 <td style="text-align:center"></td>
 <td style="text-align:center">(间址)</td>
@@ -1477,25 +1477,25 @@
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">LATCH-&gt;M(JAR)</td>
+<td style="text-align:center">LATCH-&gt;M (JAR)</td>
 <td style="text-align:center">M</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">DA(IR)-&gt;BUS-&gt;ACC</td>
+<td style="text-align:center">DA (IR)-&gt;BUS-&gt;ACC</td>
 <td style="text-align:center">N+1</td>
 <td style="text-align:center">N</td>
-<td style="text-align:center">andRI周期微程序</td>
+<td style="text-align:center">andRI 周期微程序</td>
 </tr>
 <tr>
-<td style="text-align:center">AD(IR)-&gt;BUS-&gt;JAR</td>
+<td style="text-align:center">AD (IR)-&gt;BUS-&gt;JAR</td>
 <td style="text-align:center">N+2</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">M(JAR)-&gt;MDR</td>
+<td style="text-align:center">M (JAR)-&gt;MDR</td>
 <td style="text-align:center">N+3</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
@@ -1507,19 +1507,19 @@
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">LATCH-&gt;BUS-&gt;M(JAR)</td>
+<td style="text-align:center">LATCH-&gt;BUS-&gt;M (JAR)</td>
 <td style="text-align:center">M</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">AD(IR)-&gt;BUS-&gt;JAR</td>
+<td style="text-align:center">AD (IR)-&gt;BUS-&gt;JAR</td>
 <td style="text-align:center">O+1</td>
 <td style="text-align:center">O</td>
-<td style="text-align:center">andRR周期微程序</td>
+<td style="text-align:center">andRR 周期微程序</td>
 </tr>
 <tr>
-<td style="text-align:center">M(JAR)-&gt;JDR</td>
+<td style="text-align:center">M (JAR)-&gt;JDR</td>
 <td style="text-align:center">O+2</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
@@ -1531,13 +1531,13 @@
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">AD(IR)-&gt;BUS-&gt;JAR</td>
+<td style="text-align:center">AD (IR)-&gt;BUS-&gt;JAR</td>
 <td style="text-align:center">O+4</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">M(JAR)-&gt;JDR</td>
+<td style="text-align:center">M (JAR)-&gt;JDR</td>
 <td style="text-align:center">O+5</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
@@ -1549,19 +1549,19 @@
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">LATCH-&gt;BUS-&gt;M(JAR)</td>
+<td style="text-align:center">LATCH-&gt;BUS-&gt;M (JAR)</td>
 <td style="text-align:center">M</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">AD(IR)-&gt;BUS-&gt;MAR</td>
+<td style="text-align:center">AD (IR)-&gt;BUS-&gt;MAR</td>
 <td style="text-align:center">P+1</td>
 <td style="text-align:center">P</td>
-<td style="text-align:center">andRM周期微程序(间址)</td>
+<td style="text-align:center">andRM 周期微程序 (间址)</td>
 </tr>
 <tr>
-<td style="text-align:center">M(MAR)-&gt;BUS-&gt;MDR</td>
+<td style="text-align:center">M (MAR)-&gt;BUS-&gt;MDR</td>
 <td style="text-align:center">P+2</td>
 <td style="text-align:center"></td>
 <td style="text-align:center">（间址)</td>
@@ -1573,13 +1573,13 @@
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">ID(IR)-&gt;BUS-&gt;JAR</td>
+<td style="text-align:center">ID (IR)-&gt;BUS-&gt;JAR</td>
 <td style="text-align:center">P+4</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">M(JAR)-&gt;JDR</td>
+<td style="text-align:center">M (JAR)-&gt;JDR</td>
 <td style="text-align:center">P+5</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
@@ -1591,19 +1591,19 @@
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">LATCH-&gt;BUS-&gt;M(MAR)</td>
+<td style="text-align:center">LATCH-&gt;BUS-&gt;M (MAR)</td>
 <td style="text-align:center">M</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">AD(IR)-&gt;BUS-&gt;JAR</td>
+<td style="text-align:center">AD (IR)-&gt;BUS-&gt;JAR</td>
 <td style="text-align:center">Q+1</td>
 <td style="text-align:center">Q</td>
-<td style="text-align:center">andMR周期微程序</td>
+<td style="text-align:center">andMR 周期微程序</td>
 </tr>
 <tr>
-<td style="text-align:center">M(JAR)-&gt;JDR</td>
+<td style="text-align:center">M (JAR)-&gt;JDR</td>
 <td style="text-align:center">Q+2</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
@@ -1615,13 +1615,13 @@
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">AD(IR)-&gt;BUS-&gt;MAR</td>
+<td style="text-align:center">AD (IR)-&gt;BUS-&gt;MAR</td>
 <td style="text-align:center">Q+4</td>
 <td style="text-align:center"></td>
 <td style="text-align:center">(间址)</td>
 </tr>
 <tr>
-<td style="text-align:center">M(MAR)-&gt;MDR</td>
+<td style="text-align:center">M (MAR)-&gt;MDR</td>
 <td style="text-align:center">Q+5</td>
 <td style="text-align:center"></td>
 <td style="text-align:center">(间址)</td>
@@ -1633,25 +1633,25 @@
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">LATCH-&gt;M(JAR)</td>
+<td style="text-align:center">LATCH-&gt;M (JAR)</td>
 <td style="text-align:center">M</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">DA(IR)-&gt;BUS-&gt;ACC</td>
+<td style="text-align:center">DA (IR)-&gt;BUS-&gt;ACC</td>
 <td style="text-align:center">R+1</td>
 <td style="text-align:center">R</td>
-<td style="text-align:center">orRI周期微程序</td>
+<td style="text-align:center">orRI 周期微程序</td>
 </tr>
 <tr>
-<td style="text-align:center">AD(IR)-&gt;BUS-&gt;JAR</td>
+<td style="text-align:center">AD (IR)-&gt;BUS-&gt;JAR</td>
 <td style="text-align:center">R+2</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">M(JAR)-&gt;MDR</td>
+<td style="text-align:center">M (JAR)-&gt;MDR</td>
 <td style="text-align:center">R+3</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
@@ -1663,19 +1663,19 @@
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">LATCH-&gt;BUS-&gt;M(JAR)</td>
+<td style="text-align:center">LATCH-&gt;BUS-&gt;M (JAR)</td>
 <td style="text-align:center">M</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">AD(IR)-&gt;BUS-&gt;JAR</td>
+<td style="text-align:center">AD (IR)-&gt;BUS-&gt;JAR</td>
 <td style="text-align:center">S+1</td>
 <td style="text-align:center">S</td>
-<td style="text-align:center">orRR周期微程序</td>
+<td style="text-align:center">orRR 周期微程序</td>
 </tr>
 <tr>
-<td style="text-align:center">M(JAR)-&gt;JDR</td>
+<td style="text-align:center">M (JAR)-&gt;JDR</td>
 <td style="text-align:center">S+2</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
@@ -1687,13 +1687,13 @@
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">AD(IR)-&gt;BUS-&gt;JAR</td>
+<td style="text-align:center">AD (IR)-&gt;BUS-&gt;JAR</td>
 <td style="text-align:center">S+4</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">M(JAR)-&gt;JDR</td>
+<td style="text-align:center">M (JAR)-&gt;JDR</td>
 <td style="text-align:center">S+5</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
@@ -1705,19 +1705,19 @@
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">LATCH-&gt;BUS-&gt;M(JAR)</td>
+<td style="text-align:center">LATCH-&gt;BUS-&gt;M (JAR)</td>
 <td style="text-align:center">M</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">AD(IR)-&gt;BUS-&gt;MAR</td>
+<td style="text-align:center">AD (IR)-&gt;BUS-&gt;MAR</td>
 <td style="text-align:center">T+1</td>
 <td style="text-align:center">T</td>
-<td style="text-align:center">orRM周期微程序(间址)</td>
+<td style="text-align:center">orRM 周期微程序 (间址)</td>
 </tr>
 <tr>
-<td style="text-align:center">M(MAR)-&gt;BUS-&gt;MDR</td>
+<td style="text-align:center">M (MAR)-&gt;BUS-&gt;MDR</td>
 <td style="text-align:center">T+2</td>
 <td style="text-align:center"></td>
 <td style="text-align:center">（间址)</td>
@@ -1729,13 +1729,13 @@
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">ID(IR)-&gt;BUS-&gt;JAR</td>
+<td style="text-align:center">ID (IR)-&gt;BUS-&gt;JAR</td>
 <td style="text-align:center">T+4</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">M(JAR)-&gt;JDR</td>
+<td style="text-align:center">M (JAR)-&gt;JDR</td>
 <td style="text-align:center">T+5</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
@@ -1747,31 +1747,31 @@
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">LATCH-&gt;BUS-&gt;M(MAR)</td>
+<td style="text-align:center">LATCH-&gt;BUS-&gt;M (MAR)</td>
 <td style="text-align:center">M</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">AD(IR)-&gt;BUS-&gt;MAR</td>
+<td style="text-align:center">AD (IR)-&gt;BUS-&gt;MAR</td>
 <td style="text-align:center">U+1</td>
 <td style="text-align:center">U</td>
-<td style="text-align:center">orMR周期微程序(间址)</td>
+<td style="text-align:center">orMR 周期微程序 (间址)</td>
 </tr>
 <tr>
-<td style="text-align:center">M(MAR)-&gt;MDR</td>
+<td style="text-align:center">M (MAR)-&gt;MDR</td>
 <td style="text-align:center">U+2</td>
 <td style="text-align:center"></td>
 <td style="text-align:center">(间址)</td>
 </tr>
 <tr>
-<td style="text-align:center">AD(IR)-&gt;BUS-&gt;JAR</td>
+<td style="text-align:center">AD (IR)-&gt;BUS-&gt;JAR</td>
 <td style="text-align:center">U+3</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">M(JAR)-&gt;JDR</td>
+<td style="text-align:center">M (JAR)-&gt;JDR</td>
 <td style="text-align:center">U+4</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
@@ -1789,19 +1789,19 @@
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">LATCH-&gt;M(JAR)</td>
+<td style="text-align:center">LATCH-&gt;M (JAR)</td>
 <td style="text-align:center">M</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">AD(IR)-&gt;BUS-&gt;JAR</td>
+<td style="text-align:center">AD (IR)-&gt;BUS-&gt;JAR</td>
 <td style="text-align:center">V+1</td>
 <td style="text-align:center">V</td>
-<td style="text-align:center">notR周期微程序</td>
+<td style="text-align:center">notR 周期微程序</td>
 </tr>
 <tr>
-<td style="text-align:center">M(JAR)-&gt;JDR</td>
+<td style="text-align:center">M (JAR)-&gt;JDR</td>
 <td style="text-align:center">V+2</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
@@ -1819,19 +1819,19 @@
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">LATCH-&gt;BUS-&gt;M(JAR)</td>
+<td style="text-align:center">LATCH-&gt;BUS-&gt;M (JAR)</td>
 <td style="text-align:center">M</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">AD(IR)-&gt;BUS-&gt;MAR</td>
+<td style="text-align:center">AD (IR)-&gt;BUS-&gt;MAR</td>
 <td style="text-align:center">W+1</td>
 <td style="text-align:center">W</td>
-<td style="text-align:center">notM周期微程序(间址)</td>
+<td style="text-align:center">notM 周期微程序 (间址)</td>
 </tr>
 <tr>
-<td style="text-align:center">M(MAR)-&gt;MDR</td>
+<td style="text-align:center">M (MAR)-&gt;MDR</td>
 <td style="text-align:center">W+2</td>
 <td style="text-align:center"></td>
 <td style="text-align:center">（间址）</td>
@@ -1849,16 +1849,16 @@
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">LATCH-&gt;Bus-&gt;M(MAR)</td>
+<td style="text-align:center">LATCH-&gt;Bus-&gt;M (MAR)</td>
 <td style="text-align:center">M</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">(PC)+AD(IR)-&gt;EAR</td>
+<td style="text-align:center">(PC)+AD (IR)-&gt;EAR</td>
 <td style="text-align:center">X+1</td>
 <td style="text-align:center">X</td>
-<td style="text-align:center">jmpR周期微程序</td>
+<td style="text-align:center">jmpR 周期微程序</td>
 </tr>
 <tr>
 <td style="text-align:center">EAR-&gt;BUS-&gt;PC</td>
@@ -1867,7 +1867,7 @@
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:center">AD(IR)-&gt;PC</td>
+<td style="text-align:center">AD (IR)-&gt;PC</td>
 <td style="text-align:center">M</td>
 <td style="text-align:center">Y</td>
 <td style="text-align:center"></td>
@@ -1876,7 +1876,7 @@
 <td style="text-align:center"></td>
 <td style="text-align:center">M</td>
 <td style="text-align:center">Z</td>
-<td style="text-align:center">htl周期微程序</td>
+<td style="text-align:center">htl 周期微程序</td>
 </tr>
 </tbody>
 </table>
@@ -1898,9 +1898,9 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/CPU/">CPU</a>
-                    
                       <a class="hover-with-bg" href="/tags/Course/">Course</a>
+                    
+                      <a class="hover-with-bg" href="/tags/CPU/">CPU</a>
                     
                   </div>
                 
@@ -2063,7 +2063,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "计算机组成原理 - 设计一个CPU&nbsp;",
+        "计算机组成原理 - 设计一个 CPU&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,

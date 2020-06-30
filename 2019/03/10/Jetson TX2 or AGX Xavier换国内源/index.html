@@ -163,7 +163,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      659 字
+      662 字
     </span>
   
 
@@ -208,46 +208,46 @@
 <h1 id="nvidia-jetson-tx2-or-agx-xavier-apt-切换国内的源"><a class="markdownIt-Anchor" href="#nvidia-jetson-tx2-or-agx-xavier-apt-切换国内的源"></a> NVIDIA Jetson TX2 or AGX Xavier apt 切换国内的源</h1>
 <p>日期可能稍稍有些久远导致不能用，但目前还可以用。</p>
 <h2 id="1-首先备份下之前的-sourcelist"><a class="markdownIt-Anchor" href="#1-首先备份下之前的-sourcelist"></a> 1. 首先备份下之前的 source.list</h2>
-<pre><code class="hljs bash">sudo cp /etc/apt/sources.list /etc/apt/sources.list.backup</code></pre>
+<pre><code class="hljs bash">sudo cp /etc/apt/sources.list/etc/apt/sources.list.backup</code></pre>
 <h2 id="2-修改-sourcelist"><a class="markdownIt-Anchor" href="#2-修改-sourcelist"></a> 2. 修改 source.list</h2>
-<p>换源需要换 <strong>ARM</strong> 的源，不要换成了 PC 平台的软件源。这里推荐的两个国内源为清华和中科大的源，将原来文件里面的内容全部替换成下面两个源之一就可以. 并且由于 TX2 的系统是16.04(xenial)的,Xavier 的系统是18.04(bionic), 所以两者的源还要换个系统版本.</p>
-<p>Xavier清华的:</p>
-<pre><code class="hljs bash">deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ bionic-updates main restricted universe multiverse
-deb-src http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ bionic-updates main restricted universe multiverse
-deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ bionic-security main restricted universe multiverse
-deb-src http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ bionic-security main restricted universe multiverse
-deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ bionic-backports main restricted universe multiverse
-deb-src http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ bionic-backports main restricted universe multiverse
-deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ bionic main universe restricted
-deb-src http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ bionic main universe restricted</code></pre>
-<p>Jetson TX2清华的:</p>
-<pre><code class="hljs bash">deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ xenial-updates main restricted universe multiverse  
-deb-src http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ xenial-updates main restricted universe multiverse   
-deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ xenial-security main restricted universe multiverse   
-deb-src http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ xenial-security main restricted universe multiverse   
-deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ xenial-backports main restricted universe multiverse   
-deb-src http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ xenial-backports main restricted universe multiverse   
-deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ xenial main universe restricted   
-deb-src http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ xenial main universe restricted</code></pre>
-<p>Xavier中科大的:</p>
-<pre><code class="hljs bash">deb http://mirrors.ustc.edu.cn/ubuntu-ports/ xenial-updates main restricted universe multiverse 
-deb-src http://mirrors.ustc.edu.cn/ubuntu-ports/ xenial-updates main restricted universe multiverse 
-deb http://mirrors.ustc.edu.cn/ubuntu-ports/ xenial-security main restricted universe multiverse 
-deb-src http://mirrors.ustc.edu.cn/ubuntu-ports/ xenial-security main restricted universe multiverse 
-deb http://mirrors.ustc.edu.cn/ubuntu-ports/ xenial-backports main restricted universe multiverse 
-deb-src http://mirrors.ustc.edu.cn/ubuntu-ports/ xenial-backports main restricted universe multiverse 
-deb http://mirrors.ustc.edu.cn/ubuntu-ports/ xenial main universe restricted 
-deb-src http://mirrors.ustc.edu.cn/ubuntu-ports/ xenial main universe restricted</code></pre>
-<p>Jetson TX2中科大的:</p>
-<pre><code class="hljs bash">deb http://mirrors.ustc.edu.cn/ubuntu-ports/ xenial-updates main restricted universe multiverse 
-deb-src http://mirrors.ustc.edu.cn/ubuntu-ports/ xenial-updates main restricted universe multiverse 
-deb http://mirrors.ustc.edu.cn/ubuntu-ports/ xenial-security main restricted universe multiverse 
-deb-src http://mirrors.ustc.edu.cn/ubuntu-ports/ xenial-security main restricted universe multiverse 
-deb http://mirrors.ustc.edu.cn/ubuntu-ports/ xenial-backports main restricted universe multiverse 
-deb-src http://mirrors.ustc.edu.cn/ubuntu-ports/ xenial-backports main restricted universe multiverse 
-deb http://mirrors.ustc.edu.cn/ubuntu-ports/ xenial main universe restricted 
-deb-src http://mirrors.ustc.edu.cn/ubuntu-ports/ xenial main universe restricted</code></pre>
-<p>修改完保存后 <code>sudo apt update</code> 一些就OK了.</p>
+<p>换源需要换 <strong>ARM</strong> 的源，不要换成了 PC 平台的软件源。这里推荐的两个国内源为清华和中科大的源，将原来文件里面的内容全部替换成下面两个源之一就可以。并且由于 TX2 的系统是 16.04 (xenial) 的，Xavier 的系统是 18.04 (bionic), 所以两者的源还要换个系统版本.</p>
+<p>Xavier 清华的:</p>
+<pre class="highlight"><code class="bash">deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/bionic-updates main restricted universe multiverse
+deb-src http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/bionic-updates main restricted universe multiverse
+deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/bionic-security main restricted universe multiverse
+deb-src http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/bionic-security main restricted universe multiverse
+deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/bionic-backports main restricted universe multiverse
+deb-src http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/bionic-backports main restricted universe multiverse
+deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/bionic main universe restricted
+deb-src http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/bionic main universe restricted
+```Jetson TX2 清华的:```bash
+deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/xenial-updates main restricted universe multiverse  
+deb-src http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/xenial-updates main restricted universe multiverse   
+deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/xenial-security main restricted universe multiverse   
+deb-src http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/xenial-security main restricted universe multiverse   
+deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/xenial-backports main restricted universe multiverse   
+deb-src http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/xenial-backports main restricted universe multiverse   
+deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/xenial main universe restricted   
+deb-src http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/xenial main universe restricted 
+```Xavier 中科大的:```bash
+deb http://mirrors.ustc.edu.cn/ubuntu-ports/xenial-updates main restricted universe multiverse 
+deb-src http://mirrors.ustc.edu.cn/ubuntu-ports/xenial-updates main restricted universe multiverse 
+deb http://mirrors.ustc.edu.cn/ubuntu-ports/xenial-security main restricted universe multiverse 
+deb-src http://mirrors.ustc.edu.cn/ubuntu-ports/xenial-security main restricted universe multiverse 
+deb http://mirrors.ustc.edu.cn/ubuntu-ports/xenial-backports main restricted universe multiverse 
+deb-src http://mirrors.ustc.edu.cn/ubuntu-ports/xenial-backports main restricted universe multiverse 
+deb http://mirrors.ustc.edu.cn/ubuntu-ports/xenial main universe restricted 
+deb-src http://mirrors.ustc.edu.cn/ubuntu-ports/xenial main universe restricted
+```Jetson TX2 中科大的:```bash
+deb http://mirrors.ustc.edu.cn/ubuntu-ports/xenial-updates main restricted universe multiverse 
+deb-src http://mirrors.ustc.edu.cn/ubuntu-ports/xenial-updates main restricted universe multiverse 
+deb http://mirrors.ustc.edu.cn/ubuntu-ports/xenial-security main restricted universe multiverse 
+deb-src http://mirrors.ustc.edu.cn/ubuntu-ports/xenial-security main restricted universe multiverse 
+deb http://mirrors.ustc.edu.cn/ubuntu-ports/xenial-backports main restricted universe multiverse 
+deb-src http://mirrors.ustc.edu.cn/ubuntu-ports/xenial-backports main restricted universe multiverse 
+deb http://mirrors.ustc.edu.cn/ubuntu-ports/xenial main universe restricted 
+deb-src http://mirrors.ustc.edu.cn/ubuntu-ports/xenial main universe restricted
+```修改完保存后`sudo apt update` 一些就 OK 了.</code></pre>
 
             </article>
             <hr>

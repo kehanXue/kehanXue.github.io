@@ -173,7 +173,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      12
+      13
        分钟
     </span>
   
@@ -206,44 +206,50 @@
             <article class="markdown-body">
               <p>使用 Autoware 提供的 autoware_camera_lidar_calibrator 工具进行进行 VLP-16 与 ZED Camera 两者之间的标定。</p>
 <a id="more"></a>
-<p>在用Autoware提供的工具进行标定之前,搜索了很多的标定工具,但是看其他的方法或多或少都有一点点的麻烦,比如还要制作比较大的标定板等等,而使用 Autoware 则比较简单, 可以直接通过手动对齐图像中的像素点与激光雷达的 3D points 来进行标定. 标定结束后感觉该方式对于 VLP-16 这种较为稀疏的多线激光雷达来说,标定的精度可能不是很高.</p>
-<h1 id="安装autoware"><a class="markdownIt-Anchor" href="#安装autoware"></a> 安装Autoware</h1>
-<p>官方推荐使用 Docker 安装，我选择直接源码装了。<a href="https://github.com/autowarefoundation/autoware/wiki/Demo" target="_blank" rel="noopener">跑Demo的地址</a>中有一个 Build Sources 的<a href="https://github.com/CPFL/Autoware/wiki/Source-Build" target="_blank" rel="noopener">链接</a>是源码编译的步骤。源码编译其实也不麻烦，Autoware 是基于 ROS 搞的，rosdep 依赖一装然后跑编译脚本即可。中间没出什么问题，反而Docker的时候因为要装 NVIDIA Docker（因为要用 GPU），笔记本 ubuntu 端一牵扯显卡啥的就老出一堆问题。后面懒得折腾了就直接源码编译了一遍 Autoware。</p>
+<p>在用 Autoware 提供的工具进行标定之前，搜索了很多的标定工具，但是看其他的方法或多或少都有一点点的麻烦，比如还要制作比较大的标定板等等，而使用 Autoware 则比较简单，可以直接通过手动对齐图像中的像素点与激光雷达的 3D points 来进行标定。标定结束后感觉该方式对于 VLP-16 这种较为稀疏的多线激光雷达来说，标定的精度可能不是很高.</p>
+<h1 id="安装-autoware"><a class="markdownIt-Anchor" href="#安装-autoware"></a> 安装 Autoware</h1>
+<p>官方推荐使用 Docker 安装，我选择直接源码装了。<a href="https://github.com/autowarefoundation/autoware/wiki/Demo" target="_blank" rel="noopener">跑 Demo 的地址</a> 中有一个 Build Sources 的 <a href="https://github.com/CPFL/Autoware/wiki/Source-Build" target="_blank" rel="noopener">链接</a> 是源码编译的步骤。源码编译其实也不麻烦，Autoware 是基于 ROS 搞的，rosdep 依赖一装然后跑编译脚本即可。中间没出什么问题，反而 Docker 的时候因为要装 NVIDIA Docker（因为要用 GPU），笔记本 ubuntu 端一牵扯显卡啥的就老出一堆问题。后面懒得折腾了就直接源码编译了一遍 Autoware。</p>
 <h1 id="开始标定工作"><a class="markdownIt-Anchor" href="#开始标定工作"></a> 开始标定工作</h1>
-<p>Autoware装好后，source 一下它的setup.zsh，就可以正常使用了。它提供了 <code>autoware_camera_lidar_calibrator</code> 可以用来联合标定相机与激光雷达。联合标定分为两步走:</p>
+<p>Autoware 装好后，source 一下它的 setup.zsh，就可以正常使用了。它提供了 <code>autoware_camera_lidar_calibrator</code> 可以用来联合标定相机与激光雷达。联合标定分为两步走:</p>
 <ol>
 <li>获取相机的内参</li>
-<li>获得相机-Lidar的外参</li>
+<li>获得相机 - Lidar 的外参</li>
 </ol>
 <h1 id="标定相机内参"><a class="markdownIt-Anchor" href="#标定相机内参"></a> 标定相机内参</h1>
 <p>单目和双目相机均可以用 <code>autoware_camera_lidar_calibrator</code> 来标定。还需准备一个棋盘格。</p>
 <p>标定单目:</p>
-<pre><code class="hljs bash">rosrun autoware_camera_lidar_calibrator cameracalibrator.py --square SQUARE_SIZE --size MxN image:=/image_topic</code></pre>
-<p>标定双目:</p>
-<pre><code class="hljs bash">rosrun autoware_camera_lidar_calibrator cameracalibrator.py --square SQUARE_SIZE  --size MxN right:=/image_topic left:=/image_topic</code></pre>
-<p>参数说明:</p>
-<p><code>--square</code> :棋盘格中的每个方格的边长大小。单位为m</p>
-<p><code>--size</code> :棋盘格的尺寸是几乘几。注意是 <strong>inner</strong> ，也就是出去边长最外圈方格数-1。如果这个参数设置不对的话会在下面的标定步骤中发现标定程序毫无反应</p>
-<p><code>image</code> :发布图像的话题名</p>
-<p><code>right</code>,<code>left</code> : 左右眼图像的话题名。</p>
-<p>最后发现它的参数其实还有一个 <code>camera_info</code>，但是好像是zed的包的小bug或者zed launch时未加标定文件吧，zed的节点发布的这个话题中是没有消息的。标定的时候也没有加这个topic，目前看起来没啥影响。</p>
-<p><img src="/assets/autoware-1.png" srcset="/img/loading.gif" alt="相机内参标定" /></p>
-<p>上述节点启动起来后，会弹出一个图像框，右边有几个按钮，通过晃动棋盘格使得右边的 <code>Calibration</code> 按钮变绿。把棋盘格拿到相机前，看到棋盘格上有了mark并且右上方出现了四个滑动条类似的东西，分别表示X、Y、尺度与俯仰，根据提示哪一个自由度完成度不足来移动棋盘格。等 <code>Calibration</code> 按钮变绿了之后就可以点击一下，命令行窗口会给出计算出的标定结果，再点击Save按钮即可保存成在home目录下的命名类似于20190401_1133_autoware_camera_calibration.yaml文件。</p>
-<blockquote>
-<p>我Save的时候报了个错说没有cv2有关的那个对象没write方法，然后pip重新装一下opencv-python即可</p>
-</blockquote>
-<p>标定双目相机的流程与上图类似。结果被打包成为一个压缩包，里面分别有左右眼的参数和ost。但这个结果在后面的相机雷达联合标定中是无法使用的。后面的相机雷达联合标定需要用到的是单目标定出的那个 yaml 参数文件.</p>
-<h1 id="相机雷达联合标定"><a class="markdownIt-Anchor" href="#相机雷达联合标定"></a> 相机雷达联合标定</h1>
-<p>相机与雷达的联合标定是要使用上一步的相机内参标定结果的。运行命令如下:</p>
-<pre><code class="hljs bash">roslaunch autoware_camera_lidar_calibrator camera_lidar_calibration.launch intrinsics_file:=/PATH/TO/YYYYmmdd_HHMM_autoware_camera_calibration.yaml image_src:=/image</code></pre>
-<p>参数说明:</p>
-<p><code>intrinsics_file</code> :相机内参标定结果的yaml文件</p>
-<p><code>image_src</code> :为发布图像信息的话题</p>
-<p>启动后会出现一个显示已经纠正过的相机图像的弹框（该弹框需要ROS的image-view2组件，报错找不到这个node的话apt装一下就好了）。</p>
-<p>然后启动雷达开启rviz调出雷达扫描的点云图。然后通过寻找图像窗口中图像的像素点与雷达点云数据的对应关系，先点击图像上的像素点，然后在rviz中通过 <code>publish point</code> 工具点击雷达点云中对应的3D点，看命令行是会有反应/输出信息的。寻找9组后会把生成的标定结果文件生成到home目录下，命名格式为20190401_115333_autoware_lidar_camera_calibration.yaml。</p>
-<p><img src="/assets/autoware-2.png" srcset="/img/loading.gif" alt="相机雷达外参标定" /></p>
-<p>标定完9组后自动在home目录下生成结果文件:</p>
-<p><img src="/assets/autoware-3.png" srcset="/img/loading.gif" alt="相机雷达外参标定2" /></p>
+<pre class="highlight"><code class="bash">rosrun autoware_camera_lidar_calibrator cameracalibrator.py --square SQUARE_SIZE --size MxN image:=/image_topic
+```标定双目:```bash
+rosrun autoware_camera_lidar_calibrator cameracalibrator.py --square SQUARE_SIZE  --size MxN right:=/image_topic left:=/image_topic
+```参数说明:`--square`: 棋盘格中的每个方格的边长大小。单位为 m`--size`: 棋盘格的尺寸是几乘几。注意是 __inner__ ，也就是出去边长最外圈方格数 - 1。如果这个参数设置不对的话会在下面的标定步骤中发现标定程序毫无反应`image`: 发布图像的话题名`right`,`left` : 左右眼图像的话题名。
+
+最后发现它的参数其实还有一个 `camera_info`，但是好像是 zed 的包的小 bug 或者 zed launch 时未加标定文件吧，zed 的节点发布的这个话题中是没有消息的。标定的时候也没有加这个 topic，目前看起来没啥影响。
+
+![相机内参标定](/assets/autoware-1.png)
+
+上述节点启动起来后，会弹出一个图像框，右边有几个按钮，通过晃动棋盘格使得右边的 `Calibration` 按钮变绿。把棋盘格拿到相机前，看到棋盘格上有了 mark 并且右上方出现了四个滑动条类似的东西，分别表示 X、Y、尺度与俯仰，根据提示哪一个自由度完成度不足来移动棋盘格。等 `Calibration` 按钮变绿了之后就可以点击一下，命令行窗口会给出计算出的标定结果，再点击 Save 按钮即可保存成在 home 目录下的命名类似于 20190401_1133_autoware_camera_calibration.yaml 文件。
+
+&gt; 我 Save 的时候报了个错说没有 cv2 有关的那个对象没 write 方法，然后 pip 重新装一下 opencv-python 即可
+
+标定双目相机的流程与上图类似。结果被打包成为一个压缩包，里面分别有左右眼的参数和 ost。但这个结果在后面的相机雷达联合标定中是无法使用的。后面的相机雷达联合标定需要用到的是单目标定出的那个 yaml 参数文件.
+
+<span class="hljs-comment"># 相机雷达联合标定</span>
+
+相机与雷达的联合标定是要使用上一步的相机内参标定结果的。运行命令如下:
+
+```bash
+roslaunch autoware_camera_lidar_calibrator camera_lidar_calibration.launch intrinsics_file:=/PATH/TO/YYYYmmdd_HHMM_autoware_camera_calibration.yaml image_src:=/image
+```参数说明:`intrinsics_file`: 相机内参标定结果的 yaml 文件`image_src` : 为发布图像信息的话题
+
+启动后会出现一个显示已经纠正过的相机图像的弹框（该弹框需要 ROS 的 image-view2 组件，报错找不到这个 node 的话 apt 装一下就好了）。
+
+然后启动雷达开启 rviz 调出雷达扫描的点云图。然后通过寻找图像窗口中图像的像素点与雷达点云数据的对应关系，先点击图像上的像素点，然后在 rviz 中通过 `publish point` 工具点击雷达点云中对应的 3D 点，看命令行是会有反应 / 输出信息的。寻找 9 组后会把生成的标定结果文件生成到 home 目录下，命名格式为 20190401_115333_autoware_lidar_camera_calibration.yaml。
+
+![相机雷达外参标定](/assets/autoware-2.png)
+
+标定完 9 组后自动在 home 目录下生成结果文件:
+
+![相机雷达外参标定 2](/assets/autoware-3.png)</code></pre>
 
             </article>
             <hr>
@@ -263,11 +269,11 @@
                     
                       <a class="hover-with-bg" href="/tags/ROS/">ROS</a>
                     
+                      <a class="hover-with-bg" href="/tags/Robotics/">Robotics</a>
+                    
                       <a class="hover-with-bg" href="/tags/Calibration/">Calibration</a>
                     
                       <a class="hover-with-bg" href="/tags/Multi-Sensors/">Multi-Sensors</a>
-                    
-                      <a class="hover-with-bg" href="/tags/Robotics/">Robotics</a>
                     
                       <a class="hover-with-bg" href="/tags/Autoware/">Autoware</a>
                     
