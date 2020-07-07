@@ -321,9 +321,9 @@
     
     <tags>
       
-      <tag>Course</tag>
-      
       <tag>CPU</tag>
+      
+      <tag>Course</tag>
       
     </tags>
     
@@ -508,13 +508,13 @@
     
     <tags>
       
-      <tag>ROS</tag>
-      
-      <tag>Robotics</tag>
-      
       <tag>Calibration</tag>
       
       <tag>Multi-Sensors</tag>
+      
+      <tag>ROS</tag>
+      
+      <tag>Robotics</tag>
       
       <tag>Autoware</tag>
       
