@@ -164,6 +164,54 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2019/10/25/VINS-Mono-%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E6%80%BB%E7%BB%93/" target="_blank">
+          <img src="/assets/vins-mono-pipline-index.png" srcset="/img/loading.gif" alt="VINS-Mono 工作流程总结">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a class="index-header" href="/2019/10/25/VINS-Mono-%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E6%80%BB%E7%BB%93/">VINS-Mono 工作流程总结</a>
+
+      <a href="/2019/10/25/VINS-Mono-%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E6%80%BB%E7%BB%93/" class="index-excerpt">
+        
+        
+          
+        
+        <div>本篇是我在学习 VINS-Mono 时对其工作流程的一个总结。VINS-Mono 的功能模块可包括五个部分：数据预处理、初始化、后端非线性优化、闭环检测及闭环优化。代码中主要开启了四个线程，分别是：前端图像跟踪、后端非线性优化 (其中初始化和 IMU 预积分在这个线程中) 、闭环检测、闭环优化。本人才学疏浅，有理解不深和错误的地方，请多多指教！</div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2019-10-25
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/SLAM-%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E8%B7%B5/">SLAM 原理与实践</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/SLAM/">SLAM</a>
+            
+              <a href="/tags/Robotics/">Robotics</a>
+            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2019/10/20/VINS-Mono-%E6%95%B4%E4%BD%93%E6%A1%86%E6%9E%B6%E6%A6%82%E8%BF%B0/" target="_blank">
           <img src="/assets/vins-mono-index.png" srcset="/img/loading.gif" alt="VINS-Mono 整体框架概述">
         </a>
@@ -246,9 +294,9 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/CPU/">CPU</a>
-            
               <a href="/tags/Course/">Course</a>
+            
+              <a href="/tags/CPU/">CPU</a>
             
           </div>
         
@@ -594,67 +642,15 @@ DJI Matrix 100
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
+              <a href="/tags/Robotics/">Robotics</a>
+            
               <a href="/tags/Calibration/">Calibration</a>
             
               <a href="/tags/Multi-Sensors/">Multi-Sensors</a>
             
               <a href="/tags/ROS/">ROS</a>
             
-              <a href="/tags/Robotics/">Robotics</a>
-            
               <a href="/tags/Autoware/">Autoware</a>
-            
-          </div>
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2019/03/10/Jetson%20TX2%20or%20AGX%20Xavier%E6%8D%A2%E5%9B%BD%E5%86%85%E6%BA%90/" target="_blank">
-          <img src="/assets/nvidia-jetson-tx2-index.jpg" srcset="/img/loading.gif" alt="NVIDIA Jetson TX2 or AGX Xavier apt 切换国内的源">
-        </a>
-      </div>
-    
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a class="index-header" href="/2019/03/10/Jetson%20TX2%20or%20AGX%20Xavier%E6%8D%A2%E5%9B%BD%E5%86%85%E6%BA%90/">NVIDIA Jetson TX2 or AGX Xavier apt 切换国内的源</a>
-
-      <a href="/2019/03/10/Jetson%20TX2%20or%20AGX%20Xavier%E6%8D%A2%E5%9B%BD%E5%86%85%E6%BA%90/" class="index-excerpt">
-        
-        
-          
-        
-        <div>
- NVIDIA Jetson TX2 or AGX Xavier apt 切换国内的源
-日期可能稍稍有些久远导致不能用，但目前还可以用。
- 1. 首先备份下之前的 source.list
-sudo cp /etc/apt/sources.list/etc/apt/sources.list.backup
- 2. 修改 source.list
-换源需要换 ARM 的源，不要换成了 PC 平台的软件源</div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>&nbsp;2019-03-10
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/Tools/">Tools</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Onboard-Computer/">Onboard-Computer</a>
             
           </div>
         
