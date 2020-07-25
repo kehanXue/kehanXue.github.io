@@ -47,11 +47,11 @@
     
     <tags>
       
-      <tag>Event-Camera</tag>
-      
       <tag>SLAM</tag>
       
       <tag>Robotics</tag>
+      
+      <tag>Event-Camera</tag>
       
     </tags>
     
@@ -377,9 +377,9 @@
     
     <tags>
       
-      <tag>Course</tag>
-      
       <tag>CPU</tag>
+      
+      <tag>Course</tag>
       
     </tags>
     
@@ -564,9 +564,9 @@
     
     <tags>
       
-      <tag>ROS</tag>
-      
       <tag>Robotics</tag>
+      
+      <tag>ROS</tag>
       
       <tag>Calibration</tag>
       
