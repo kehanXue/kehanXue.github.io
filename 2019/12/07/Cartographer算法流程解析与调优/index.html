@@ -253,7 +253,7 @@
 <p>这两个参数就是雷达扫描数据的距离范围。参数为下面两个。</p>
 <pre><code class="hljs lua">TRAJECTORY_BUILDER_nD.min_range
 TRAJECTORY_BUILDER_nD.max_range
-```Cartographer 会用`TRAJECTORY_BUILDER_2D.missing_data_ray_length`的值来替换实际大于`TRAJECTORY_BUILDER_nD.max_range` 的 ranges。
+​```Cartographer 会用`TRAJECTORY_BUILDER_2D.missing_data_ray_length`的值来替换实际大于`TRAJECTORY_BUILDER_nD.max_range` 的 ranges。
 
 &gt; TODO:
 &gt;
@@ -282,46 +282,52 @@ TRAJECTORY_BUILDER_nD.max_range
 <p>具体待跑起来后分析实际数据</p>
 </blockquote>
 <p>如果将 3D 雷达用在 2D SLAM 的话，提供一个 “截断” 的参数，就是把一定高度范围内的扫描点映射到 2D 的一个平面上。</p>
-<pre><code class="hljs lua">TRAJECTORY_BUILDER_2D.max_z
-TRAJECTORY_BUILDER_2D.min_z</code></pre>
-<p>一组激光雷达的距离数据是一段时间内测量出来的，而这一段时间内机器人是运动的，这就导致了激光数据会产生畸变。这些距离数据被封装到一帧一帧的 ROS message 中，每一帧都带有时间戳信息，Cartographer 会把多 (&gt;=1) 帧集合 (accumulate) 成一个大帧作为算法的输入。Cartographer 认为这每一帧都是独立的，以帧为单位补偿运动导致的激光雷达数据产生的畸变，然后再把这些帧集合到一块去。所以当然 Cartographer 接收到的数据帧的频率越高，Cartographer 的补偿效果越好，算法的输入数据质量越高。</p>
-<p>所以 <code>TRAJECTORY_BUILDER_nD.num_accumulated_range_data</code> 参数的意义就是集合多少帧运动补偿后形成算法输入的大数据帧。(该参数要根据实际雷达的数据采集频率和每一帧数据的扫描范围来定，比如 Rplidar A3 的一帧数据是采样一圈；而 VLP-16 的一帧数据可以调成一个 udp 数据包而不是一圈数据，并且这样更好，因为转一圈也是需要时间的，这样就可以把一圈内的数据也做了运动补偿)</p>
-<p>相关代码 (<code>cartographer/mapping/internal/2d/local_trajectory_builder_2d.h</code> line:142-205)：</p>
-<pre><code class="hljs c++"><span class="hljs-keyword">if</span> (num_accumulated_ == <span class="hljs-number">0</span>) &#123;accumulation_started_ = <span class="hljs-built_in">std</span>::chrono::steady_clock::now ();
-&#125;
-...
-<span class="hljs-keyword">if</span> (num_accumulated_ == <span class="hljs-number">0</span>) &#123;
-  <span class="hljs-comment">// 'accumulated_range_data_.origin' is uninitialized until the last</span>
-  <span class="hljs-comment">//accumulation.</span>
-  accumulated_range_data_ = sensor::RangeData &#123;&#123;&#125;, &#123;&#125;, &#123;&#125;&#125;;
-&#125;
+<p>​```lua<br />
+TRAJECTORY_BUILDER_2D.max_z<br />
+TRAJECTORY_BUILDER_2D.min_z</p>
+<pre><code class="hljs angelscript">
+一组激光雷达的距离数据是一段时间内测量出来的，而这一段时间内机器人是运动的，这就导致了激光数据会产生畸变。这些距离数据被封装到一帧一帧的 ROS message 中，每一帧都带有时间戳信息，Cartographer 会把多 (&gt;=<span class="hljs-number">1</span>) 帧集合 (accumulate) 成一个大帧作为算法的输入。Cartographer 认为这每一帧都是独立的，以帧为单位补偿运动导致的激光雷达数据产生的畸变，然后再把这些帧集合到一块去。所以当然 Cartographer 接收到的数据帧的频率越高，Cartographer 的补偿效果越好，算法的输入数据质量越高。
 
-<span class="hljs-comment">// Drop any returns below the minimum range and convert returns beyond the</span>
-<span class="hljs-comment">//maximum range into misses.</span>
-<span class="hljs-keyword">for</span> (<span class="hljs-keyword">size_t</span> i = <span class="hljs-number">0</span>; i &lt; synchronized_data.ranges.<span class="hljs-built_in">size</span> (); ++i) &#123;
+所以 `TRAJECTORY_BUILDER_nD.num_accumulated_range_data` 参数的意义就是集合多少帧运动补偿后形成算法输入的大数据帧。(该参数要根据实际雷达的数据采集频率和每一帧数据的扫描范围来定，比如 Rplidar A3 的一帧数据是采样一圈；而 VLP<span class="hljs-number">-16</span> 的一帧数据可以调成一个 udp 数据包而不是一圈数据，并且这样更好，因为转一圈也是需要时间的，这样就可以把一圈内的数据也做了运动补偿)
+
+相关代码 (`cartographer/mapping/<span class="hljs-built_in">int</span>ernal/<span class="hljs-number">2</span>d/local_trajectory_builder_2d.h` line:<span class="hljs-number">142</span><span class="hljs-number">-205</span>)：
+
+```c++
+  <span class="hljs-keyword">if</span> (num_accumulated_ == <span class="hljs-number">0</span>) &#123;accumulation_started_ = std::chrono::steady_clock::now ();
+  &#125;
   ...
-  <span class="hljs-keyword">if</span> (range&gt;= options_.min_range ()) &#123;<span class="hljs-keyword">if</span> (range &lt;= options_.max_range ()) &#123;accumulated_range_data_.returns.push_back (hit_in_local);
-    &#125; <span class="hljs-keyword">else</span> &#123;
-      accumulated_range_data_.misses.push_back (
-          origin_in_local +
-          options_.missing_data_ray_length () /range * delta);
+  <span class="hljs-keyword">if</span> (num_accumulated_ == <span class="hljs-number">0</span>) &#123;
+    <span class="hljs-comment">// 'accumulated_range_data_.origin' is uninitialized until the last</span>
+    <span class="hljs-comment">//accumulation.</span>
+    accumulated_range_data_ = sensor::RangeData &#123;&#123;&#125;, &#123;&#125;, &#123;&#125;&#125;;
+  &#125;
+
+  <span class="hljs-comment">// Drop any returns below the minimum range and convert returns beyond the</span>
+  <span class="hljs-comment">//maximum range into misses.</span>
+  <span class="hljs-keyword">for</span> (size_t i = <span class="hljs-number">0</span>; i &lt; synchronized_data.ranges.size (); ++i) &#123;
+    ...
+    <span class="hljs-keyword">if</span> (range&gt;= options_.min_range ()) &#123;<span class="hljs-keyword">if</span> (range &lt;= options_.max_range ()) &#123;accumulated_range_data_.returns.push_back (hit_in_local);
+      &#125; <span class="hljs-keyword">else</span> &#123;
+        accumulated_range_data_.misses.push_back (
+            origin_in_local +
+            options_.missing_data_ray_length () /range * delta);
+      &#125;
     &#125;
   &#125;
-&#125;
-++num_accumulated_;
+  ++num_accumulated_;
 
-<span class="hljs-keyword">if</span> (num_accumulated_&gt;= options_.num_accumulated_range_data ()) &#123;
-  num_accumulated_ = <span class="hljs-number">0</span>;
-  <span class="hljs-keyword">const</span> transform::Rigid3d gravity_alignment = transform::Rigid3d::Rotation (extrapolator_-&gt;EstimateGravityOrientation (time));
-  <span class="hljs-comment">// TODO (gaschler): This assumes that 'range_data_poses.back ()' is at time</span>
-  <span class="hljs-comment">// 'time'.</span>
-  accumulated_range_data_.origin = range_data_poses.back ().translation ();
-  <span class="hljs-keyword">return</span> AddAccumulatedRangeData (
-      time,
-      TransformToGravityAlignedFrameAndFilter (gravity_alignment.cast&lt;<span class="hljs-keyword">float</span>&gt;() * range_data_poses.back ().inverse (),
-          accumulated_range_data_),
-      gravity_alignment);
-&#125;</code></pre>
+  <span class="hljs-keyword">if</span> (num_accumulated_&gt;= options_.num_accumulated_range_data ()) &#123;
+    num_accumulated_ = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">const</span> transform::Rigid3d gravity_alignment = transform::Rigid3d::Rotation (extrapolator_-&gt;EstimateGravityOrientation (time));
+    <span class="hljs-comment">// TODO (gaschler): This assumes that 'range_data_poses.back ()' is at time</span>
+    <span class="hljs-comment">// 'time'.</span>
+    accumulated_range_data_.origin = range_data_poses.back ().translation ();
+    <span class="hljs-keyword">return</span> AddAccumulatedRangeData (
+        time,
+        TransformToGravityAlignedFrameAndFilter (gravity_alignment.<span class="hljs-keyword">cast</span>&lt;<span class="hljs-built_in">float</span>&gt;() * range_data_poses.back ().inverse (),
+            accumulated_range_data_),
+        gravity_alignment);
+  &#125;</code></pre>
 <h4 id="voxel-filter"><a class="markdownIt-Anchor" href="#voxel-filter"></a> Voxel Filter</h4>
 <p>较近的表面 (如路面) 经常扫描得到更多的 points, 而远处的物体的 points 经常比较稀少。为了降低计算量，需要对点云数据进行下采样，简单的随机采样仍然会导致低密度区的点更少，而高密度区的点仍然比较多。因此 cartographer 采用 voxel_filter (体素滤波) 的方法。通过输入的点云数据创建一个三维体素栅格（可把体素栅格想象为微小的空间三维立方体的集合），然后在每个体素（即，三维立方体）内，用体素中所有点的重心来近似显示体素中其他点，这样该体素就内所有点就用一个重心点最终表示，对于所有体素处理后得到过滤后的点云。<code>TRAJECTORY_BUILDER_nD.voxel_filter_size</code> 即为立方体的大小。如果立方体较小的话会导致更密集的数据，所耗的计算量更大。而较大的话可能会导致数据丢失但是计算速度会更快。</p>
 <p>在提供了定大小的 voxel_filter, Cartographer 还提供了一个 adaptive_voxel_filter,  adaptive_voxel_filter 可以在最大边长 <code>TRAJECTORY_BUILDER_nD.*adaptive_voxel_filter.max_length</code> 的限制下优化确定 voxel_filter_size 来实现目标的 points 数 <code>TRAJECTORY_BUILDER_nD.*adaptive_voxel_filter.min_num_points</code> 。</p>
@@ -338,9 +344,9 @@ TRAJECTORY_BUILDER_2D.min_z</code></pre>
   &#125;,
   ...
 &#125;
-````trajectory_builder_3d.lua`
+​````trajectory_builder_3d.lua`
 
-```lua
+​```lua
 TRAJECTORY_BUILDER_3D = &#123;
   ...
   voxel_filter_size = <span class="hljs-number">0.15</span>,
@@ -374,37 +380,37 @@ TRAJECTORY_BUILDER_3D = &#123;
 <li>
 <p>CeresScanMatcher 利用上面说的先验 initial guess , 寻找 scan 与当前的 submap 最匹配的位置。通过对 submap 进行插值然后与 scan 进行对齐（It does this by interpolating the submap and sub-pixel aligning the scan）。这种做法比较快速，但是无法修复远大于子图分辨率的误差。如果你的传感器的设置与累积的那个时间区间都是合理的话，仅仅使用 CeresScanMatcher 通常是最好的选择。</p>
 <p>CeresScanMatcher 可以为每一个输入源配置一个权重 weight，权重就是对其数据的信任度，可以把它视为静态协方差。这个 weight 是无量纲的，并且是不能相互比较的。weight 越大，Cartographer 在进行 scan matching 的时候就对他更关注。数据来源可以包括 occupied space (points from the scan), translation and rotation from the pose extrapolator (or <code>RealTimeCorrelativeScanMatcher</code>)</p>
-<pre><code class="hljs stylus">TRAJECTORY_BUILDER_3D<span class="hljs-selector-class">.ceres_scan_matcher</span>.occupied_space_weight
-TRAJECTORY_BUILDER_3D<span class="hljs-selector-class">.ceres_scan_matcher</span>.occupied_space_weight_0
-TRAJECTORY_BUILDER_3D<span class="hljs-selector-class">.ceres_scan_matcher</span>.occupied_space_weight_1
-TRAJECTORY_BUILDER_nD<span class="hljs-selector-class">.ceres_scan_matcher</span>.translation_weight
-TRAJECTORY_BUILDER_nD<span class="hljs-selector-class">.ceres_scan_matcher</span>.rotation_weight
-```In <span class="hljs-number">3</span>D, the`occupied_space_weight_0`and`occupied_space_weight_1` parameters are related, respectively, to the high resolution and low resolution filtered point clouds.
+<pre><code class="hljs markdown">TRAJECTORY<span class="hljs-emphasis">_BUILDER_</span>3D.ceres<span class="hljs-emphasis">_scan_</span>matcher.occupied<span class="hljs-emphasis">_space_</span>weight
+TRAJECTORY<span class="hljs-emphasis">_BUILDER_</span>3D.ceres<span class="hljs-emphasis">_scan_</span>matcher.occupied<span class="hljs-emphasis">_space_</span>weight_0
+TRAJECTORY<span class="hljs-emphasis">_BUILDER_</span>3D.ceres<span class="hljs-emphasis">_scan_</span>matcher.occupied<span class="hljs-emphasis">_space_</span>weight_1
+TRAJECTORY<span class="hljs-emphasis">_BUILDER_</span>nD.ceres<span class="hljs-emphasis">_scan_</span>matcher.translation_weight
+TRAJECTORY<span class="hljs-emphasis">_BUILDER_</span>nD.ceres<span class="hljs-emphasis">_scan_</span>matcher.rotation_weight
+​<span class="hljs-code">```</span>In 3D, the<span class="hljs-code">`occupied_space_weight_0`</span>and<span class="hljs-code">`occupied_space_weight_1`</span> parameters are related, respectively, to the high resolution and low resolution filtered point clouds.
 
-CeresScanMatcher 的名字来源于 [Ceres Solver](http:<span class="hljs-comment">//ceres-solver.org/)。这个 scan matching 问题被建模为一个最小二乘问题，两帧间的 motion 是待优化变量。（GN 等方法）Ceres optimizes the motion using a descent algorithm for a given number of iterations. Ceres can be configured to adapt the convergence speed to your own needs.</span>
+CeresScanMatcher 的名字来源于 [<span class="hljs-string">Ceres Solver</span>](<span class="hljs-link">http://ceres-solver.org/</span>)。这个 scan matching 问题被建模为一个最小二乘问题，两帧间的 motion 是待优化变量。（GN 等方法）Ceres optimizes the motion using a descent algorithm for a given number of iterations. Ceres can be configured to adapt the convergence speed to your own needs.
 
-```lua
-TRAJECTORY_BUILDER_nD<span class="hljs-selector-class">.ceres_scan_matcher</span><span class="hljs-selector-class">.ceres_solver_options</span>.use_nonmonotonic_steps
-TRAJECTORY_BUILDER_nD<span class="hljs-selector-class">.ceres_scan_matcher</span><span class="hljs-selector-class">.ceres_solver_options</span>.max_num_iterations
-TRAJECTORY_BUILDER_nD<span class="hljs-selector-class">.ceres_scan_matcher</span><span class="hljs-selector-class">.ceres_solver_options</span>.num_threads
-````use_nonmonotonic_steps` 这个暂时还未深究，参见 [Ceres-Solver 官方文档讲解](http:<span class="hljs-comment">//ceres-solver.org/nnls_solving.html#non-monotonic-steps)</span>
+​<span class="hljs-code">```</span>lua
+TRAJECTORY<span class="hljs-emphasis">_BUILDER_</span>nD.ceres<span class="hljs-emphasis">_scan_</span>matcher.ceres<span class="hljs-emphasis">_solver_</span>options.use<span class="hljs-emphasis">_nonmonotonic_</span>steps
+TRAJECTORY<span class="hljs-emphasis">_BUILDER_</span>nD.ceres<span class="hljs-emphasis">_scan_</span>matcher.ceres<span class="hljs-emphasis">_solver_</span>options.max<span class="hljs-emphasis">_num_</span>iterations
+TRAJECTORY<span class="hljs-emphasis">_BUILDER_</span>nD.ceres<span class="hljs-emphasis">_scan_</span>matcher.ceres<span class="hljs-emphasis">_solver_</span>options.num_threads
+​<span class="hljs-code">```</span><span class="hljs-code">`use_nonmonotonic_steps`</span> 这个暂时还未深究，参见 [<span class="hljs-string">Ceres-Solver 官方文档讲解</span>](<span class="hljs-link">http://ceres-solver.org/nnls_solving.html#non-monotonic-steps</span>)
 
 官方给的默认配置：
 
-`trajectory_builder_2d.lua`
+<span class="hljs-code">`trajectory_builder_2d.lua`</span>
 
-```lua
-TRAJECTORY_BUILDER_2D = &#123;
+​<span class="hljs-code">```</span>lua
+TRAJECTORY<span class="hljs-emphasis">_BUILDER_</span>2D = &#123;
   ...
-  ceres_scan_matcher = &#123;
-    occupied_space_weight = <span class="hljs-number">1</span>.,
-    translation_weight = <span class="hljs-number">10</span>.,
-    rotation_weight = <span class="hljs-number">40</span>.,
-    ceres_solver_options = &#123;
-      use_nonmonotonic_steps = false,
-      max_num_iterations = <span class="hljs-number">20</span>,
-      num_threads = <span class="hljs-number">1</span>,
-    &#125;,
+  ceres<span class="hljs-emphasis">_scan_</span>matcher = &#123;
+<span class="hljs-code">    occupied_space_weight = 1.,</span>
+<span class="hljs-code">    translation_weight = 10.,</span>
+<span class="hljs-code">    rotation_weight = 40.,</span>
+<span class="hljs-code">    ceres_solver_options = &#123;</span>
+<span class="hljs-code">      use_nonmonotonic_steps = false,</span>
+<span class="hljs-code">      max_num_iterations = 20,</span>
+<span class="hljs-code">      num_threads = 1,</span>
+<span class="hljs-code">    &#125;,</span>
   &#125;,
   ...
 &#125;</code></pre>
@@ -422,7 +428,7 @@ TRAJECTORY_BUILDER_nD.real_time_correlative_scan_matcher.linear_search_window
 TRAJECTORY_BUILDER_nD.real_time_correlative_scan_matcher.angular_search_window
 TRAJECTORY_BUILDER_nD.real_time_correlative_scan_matcher.translation_delta_cost_weight
 TRAJECTORY_BUILDER_nD.real_time_correlative_scan_matcher.rotation_delta_cost_weight
-```官方给的默认配置：`trajectory_builder_2d.lua````lua
+​```官方给的默认配置：`trajectory_builder_2d.lua````lua
 TRAJECTORY_BUILDER_2D = &#123;
   ...
   use_online_correlative_scan_matching = <span class="hljs-literal">false</span>,
@@ -441,7 +447,7 @@ TRAJECTORY_BUILDER_2D = &#123;
 <pre><code class="hljs stylus">TRAJECTORY_BUILDER_nD<span class="hljs-selector-class">.motion_filter</span>.max_time_seconds
 TRAJECTORY_BUILDER_nD<span class="hljs-selector-class">.motion_filter</span>.max_distance_meters
 TRAJECTORY_BUILDER_nD<span class="hljs-selector-class">.motion_filter</span>.max_angle_radians
-```官方给的默认配置：`trajectory_builder_2d.lua````lua
+​```官方给的默认配置：`trajectory_builder_2d.lua````lua
 TRAJECTORY_BUILDER_2D = &#123;
   ...
   motion_filter = &#123;
@@ -471,7 +477,7 @@ TRAJECTORY_BUILDER_2D.submaps.grid_options_2d.grid_type</code></pre>
 TRAJECTORY_BUILDER_2D.submaps.range_data_inserter.probability_grid_range_data_inserter.miss_probability
 TRAJECTORY_BUILDER_3D.submaps.range_data_inserter.hit_probability
 TRAJECTORY_BUILDER_3D.submaps.range_data_inserter.miss_probability
-```官方给的默认配置：`trajectory_builder_2d.lua````lua
+​```官方给的默认配置：`trajectory_builder_2d.lua````lua
 TRAJECTORY_BUILDER_2D = &#123;
   ...
   submaps = &#123;
@@ -593,7 +599,7 @@ POSE_GRAPH.fast_correlative_scan_matcher.linear_search_window
 POSE_GRAPH.fast_correlative_scan_matcher_3d.linear_xy_search_window
 POSE_GRAPH.fast_correlative_scan_matcher_3d.linear_z_search_window
 POSE_GRAPH.fast_correlative_scan_matcher*.angular_search_window
-```官方默认配置：`pose_graph.lua````lua
+​```官方默认配置：`pose_graph.lua````lua
 POSE_GRAPH = &#123;
   ...
   constraint_builder = &#123;
@@ -629,11 +635,11 @@ POSE_GRAPH = &#123;
   &#125;
   ...
 &#125;
-```当一个 node 和一个 submap 进行 constraint building 的时候，通过的是一个叫做 FastCorrelativeScanMatcher 的机制。这个 scan matcher 是 Cartographer 的独创并且使得 real-<span class="hljs-built_in">time</span> loop closures scan matching 成为可能。它引入了分支界限法（Branch <span class="hljs-keyword">and</span> bound），可以在不同分辨率的地图网格上进行工作并且非常有效的去除误匹配。关于这个在 Cartographer 的论文中被详细描述了。所用的搜索树的深度是可以被控制的。```lua
+​```当一个 node 和一个 submap 进行 constraint building 的时候，通过的是一个叫做 FastCorrelativeScanMatcher 的机制。这个 scan matcher 是 Cartographer 的独创并且使得 real-<span class="hljs-built_in">time</span> loop closures scan matching 成为可能。它引入了分支界限法（Branch <span class="hljs-keyword">and</span> bound），可以在不同分辨率的地图网格上进行工作并且非常有效的去除误匹配。关于这个在 Cartographer 的论文中被详细描述了。所用的搜索树的深度是可以被控制的。```lua
 POSE_GRAPH.constraint_builder.fast_correlative_scan_matcher.branch_and_bound_depth
 POSE_GRAPH.constraint_builder.fast_correlative_scan_matcher_3d.branch_and_bound_depth
 POSE_GRAPH.constraint_builder.fast_correlative_scan_matcher_3d.full_resolution_depth
-```官方默认配置：`pose_graph.lua````lua
+​```官方默认配置：`pose_graph.lua````lua
 POSE_GRAPH = &#123;
   ...
   constraint_builder = &#123;
@@ -652,11 +658,11 @@ POSE_GRAPH = &#123;
   &#125;
   ...
 &#125;
-```一旦 FastCorrelativeScanMatcher 达到一定的效果的时候（大于`POSE_GRAPH.constraint_builder.min_score`参数值），会把它再继续扔到 CeresScanMatcher 中来进行 refine。```lua
+​```一旦 FastCorrelativeScanMatcher 达到一定的效果的时候（大于`POSE_GRAPH.constraint_builder.min_score`参数值），会把它再继续扔到 CeresScanMatcher 中来进行 refine。```lua
 POSE_GRAPH.constraint_builder.min_score
 POSE_GRAPH.constraint_builder.ceres_scan_matcher_3d
 POSE_GRAPH.constraint_builder.ceres_scan_matcher
-```官方默认配置：`pose_graph.lua````lua
+​```官方默认配置：`pose_graph.lua````lua
 POSE_GRAPH = &#123;
   ...
   constraint_builder = &#123;
