@@ -47,11 +47,11 @@
     
     <tags>
       
+      <tag>Event-Camera</tag>
+      
       <tag>SLAM</tag>
       
       <tag>Robotics</tag>
-      
-      <tag>Event-Camera</tag>
       
     </tags>
     
@@ -161,9 +161,9 @@
       
       <tag>Event-Camera</tag>
       
-      <tag>Odomerty</tag>
-      
       <tag>3D-Vision</tag>
+      
+      <tag>Odomerty</tag>
       
     </tags>
     
@@ -564,13 +564,13 @@
     
     <tags>
       
-      <tag>Robotics</tag>
-      
-      <tag>ROS</tag>
-      
       <tag>Calibration</tag>
       
       <tag>Multi-Sensors</tag>
+      
+      <tag>Robotics</tag>
+      
+      <tag>ROS</tag>
       
       <tag>Autoware</tag>
       
