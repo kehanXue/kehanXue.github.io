@@ -161,9 +161,9 @@
       
       <tag>Event-Camera</tag>
       
-      <tag>3D-Vision</tag>
-      
       <tag>Odomerty</tag>
+      
+      <tag>3D-Vision</tag>
       
     </tags>
     
@@ -377,9 +377,9 @@
     
     <tags>
       
-      <tag>CPU</tag>
-      
       <tag>Course</tag>
+      
+      <tag>CPU</tag>
       
     </tags>
     
