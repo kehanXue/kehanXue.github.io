@@ -17,7 +17,7 @@
   <meta name="description" content="">
   <meta name="author" content="Kehan Xue">
   <meta name="keywords" content="">
-  <title>DSO中Residual pattern的SSE加速.md - Kehan&#39;s Blog</title>
+  <title>DSO 中 Residual pattern 的 SSE 加速 - Kehan&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 
@@ -222,7 +222,7 @@
 <p><img src="assets/image-20200727114304761.png" srcset="/img/loading.gif" alt="image-20200727114304761" /></p>
 <p>可见，作者把右下角的一个点给舍弃了，并说这里是为了使用 SSE 加速。当时看到这个的时候有点懵逼，后来去找了一些资料并简单看了一下代码，逐渐明了。</p>
 <p>阅读到一篇关于讲解 SSE 加速原理的博客：</p>
-<iframe src="https://x007dwd.github.io/2017/03/18/SSE-vs-NEON/" width="100%" height="500" name="topFrame" scrolling="yes"  noresize="noresize" frameborder="0" id="topFrame"></iframe>
+<iframe src="https://x007dwd.github.io/2017/03/18/SSE-vs-NEON/" width="100%" height="400" name="topFrame" scrolling="yes"  noresize="noresize" frameborder="0" id="topFrame"></iframe>
 <p><strong>SIMD 单指令流多数据流</strong>（<strong>SingleInstruction Multiple Data</strong>, <strong>SIMD</strong>）是一种采用一个控制器来控制多个处理器，同时对一组数据（又称“数据向量”）中的每一个分别执行<strong>相同</strong>的操作从而实现空间上的并行性的技术。</p>
 <p>而本文的主角 <strong>SSE (Streaming SIMD Extensions)</strong>，就是 SIMD 技术的一种。</p>
 <p>Intel 对多媒体 SIMD 扩展指令集的应用很具代表性。1996 年，Intel 在其奔腾处理器上集成了 SIMD 扩展部件 MMX，其向量寄存器为64位宽。后来又相继推出了 SSE（128位宽），AVX（256位宽），IMCI 和 AVX-512（512位宽）。</p>
@@ -538,7 +538,7 @@
       if ('true' === 'true') {
         var viewCtn = document.querySelector('#leancloud-post-views-container');
         if (viewCtn || enableIncr) {
-          var target = decodeURI('/2020/07/27/DSO%E4%B8%ADResidual-pattern%E7%9A%84SSE%E5%8A%A0%E9%80%9F-md/');
+          var target = decodeURI('/2020/07/27/DSO%E4%B8%ADResidual-pattern%E7%9A%84SSE%E5%8A%A0%E9%80%9F/');
           var viewGetter = getRecord(Counter, target).then((record) => {
             incrArr.push(buildIncrement(record.objectId))
             if (viewCtn) {
@@ -632,7 +632,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "DSO中Residual pattern的SSE加速.md&nbsp;",
+        "DSO 中 Residual pattern 的 SSE 加速&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
