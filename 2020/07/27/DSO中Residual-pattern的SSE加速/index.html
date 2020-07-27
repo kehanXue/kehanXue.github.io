@@ -163,7 +163,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      666 字
+      677 字
     </span>
   
 
@@ -173,7 +173,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      7
+      8
        分钟
     </span>
   
@@ -247,7 +247,7 @@
     num = numIn1 = numIn1k = numIn1m = <span class="hljs-number">0</span>;
   &#125;
 ...</code></pre>
-<p>可见，DSO 中进行 SSE 加速的操作的数据类型为 <code>float</code>，正好 128 位的 SSE 寄存器中最多存放 4 个浮点数类型，代码中的实现也亦是如此。</p>
+<p>可见，DSO 中进行 SSE 加速的操作的数据类型为 <code>float</code>，正好 128 位的 SSE 寄存器中最多存放 4 个浮点数类型（<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>4</mn><mo>∗</mo><mo stretchy="false">(</mo><mn>4</mn><mo>∗</mo><mn>8</mn><mo stretchy="false">)</mo><mo>=</mo><mn>128</mn></mrow><annotation encoding="application/x-tex">4*(4*8) = 128</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">4</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">4</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">8</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">2</span><span class="mord">8</span></span></span></span> bit），代码中的实现也亦是如此。</p>
 
             </article>
             <hr>
