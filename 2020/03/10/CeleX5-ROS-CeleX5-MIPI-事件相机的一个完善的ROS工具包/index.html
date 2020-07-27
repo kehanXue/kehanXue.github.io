@@ -173,7 +173,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      23
+      22
        分钟
     </span>
   
@@ -214,8 +214,12 @@
             <article class="markdown-body">
               <p>我在前段时间为 CeleX5-MIPI 系列相机开发了一套完善的 ROS 下的驱动。CeleX5-MIPI 是一款国产的事件相机，具有 1280x800 的分辨率。项目已开源在：<a href="https://github.com/kehanXue/CeleX5-ROS" target="_blank" rel="noopener">https://github.com/kehanXue/CeleX5-ROS</a> 。</p>
 <a id="more"></a>
+<p>视频 demo：</p>
+<div align="center">
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/xzCPiKI38vE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
 <blockquote>
-<p>！本篇是项目在 Github 的中文版 <a href="http://README.md" target="_blank" rel="noopener">README.md</a>，所以本文中的链接是相对链接，这将导致它们在本文中不可用。请移步项目的 <a href="https://github.com/kehanXue/CeleX5-ROS" target="_blank" rel="noopener">地址</a>，非常感谢！</p>
+<p>本篇是项目在 Github 的中文版 <a href="http://README.md" target="_blank" rel="noopener">README.md</a>，所以本文中的链接是相对链接，这将导致它们在本文中不可用。请移步项目的 <a href="https://github.com/kehanXue/CeleX5-ROS" target="_blank" rel="noopener">地址</a>，非常感谢！</p>
 </blockquote>
 <p><em><a href="https://github.com/kehanXue/CeleX5-ROS" target="_blank" rel="noopener">English Version</a></em></p>
 <h1 id="celex5-ros"><a class="markdownIt-Anchor" href="#celex5-ros"></a> CeleX5-ROS</h1>
@@ -229,10 +233,10 @@
 <li><code>celex5_calibration</code>：提供了有关于 <code>celex5_calibration</code> 基于 Events 数据进行标定相关的工具和教程。</li>
 </ul>
 <p><em><strong>本仓库代码主要遵从 <a href="https://google.github.io/styleguide/cppguide.html" target="_blank" rel="noopener">Google C++ 编程风格</a></strong></em></p>
-<p>[介绍](# 介绍)</p>
-<p>[概要](# 概要)</p>
-<p>[编译与运行](# 编译与运行)</p>
-<p>[仍存在的问题](# 仍存在的问题)</p>
+<p><a href="#%E4%BB%8B%E7%BB%8D">介绍</a></p>
+<p><a href="#%E6%A6%82%E8%A6%81">概要</a></p>
+<p><a href="#%E7%BC%96%E8%AF%91%E4%B8%8E%E8%BF%90%E8%A1%8C">编译与运行</a></p>
+<p><a href="#%E4%BB%8D%E5%AD%98%E5%9C%A8%E7%9A%84%E9%97%AE%E9%A2%98">仍存在的问题</a></p>
 <h2 id="介绍"><a class="markdownIt-Anchor" href="#介绍"></a> 介绍</h2>
 <img src="assets/242069421.jpg" srcset="/img/loading.gif" height="300" alt="CeleX5-MIPI"/>
 <p>CeleX™ 是针对机器视觉而设计的智能图像传感器系列。传感器中的每一像素点能够独立自主地监测相对光强的变化，并在到达阈值时被激发发出被读出信号。行和列仲裁电路实时处理像素激发信号，并确保即使同时接收到多个请求时能够按有序的方式逐一处理。传感器依据被激发的事件，输出连续的异步数据流，而不是图像帧。CeleX™ 传感器监测的运动物体速度不再受传统的曝光时间和帧速率限制。它可以侦测高达万帧 / 秒昂贵高速相机才能获取到的高速物体运动信息，而且还能大幅降低后端处理量。</p>
@@ -285,7 +289,7 @@ catkin_make <span class="hljs-comment"># Or use `catkin build`</span></code></pr
 roslaunch celex5_ros celex5_ros_node.launch
 <span class="hljs-comment"># In a new Terminal</span>
 rosrun rqt_reconfigure rqt_reconfigure <span class="hljs-comment"># Open rqt_reconfigure to config</span>
-```无报错即正常运行。使用`rostopic list`即可看到发布的话题，使用`rivz`或者`image_view`订阅相对应图像话题即可看到发布的图像。某图像话题中是否发布数据由参数配置、上表的相机工作模式所共同决定。```bash
+​```无报错即正常运行。使用`rostopic list`即可看到发布的话题，使用`rivz`或者`image_view`订阅相对应图像话题即可看到发布的图像。某图像话题中是否发布数据由参数配置、上表的相机工作模式所共同决定。```bash
 $ rostopic list
 /celex5_mipi/display/accumulated_img/camera_info
 /celex5_mipi/display/accumulated_img/raw_image
@@ -319,9 +323,9 @@ $ rostopic list
 /celex5_mipi/sensor/parameter_updates
 /rosout
 /rosout_agg
-```其中原始 event 数据的话题：`/celex5_mipi/events`imu 数据的话题（注意由于 CeleX5 原始 imu 数据获取的方式，导致 imu 话题与 ROS 中标准的 IMU 话题的消息类型不同）：`/celex5_mipi/imu_data`通过`image_view`查看某一图像：```bash
+​```其中原始 event 数据的话题：`/celex5_mipi/events`imu 数据的话题（注意由于 CeleX5 原始 imu 数据获取的方式，导致 imu 话题与 ROS 中标准的 IMU 话题的消息类型不同）：`/celex5_mipi/imu_data`通过`image_view`查看某一图像：```bash
 rosrun image_view image_view image:=/celex5_mipi/display/binary_img/raw_image
-```3. 使用`celex5_calibration`
+​```3. 使用`celex5_calibration`
 
 更多细节：[链接](celex5_calibration)
 
