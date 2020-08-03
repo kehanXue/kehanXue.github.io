@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>[转] 谈谈 C/C++ 中的 volatile</title>
+    <link href="/2020/08/03/%E8%BD%AC-%E8%B0%88%E8%B0%88-C-C-%E4%B8%AD%E7%9A%84-volatile/"/>
+    <url>/2020/08/03/%E8%BD%AC-%E8%B0%88%E8%B0%88-C-C-%E4%B8%AD%E7%9A%84-volatile/</url>
+    
+    <content type="html"><![CDATA[<p>本文转载了一篇关于 volatile 关键字在多线程中用法的拨乱反正的文章。为了解决多线程编程中可能的 false sharing 问题，<code>std::atomic</code> 更推荐被使用。</p><a id="more"></a><iframe src="https://liam.page/2018/01/18/volatile-in-C-and-Cpp/" width="100%" height="400" name="topFrame" scrolling="yes"  noresize="noresize" frameborder="0" id="topFrame"></iframe>]]></content>
+    
+    
+    <categories>
+      
+      <category>Programming</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>C++</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>[转] 深入浅出 C++ 11 std::async</title>
     <link href="/2020/08/03/%E8%BD%AC-%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA-C-11-std-async/"/>
     <url>/2020/08/03/%E8%BD%AC-%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA-C-11-std-async/</url>
@@ -429,9 +454,9 @@
     
     <tags>
       
-      <tag>Course</tag>
-      
       <tag>CPU</tag>
+      
+      <tag>Course</tag>
       
     </tags>
     
@@ -616,11 +641,11 @@
     
     <tags>
       
+      <tag>ROS</tag>
+      
       <tag>Calibration</tag>
       
       <tag>Multi-Sensors</tag>
-      
-      <tag>ROS</tag>
       
       <tag>Robotics</tag>
       
