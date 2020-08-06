@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>Ubuntu 18.04 在 Clion 中使用 Docker 插件</title>
+    <link href="/2020/08/06/Ubuntu-18-04-%E5%9C%A8-Clion-%E4%B8%AD%E4%BD%BF%E7%94%A8-Docker-%E6%8F%92%E4%BB%B6/"/>
+    <url>/2020/08/06/Ubuntu-18-04-%E5%9C%A8-Clion-%E4%B8%AD%E4%BD%BF%E7%94%A8-Docker-%E6%8F%92%E4%BB%B6/</url>
+    
+    <content type="html"><![CDATA[<p>在我的 Ubuntu 18.04 中，当 Clion 的 Docker 插件直接使用 Unix socket 与 Docker daemon 进行通信时，会抛出 <code>java.io.IOException: unexpected end of stream on http://docker.socket/...</code> 的异常。所以采用将 Docker daemon 开启一个新的 tcp 端口，配置 Clion 的 Docker 插件与其进行通信。</p><a id="more"></a><h1 id="ubuntu-1804-在-clion-中使用-docker-插件"><a class="markdownIt-Anchor" href="#ubuntu-1804-在-clion-中使用-docker-插件"></a> Ubuntu 18.04 在 Clion 中使用 Docker 插件</h1><h2 id="在-clion-中安装-docker-插件"><a class="markdownIt-Anchor" href="#在-clion-中安装-docker-插件"></a> 在 Clion 中安装 Docker 插件</h2><p>在插件市场直接搜索 Docker 即可。官方使用文档：<a href="https://www.jetbrains.com/help/clion/2020.2/docker-connection-settings.html?utm_campaign=CL&amp;utm_medium=link&amp;utm_source=product&amp;utm_content=2020.2" target="_blank" rel="noopener">Docker</a></p><p>此时已经可以在 <code>File | Settings | Build, Execution &amp; Deployment | Docker</code>  中进行配置了。可见有三个选项：</p><p><img src="assets/image-20200806152451295.png" srcset="/img/loading.gif" alt="image-20200806152451295" /></p><p>首先当然默认的 Unix socket 方式是最简单的，可以直接试一下，成功的话下面会显示 <code>Connection successful</code>，这样就可以啦，不用看下面的步骤了。</p><p>但是我这里抛出了  <code>java.io.IOException: unexpected end of stream on http://docker.socket/...</code> 的异常… 所以考虑使用其他解决方案，即采用 TCP socket 的方式。</p><p><img src="assets/image-20200806153327375.png" srcset="/img/loading.gif" alt="image-20200806153327375" /></p><h2 id="开启本地-docker-daemon-的-2375-端口"><a class="markdownIt-Anchor" href="#开启本地-docker-daemon-的-2375-端口"></a> 开启本地 Docker daemon 的 2375 端口</h2><pre><code class="hljs bash">sudo vim /lib/systemd/system/docker.service</code></pre><p>找到 <code>ExecStart</code>，后面追加 <code>-H tcp://0.0.0.0:2375</code>：</p><p><img src="assets/image-20200806152943222.png" srcset="/img/loading.gif" alt="image-20200806152943222" /></p><p>然后重启Docker：</p><pre><code class="hljs bash">systemctl daemon-reloadsystemctl restart docker</code></pre><h2 id="在-clion-docker-插件中进行配置"><a class="markdownIt-Anchor" href="#在-clion-docker-插件中进行配置"></a> 在 Clion Docker 插件中进行配置</h2><p>选择 TCP socket 即可：</p><p><img src="assets/image-20200806153227068.png" srcset="/img/loading.gif" alt="image-20200806153227068" /></p><h2 id="成功配置后的简单使用"><a class="markdownIt-Anchor" href="#成功配置后的简单使用"></a> 成功配置后的简单使用</h2><p>可进行对 Docker 方便的管理：</p><p><img src="assets/image-20200806153504778.png" srcset="/img/loading.gif" alt="image-20200806153504778" /></p><p>对 Dockerfile 可以直接创建 run configuration：</p><p><img src="assets/image-20200806154130257.png" srcset="/img/loading.gif" alt="image-20200806154130257" /></p><h2 id="go-further"><a class="markdownIt-Anchor" href="#go-further"></a> Go further</h2><p>当然上文只是本地配置时的一些问题以及解决办法；如果连远程服务器上的 Docker，则同理，直接配置 TCP 方式连接即可。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Tools</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Docker</tag>
+      
+      <tag>Ubuntu</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>[转] 谈谈 C/C++ 中的 volatile</title>
     <link href="/2020/08/03/%E8%BD%AC-%E8%B0%88%E8%B0%88-C-C-%E4%B8%AD%E7%9A%84-volatile/"/>
     <url>/2020/08/03/%E8%BD%AC-%E8%B0%88%E8%B0%88-C-C-%E4%B8%AD%E7%9A%84-volatile/</url>
@@ -124,11 +151,11 @@
     
     <tags>
       
+      <tag>Event-Camera</tag>
+      
       <tag>SLAM</tag>
       
       <tag>Robotics</tag>
-      
-      <tag>Event-Camera</tag>
       
     </tags>
     
@@ -641,13 +668,13 @@
     
     <tags>
       
-      <tag>Robotics</tag>
-      
       <tag>ROS</tag>
       
       <tag>Calibration</tag>
       
       <tag>Multi-Sensors</tag>
+      
+      <tag>Robotics</tag>
       
       <tag>Autoware</tag>
       
@@ -701,7 +728,7 @@
       
       <tag>Deep-Learning</tag>
       
-      <tag>SR</tag>
+      <tag>Super-Resolution</tag>
       
     </tags>
     
