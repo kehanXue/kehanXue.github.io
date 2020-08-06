@@ -341,7 +341,7 @@ TRAJECTORY_BUILDER_2D.min_z</code></pre>
 &#125;</code></pre>
 <h4 id="voxel-filter"><a class="markdownIt-Anchor" href="#voxel-filter"></a> Voxel Filter</h4>
 <p>较近的表面 (如路面) 经常扫描得到更多的 points, 而远处的物体的 points 经常比较稀少。为了降低计算量，需要对点云数据进行下采样，简单的随机采样仍然会导致低密度区的点更少，而高密度区的点仍然比较多。因此 cartographer 采用 voxel_filter (体素滤波) 的方法。通过输入的点云数据创建一个三维体素栅格（可把体素栅格想象为微小的空间三维立方体的集合），然后在每个体素（即，三维立方体）内，用体素中所有点的重心来近似显示体素中其他点，这样该体素就内所有点就用一个重心点最终表示，对于所有体素处理后得到过滤后的点云。<code>TRAJECTORY_BUILDER_nD.voxel_filter_size</code> 即为立方体的大小。如果立方体较小的话会导致更密集的数据，所耗的计算量更大。而较大的话可能会导致数据丢失但是计算速度会更快。</p>
-<p>在提供了定大小的 voxel_filter, Cartographer 还提供了一个 adaptive_voxel_filter,  adaptive_voxel_filter 可以在最大边长 <code>TRAJECTORY_BUILDER_nD.\*adaptive_voxel_filter.max_length</code> 的限制下优化确定 voxel_filter_size 来实现目标的 points 数 <code>TRAJECTORY_BUILDER_nD.\*adaptive_voxel_filter.min_num_points</code> 。</p>
+<p>在提供了定大小的 voxel_filter, Cartographer 还提供了一个 adaptive_voxel_filter,  adaptive_voxel_filter 可以在最大边长 <code>TRAJECTORY_BUILDER_nD.adaptive_voxel_filter.max_length</code> 的限制下优化确定 voxel_filter_size 来实现目标的 points 数 <code>TRAJECTORY_BUILDER_nD.adaptive_voxel_filter.min_num_points</code> 。</p>
 <p>官方给的默认配置：</p>
 <p><code>trajectory_builder_2d.lua</code></p>
 <pre><code class="hljs lua">TRAJECTORY_BUILDER_2D = &#123;
@@ -546,7 +546,9 @@ TRAJECTORY_BUILDER_3D.low_resolution_adaptive_voxel_filter.max_range</code></pre
 <span class="hljs-keyword">import</span> <span class="hljs-string">"cartographer/transform/proto/transform.proto"</span>;
 
 <span class="hljs-comment">// Serialized state of a mapping::TrajectoryNode::Data.</span>
-<span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">TrajectoryNodeData</span> </span>&#123;&gt;   <span class="hljs-built_in">int64</span> timestamp = <span class="hljs-number">1</span>;&gt;   transform.proto.Quaterniond gravity_alignment = <span class="hljs-number">2</span>;
+<span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">TrajectoryNodeData</span> </span>&#123;
+  <span class="hljs-built_in">int64</span> timestamp = <span class="hljs-number">1</span>;
+  transform.proto.Quaterniond gravity_alignment = <span class="hljs-number">2</span>;
   sensor.proto.CompressedPointCloud
       filtered_gravity_aligned_point_cloud = <span class="hljs-number">3</span>;
   sensor.proto.CompressedPointCloud high_resolution_point_cloud = <span class="hljs-number">4</span>;
