@@ -1,7 +1,7 @@
+
+
 <!DOCTYPE html>
-<html lang="en">
-
-
+<html lang="en" data-default-color-scheme=&#34;auto&#34;>
 
 
 
@@ -19,17 +19,17 @@
   <meta name="keywords" content="">
   <title>Kehan&#39;s Blog</title>
 
-  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
 
 
 <!-- 主题依赖的图标库，不要自行修改 -->
 
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
 
 
 
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
 
 
 <link  rel="stylesheet" href="/css/main.css" />
@@ -37,7 +37,12 @@
 <!-- 自定义样式保持在最底部 -->
 
 
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blog.kehan.site","root":"/","version":"1.8.6","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"copy_btn":true,"image_zoom":{"enable":true},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"n6Mj5ldxlOzFKmG1RboJvi35-gzGzoHsz","app_key":"e0SXMiS3gUuaA37sDxUdkj1x","server_url":"https://n6mj5ldx.lc-cn-n1-shared.com"},"tajs":null}};
+  </script>
   <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
 <meta name="generator" content="Hexo 4.2.1"></head>
 
 
@@ -120,8 +125,14 @@
         
         
           <li class="nav-item" id="search-btn">
-            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
-                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
           </li>
         
       </ul>
@@ -129,13 +140,13 @@
   </div>
 </nav>
 
-    <div class="view intro-2" id="background" parallax=true
+    <div class="banner intro-2" id="background" parallax=true
          style="background: url('/img/sauvc-banner.jpg') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-          <div class="container text-center white-text fadeInUp">
-            <span class="h2" id="subtitle">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="写些东西的地方。">
               
             </span>
 
@@ -165,25 +176,33 @@
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2020/03/04/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Low-Latency-Visual-Odometry-using-Event-based-Feature-Tracks/" target="_blank">
-          <img src="/assets/event-vo-track-index.jpeg" srcset="/img/loading.gif" alt="论文阅读 - Low-Latency Visual Odometry using Event-based Feature Tracks">
+          <img src="/assets/event-vo-track-index.jpeg" alt="论文阅读 - Low-Latency Visual Odometry using Event-based Feature Tracks">
         </a>
       </div>
     
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a class="index-header" href="/2020/03/04/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Low-Latency-Visual-Odometry-using-Event-based-Feature-Tracks/">论文阅读 - Low-Latency Visual Odometry using Event-based Feature Tracks</a>
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/03/04/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Low-Latency-Visual-Odometry-using-Event-based-Feature-Tracks/">论文阅读 - Low-Latency Visual Odometry using Event-based Feature Tracks</a>
+      </h1>
 
-      <a href="/2020/03/04/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Low-Latency-Visual-Odometry-using-Event-based-Feature-Tracks/" class="index-excerpt">
-        
-        
+      <p class="index-excerpt">
+        <a href="/2020/03/04/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Low-Latency-Visual-Odometry-using-Event-based-Feature-Tracks/">
           
-        
-        <div>Low-Latency Visual Odometry using Event-based Feature Tracks 通过手工设计的 feature 和 feature tracking 的方法，将问题转化为传统 VO，但又不失 Event 带来的高速和异步的特性。</div>
-      </a>
+          
+            
+          
+          Low-Latency Visual Odometry using Event-based Feature Tracks 通过手工设计的 feature 和 feature tracking 的方法，将问题转化为传统 VO，但又不失 Event 带来的高速和异步的特性。
+        </a>
+      </p>
 
       <div class="index-btm post-metas">
         
           <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>&nbsp;2020-03-04
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-03-04 19:35" pubdate>
+              2020-03-04
+            </time>
           </div>
         
         
@@ -207,7 +226,7 @@
           </div>
         
       </div>
-    </div>
+    </article>
   </div>
 
   <div class="row mx-auto index-card">
@@ -215,25 +234,33 @@
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2020/02/26/LOAM%EF%BC%88A-LOAM%EF%BC%89Laser-SLAM-%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B/" target="_blank">
-          <img src="/assets/aloam-index.png" srcset="/img/loading.gif" alt="LOAM（A-LOAM）Laser-SLAM 算法流程">
+          <img src="/assets/aloam-index.png" alt="LOAM（A-LOAM）Laser-SLAM 算法流程">
         </a>
       </div>
     
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a class="index-header" href="/2020/02/26/LOAM%EF%BC%88A-LOAM%EF%BC%89Laser-SLAM-%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B/">LOAM（A-LOAM）Laser-SLAM 算法流程</a>
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/02/26/LOAM%EF%BC%88A-LOAM%EF%BC%89Laser-SLAM-%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B/">LOAM（A-LOAM）Laser-SLAM 算法流程</a>
+      </h1>
 
-      <a href="/2020/02/26/LOAM%EF%BC%88A-LOAM%EF%BC%89Laser-SLAM-%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B/" class="index-excerpt">
-        
-        
+      <p class="index-excerpt">
+        <a href="/2020/02/26/LOAM%EF%BC%88A-LOAM%EF%BC%89Laser-SLAM-%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B/">
           
-        
-        <div>loam 是一个三维激光 SLAM 中很重要的一个方案，俗称 “loam 神器”。在这篇文章中我梳理了 loam 的算法流程，代码部分参考的是港科大 HKUST-Aerial-Robotics 组的实现版本：A-LOAM。</div>
-      </a>
+          
+            
+          
+          loam 是一个三维激光 SLAM 中很重要的一个方案，俗称 “loam 神器”。在这篇文章中我梳理了 loam 的算法流程，代码部分参考的是港科大 HKUST-Aerial-Robotics 组的实现版本：A-LOAM。
+        </a>
+      </p>
 
       <div class="index-btm post-metas">
         
           <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>&nbsp;2020-02-26
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-02-26 21:30" pubdate>
+              2020-02-26
+            </time>
           </div>
         
         
@@ -255,7 +282,7 @@
           </div>
         
       </div>
-    </div>
+    </article>
   </div>
 
   <div class="row mx-auto index-card">
@@ -263,30 +290,38 @@
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2020/01/15/Event-based-Camera-%E6%A0%87%E5%AE%9A%E5%B7%A5%E4%BD%9C%E6%95%B4%E7%90%86%E5%A4%A7%E5%85%A8/" target="_blank">
-          <img src="/assets/dvs-calibration-index.jpeg" srcset="/img/loading.gif" alt="论文阅读 - Event-based Camera 标定工作整理大全">
+          <img src="/assets/dvs-calibration-index.jpeg" alt="论文阅读 - Event-based Camera 标定工作整理大全">
         </a>
       </div>
     
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a class="index-header" href="/2020/01/15/Event-based-Camera-%E6%A0%87%E5%AE%9A%E5%B7%A5%E4%BD%9C%E6%95%B4%E7%90%86%E5%A4%A7%E5%85%A8/">论文阅读 - Event-based Camera 标定工作整理大全</a>
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/01/15/Event-based-Camera-%E6%A0%87%E5%AE%9A%E5%B7%A5%E4%BD%9C%E6%95%B4%E7%90%86%E5%A4%A7%E5%85%A8/">论文阅读 - Event-based Camera 标定工作整理大全</a>
+      </h1>
 
-      <a href="/2020/01/15/Event-based-Camera-%E6%A0%87%E5%AE%9A%E5%B7%A5%E4%BD%9C%E6%95%B4%E7%90%86%E5%A4%A7%E5%85%A8/" class="index-excerpt">
-        
-        
+      <p class="index-excerpt">
+        <a href="/2020/01/15/Event-based-Camera-%E6%A0%87%E5%AE%9A%E5%B7%A5%E4%BD%9C%E6%95%B4%E7%90%86%E5%A4%A7%E5%85%A8/">
           
-        
-        <div>本篇内容整理有：
+          
+            
+          
+          本篇内容整理有：
 
 有关 Event Camera Calibration 一些直接相关的工作和工具包
 目前为止的主流的 Event-Camera 的数据集，整理了其中涉及多传感器外参标定的工作
 在 Event Camera 的 VO/SLAM、目标检测的工作中，涉及到的多传感器、与传统 CMOS 相机标定的工作（未完，仍在继续整理）
-目前为止的一些基于 Event 的 Video Synthes</div>
-      </a>
+目前为止的一些基于 Event 的 Video Synthes
+        </a>
+      </p>
 
       <div class="index-btm post-metas">
         
           <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>&nbsp;2020-01-15
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-01-15 23:45" pubdate>
+              2020-01-15
+            </time>
           </div>
         
         
@@ -310,7 +345,7 @@
           </div>
         
       </div>
-    </div>
+    </article>
   </div>
 
   <div class="row mx-auto index-card">
@@ -318,25 +353,33 @@
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2019/12/07/Cartographer%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B%E8%A7%A3%E6%9E%90%E4%B8%8E%E8%B0%83%E4%BC%98/" target="_blank">
-          <img src="/assets/cartographer-runtime.jpeg" srcset="/img/loading.gif" alt="Cartographer Laser-SLAM 算法流程解析与调优">
+          <img src="/assets/cartographer-runtime.jpeg" alt="Cartographer Laser-SLAM 算法流程解析与调优">
         </a>
       </div>
     
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a class="index-header" href="/2019/12/07/Cartographer%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B%E8%A7%A3%E6%9E%90%E4%B8%8E%E8%B0%83%E4%BC%98/">Cartographer Laser-SLAM 算法流程解析与调优</a>
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2019/12/07/Cartographer%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B%E8%A7%A3%E6%9E%90%E4%B8%8E%E8%B0%83%E4%BC%98/">Cartographer Laser-SLAM 算法流程解析与调优</a>
+      </h1>
 
-      <a href="/2019/12/07/Cartographer%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B%E8%A7%A3%E6%9E%90%E4%B8%8E%E8%B0%83%E4%BC%98/" class="index-excerpt">
-        
-        
+      <p class="index-excerpt">
+        <a href="/2019/12/07/Cartographer%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B%E8%A7%A3%E6%9E%90%E4%B8%8E%E8%B0%83%E4%BC%98/">
           
-        
-        <div>本篇博客的目的是记录自己在实物机器人上调试 Cartographer 算法的过程中，参考的资料和结合部分代码，一些自己总结的内容。Cartographer 是 Google 开源的一个激光 SLAM 项目，有着非常惊艳的工程实现。</div>
-      </a>
+          
+            
+          
+          本篇博客的目的是记录自己在实物机器人上调试 Cartographer 算法的过程中，参考的资料和结合部分代码，一些自己总结的内容。Cartographer 是 Google 开源的一个激光 SLAM 项目，有着非常惊艳的工程实现。
+        </a>
+      </p>
 
       <div class="index-btm post-metas">
         
           <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>&nbsp;2019-12-07
+            <i class="iconfont icon-date"></i>
+            <time datetime="2019-12-07 16:09" pubdate>
+              2019-12-07
+            </time>
           </div>
         
         
@@ -358,7 +401,7 @@
           </div>
         
       </div>
-    </div>
+    </article>
   </div>
 
   <div class="row mx-auto index-card">
@@ -366,25 +409,33 @@
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2019/11/25/VINS-Mono-%E4%B8%AD%E7%9A%84%E8%BE%B9%E7%BC%98%E5%8C%96%E6%93%8D%E4%BD%9C%E7%90%86%E8%A7%A3/" target="_blank">
-          <img src="/assets/vins-fej.png" srcset="/img/loading.gif" alt="VINS-Mono 中的边缘化操作理解">
+          <img src="/assets/vins-fej.png" alt="VINS-Mono 中的边缘化操作理解">
         </a>
       </div>
     
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a class="index-header" href="/2019/11/25/VINS-Mono-%E4%B8%AD%E7%9A%84%E8%BE%B9%E7%BC%98%E5%8C%96%E6%93%8D%E4%BD%9C%E7%90%86%E8%A7%A3/">VINS-Mono 中的边缘化操作理解</a>
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2019/11/25/VINS-Mono-%E4%B8%AD%E7%9A%84%E8%BE%B9%E7%BC%98%E5%8C%96%E6%93%8D%E4%BD%9C%E7%90%86%E8%A7%A3/">VINS-Mono 中的边缘化操作理解</a>
+      </h1>
 
-      <a href="/2019/11/25/VINS-Mono-%E4%B8%AD%E7%9A%84%E8%BE%B9%E7%BC%98%E5%8C%96%E6%93%8D%E4%BD%9C%E7%90%86%E8%A7%A3/" class="index-excerpt">
-        
-        
+      <p class="index-excerpt">
+        <a href="/2019/11/25/VINS-Mono-%E4%B8%AD%E7%9A%84%E8%BE%B9%E7%BC%98%E5%8C%96%E6%93%8D%E4%BD%9C%E7%90%86%E8%A7%A3/">
           
-        
-        <div>边缘化 (Marginalization)，简单来说也就是删掉某些东西但是仍保存它的影响。比如最常见的求解 BA 的过程中，求解 H 矩阵时利用它的稀疏性进行的舒尔消元，就是把路标点 “忽略掉” 先求出相机的共视矩阵。这类 “忽略掉” 的操作就是所谓的 “边缘化”。</div>
-      </a>
+          
+            
+          
+          边缘化 (Marginalization)，简单来说也就是删掉某些东西但是仍保存它的影响。比如最常见的求解 BA 的过程中，求解 H 矩阵时利用它的稀疏性进行的舒尔消元，就是把路标点 “忽略掉” 先求出相机的共视矩阵。这类 “忽略掉” 的操作就是所谓的 “边缘化”。
+        </a>
+      </p>
 
       <div class="index-btm post-metas">
         
           <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>&nbsp;2019-11-25
+            <i class="iconfont icon-date"></i>
+            <time datetime="2019-11-25 21:04" pubdate>
+              2019-11-25
+            </time>
           </div>
         
         
@@ -406,7 +457,7 @@
           </div>
         
       </div>
-    </div>
+    </article>
   </div>
 
   <div class="row mx-auto index-card">
@@ -414,27 +465,35 @@
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2019/11/22/%E4%BD%BF%E7%94%A8Pitest%E8%BF%9B%E8%A1%8C%E5%8F%98%E5%BC%82%E6%B5%8B%E8%AF%95/" target="_blank">
-          <img src="/assets/pitest-index.png" srcset="/img/loading.gif" alt="使用 Pitest 进行变异测试">
+          <img src="/assets/pitest-index.png" alt="使用 Pitest 进行变异测试">
         </a>
       </div>
     
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a class="index-header" href="/2019/11/22/%E4%BD%BF%E7%94%A8Pitest%E8%BF%9B%E8%A1%8C%E5%8F%98%E5%BC%82%E6%B5%8B%E8%AF%95/">使用 Pitest 进行变异测试</a>
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2019/11/22/%E4%BD%BF%E7%94%A8Pitest%E8%BF%9B%E8%A1%8C%E5%8F%98%E5%BC%82%E6%B5%8B%E8%AF%95/">使用 Pitest 进行变异测试</a>
+      </h1>
 
-      <a href="/2019/11/22/%E4%BD%BF%E7%94%A8Pitest%E8%BF%9B%E8%A1%8C%E5%8F%98%E5%BC%82%E6%B5%8B%E8%AF%95/" class="index-excerpt">
-        
-        
+      <p class="index-excerpt">
+        <a href="/2019/11/22/%E4%BD%BF%E7%94%A8Pitest%E8%BF%9B%E8%A1%8C%E5%8F%98%E5%BC%82%E6%B5%8B%E8%AF%95/">
           
-        
-        <div> 使用 Pitest 进行变异测试
+          
+            
+          
+           使用 Pitest 进行变异测试
  变异测试 (Mutation Testing)
-变异测试是软件测试方法中的一个重要测试方法。变异测试旨在找出有效的测试用例。简单来说，就是对代码做一些简单的修改（变异），然后用同样的测试用例进行输入，看输出是否会发生改变。如果输出发生变化，即该变异 (mutation) 被 kill 掉，该 test case 就是有效的 test case；若所有测试用例扔</div>
-      </a>
+变异测试是软件测试方法中的一个重要测试方法。变异测试旨在找出有效的测试用例。简单来说，就是对代码做一些简单的修改（变异），然后用同样的测试用例进行输入，看输出是否会发生改变。如果输出发生变化，即该变异 (mutation) 被 kill 掉，该 test case 就是有效的 test case；若所有测试用例扔
+        </a>
+      </p>
 
       <div class="index-btm post-metas">
         
           <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>&nbsp;2019-11-22
+            <i class="iconfont icon-date"></i>
+            <time datetime="2019-11-22 00:19" pubdate>
+              2019-11-22
+            </time>
           </div>
         
         
@@ -454,7 +513,7 @@
           </div>
         
       </div>
-    </div>
+    </article>
   </div>
 
   <div class="row mx-auto index-card">
@@ -462,25 +521,33 @@
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2019/10/25/VINS-Mono-%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E6%80%BB%E7%BB%93/" target="_blank">
-          <img src="/assets/vins-mono-pipline-index.png" srcset="/img/loading.gif" alt="VINS-Mono 工作流程总结">
+          <img src="/assets/vins-mono-pipline-index.png" alt="VINS-Mono 工作流程总结">
         </a>
       </div>
     
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a class="index-header" href="/2019/10/25/VINS-Mono-%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E6%80%BB%E7%BB%93/">VINS-Mono 工作流程总结</a>
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2019/10/25/VINS-Mono-%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E6%80%BB%E7%BB%93/">VINS-Mono 工作流程总结</a>
+      </h1>
 
-      <a href="/2019/10/25/VINS-Mono-%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E6%80%BB%E7%BB%93/" class="index-excerpt">
-        
-        
+      <p class="index-excerpt">
+        <a href="/2019/10/25/VINS-Mono-%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E6%80%BB%E7%BB%93/">
           
-        
-        <div>本篇是我在学习 VINS-Mono 时对其工作流程的一个总结。VINS-Mono 的功能模块可包括五个部分：数据预处理、初始化、后端非线性优化、闭环检测及闭环优化。代码中主要开启了四个线程，分别是：前端图像跟踪、后端非线性优化 (其中初始化和 IMU 预积分在这个线程中) 、闭环检测、闭环优化。本人才学疏浅，有理解不深和错误的地方，请多多指教！</div>
-      </a>
+          
+            
+          
+          本篇是我在学习 VINS-Mono 时对其工作流程的一个总结。VINS-Mono 的功能模块可包括五个部分：数据预处理、初始化、后端非线性优化、闭环检测及闭环优化。代码中主要开启了四个线程，分别是：前端图像跟踪、后端非线性优化 (其中初始化和 IMU 预积分在这个线程中) 、闭环检测、闭环优化。本人才学疏浅，有理解不深和错误的地方，请多多指教！
+        </a>
+      </p>
 
       <div class="index-btm post-metas">
         
           <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>&nbsp;2019-10-25
+            <i class="iconfont icon-date"></i>
+            <time datetime="2019-10-25 23:49" pubdate>
+              2019-10-25
+            </time>
           </div>
         
         
@@ -502,7 +569,7 @@
           </div>
         
       </div>
-    </div>
+    </article>
   </div>
 
   <div class="row mx-auto index-card">
@@ -510,25 +577,33 @@
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2019/10/20/VINS-Mono-%E6%95%B4%E4%BD%93%E6%A1%86%E6%9E%B6%E6%A6%82%E8%BF%B0/" target="_blank">
-          <img src="/assets/vins-mono-index.png" srcset="/img/loading.gif" alt="VINS-Mono 整体框架概述">
+          <img src="/assets/vins-mono-index.png" alt="VINS-Mono 整体框架概述">
         </a>
       </div>
     
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a class="index-header" href="/2019/10/20/VINS-Mono-%E6%95%B4%E4%BD%93%E6%A1%86%E6%9E%B6%E6%A6%82%E8%BF%B0/">VINS-Mono 整体框架概述</a>
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2019/10/20/VINS-Mono-%E6%95%B4%E4%BD%93%E6%A1%86%E6%9E%B6%E6%A6%82%E8%BF%B0/">VINS-Mono 整体框架概述</a>
+      </h1>
 
-      <a href="/2019/10/20/VINS-Mono-%E6%95%B4%E4%BD%93%E6%A1%86%E6%9E%B6%E6%A6%82%E8%BF%B0/" class="index-excerpt">
-        
-        
+      <p class="index-excerpt">
+        <a href="/2019/10/20/VINS-Mono-%E6%95%B4%E4%BD%93%E6%A1%86%E6%9E%B6%E6%A6%82%E8%BF%B0/">
           
-        
-        <div>VINS-Mono，即 Monocular Visual-Inertial SLAM，是港科大沈劭劼老师组开源的系统，主打 单目 + IMU。分别在 Robot 端和 IOS 端均做了实现并开源了出来。本篇为 VINS-Mono 框架的概览。本人才学疏浅，有理解不深和错误的地方，请多多指教！</div>
-      </a>
+          
+            
+          
+          VINS-Mono，即 Monocular Visual-Inertial SLAM，是港科大沈劭劼老师组开源的系统，主打 单目 + IMU。分别在 Robot 端和 IOS 端均做了实现并开源了出来。本篇为 VINS-Mono 框架的概览。本人才学疏浅，有理解不深和错误的地方，请多多指教！
+        </a>
+      </p>
 
       <div class="index-btm post-metas">
         
           <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>&nbsp;2019-10-20
+            <i class="iconfont icon-date"></i>
+            <time datetime="2019-10-20 20:05" pubdate>
+              2019-10-20
+            </time>
           </div>
         
         
@@ -550,7 +625,7 @@
           </div>
         
       </div>
-    </div>
+    </article>
   </div>
 
   <div class="row mx-auto index-card">
@@ -558,25 +633,33 @@
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2019/07/01/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E8%AE%BE%E8%AE%A1%E4%B8%80%E4%B8%AACPU/" target="_blank">
-          <img src="/assets/design-a-cpu-index.png" srcset="/img/loading.gif" alt="计算机组成原理 - 设计一个 CPU">
+          <img src="/assets/design-a-cpu-index.png" alt="计算机组成原理 - 设计一个 CPU">
         </a>
       </div>
     
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a class="index-header" href="/2019/07/01/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E8%AE%BE%E8%AE%A1%E4%B8%80%E4%B8%AACPU/">计算机组成原理 - 设计一个 CPU</a>
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2019/07/01/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E8%AE%BE%E8%AE%A1%E4%B8%80%E4%B8%AACPU/">计算机组成原理 - 设计一个 CPU</a>
+      </h1>
 
-      <a href="/2019/07/01/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E8%AE%BE%E8%AE%A1%E4%B8%80%E4%B8%AACPU/" class="index-excerpt">
-        
-        
+      <p class="index-excerpt">
+        <a href="/2019/07/01/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E8%AE%BE%E8%AE%A1%E4%B8%80%E4%B8%AACPU/">
           
-        
-        <div>计算机组成原理课程的一个大作业：设计一个符合下列要求的 CPU。完整项目请移步：https://github.com/kehanXue/Design-A-CPU。</div>
-      </a>
+          
+            
+          
+          计算机组成原理课程的一个大作业：设计一个符合下列要求的 CPU。完整项目请移步：https://github.com/kehanXue/Design-A-CPU。
+        </a>
+      </p>
 
       <div class="index-btm post-metas">
         
           <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>&nbsp;2019-07-01
+            <i class="iconfont icon-date"></i>
+            <time datetime="2019-07-01 20:46" pubdate>
+              2019-07-01
+            </time>
           </div>
         
         
@@ -598,7 +681,7 @@
           </div>
         
       </div>
-    </div>
+    </article>
   </div>
 
   <div class="row mx-auto index-card">
@@ -606,19 +689,23 @@
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2019/06/14/%E6%97%8B%E7%BF%BC%E6%97%A0%E4%BA%BA%E6%9C%BA%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA%E6%96%B9%E6%A1%88/" target="_blank">
-          <img src="/assets/uav-index.jpeg" srcset="/img/loading.gif" alt="旋翼无人机平台搭建方案">
+          <img src="/assets/uav-index.jpeg" alt="旋翼无人机平台搭建方案">
         </a>
       </div>
     
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a class="index-header" href="/2019/06/14/%E6%97%8B%E7%BF%BC%E6%97%A0%E4%BA%BA%E6%9C%BA%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA%E6%96%B9%E6%A1%88/">旋翼无人机平台搭建方案</a>
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2019/06/14/%E6%97%8B%E7%BF%BC%E6%97%A0%E4%BA%BA%E6%9C%BA%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA%E6%96%B9%E6%A1%88/">旋翼无人机平台搭建方案</a>
+      </h1>
 
-      <a href="/2019/06/14/%E6%97%8B%E7%BF%BC%E6%97%A0%E4%BA%BA%E6%9C%BA%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA%E6%96%B9%E6%A1%88/" class="index-excerpt">
-        
-        
+      <p class="index-excerpt">
+        <a href="/2019/06/14/%E6%97%8B%E7%BF%BC%E6%97%A0%E4%BA%BA%E6%9C%BA%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA%E6%96%B9%E6%A1%88/">
           
-        
-        <div> 飞行平台
+          
+            
+          
+           飞行平台
  1. 成品路线
 
 
@@ -632,13 +719,17 @@
 
 DJI Matrix 100
 ￥19999
-大疆提供的开发者平台，稳定性极强，并且不差钱的话可以非常方便集成 dji 提供的相应套件 (比如 guidance). 优点: 稳定性强，非常好的机械结构设计，减震等做的非常好；安全性强；提供有较完善的 sdk 文档；平台扩展性强. 缺点: 闭源系统，无法自己随心所欲的加外设，并且有时候</div>
-      </a>
+大疆提供的开发者平台，稳定性极强，并且不差钱的话可以非常方便集成 dji 提供的相应套件 (比如 guidance). 优点: 稳定性强，非常好的机械结构设计，减震等做的非常好；安全性强；提供有较完善的 sdk 文档；平台扩展性强. 缺点: 闭源系统，无法自己随心所欲的加外设，并且有时候
+        </a>
+      </p>
 
       <div class="index-btm post-metas">
         
           <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>&nbsp;2019-06-14
+            <i class="iconfont icon-date"></i>
+            <time datetime="2019-06-14 11:13" pubdate>
+              2019-06-14
+            </time>
           </div>
         
         
@@ -660,7 +751,7 @@ DJI Matrix 100
           </div>
         
       </div>
-    </div>
+    </article>
   </div>
 
 
@@ -685,16 +776,15 @@ DJI Matrix 100
         </div>
       </div>
     
-  </main>
 
-  
-    <a id="scroll-top-button" href="#" role="button">
-      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-    </a>
-  
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
 
-  
-    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
      aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
@@ -715,21 +805,16 @@ DJI Matrix 100
     </div>
   </div>
 </div>
-  
-
-  
-
-  
-
-  <footer class="mt-5">
-  <div class="text-center py-3">
-    <div>
-      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
-      <i class="iconfont icon-love"></i>
-      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
-        <span>Fluid</span></a>
-    </div>
     
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
   <div class="statistics">
     
     
@@ -756,17 +841,33 @@ DJI Matrix 100
   </div>
 
 
-    
+  
 
-    
-  </div>
+  
 </footer>
 
 <!-- SCRIPTS -->
-<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
-<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":200})
+    NProgress.start()
+    document.addEventListener('DOMContentLoaded', function() {
+      window.NProgress && window.NProgress.inc();
+    })
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
 <script  src="/js/debouncer.js" ></script>
-<script  src="/js/main.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
 
 <!-- Plugins -->
 
@@ -777,189 +878,7 @@ DJI Matrix 100
 
 
 
-  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
-  <script  src="/js/clipboard-use.js" ></script>
-
-
-
-  <script defer>
-  (function () {
-    // 查询存储的记录
-    function getRecord(Counter, target) {
-      return new Promise(function (resolve, reject) {
-        Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({target})))
-          .then(resp => resp.json())
-          .then(({results, code, error}) => {
-            if (code === 401) {
-              throw error;
-            }
-            if (results && results.length > 0) {
-              var record = results[0];
-              resolve(record);
-            } else {
-              Counter('post', '/classes/Counter', {target, time: 0})
-                .then(resp => resp.json())
-                .then((record, error) => {
-                  if (error) {
-                    throw error;
-                  }
-                  resolve(record);
-                }).catch(error => {
-                console.error('Failed to create', error);
-                reject(error);
-              });
-            }
-          }).catch((error) => {
-          console.error('LeanCloud Counter Error:', error);
-          reject(error);
-        });
-      })
-    }
-
-    // 发起自增请求
-    function increment(Counter, incrArr) {
-      return new Promise(function (resolve, reject) {
-        Counter('post', '/batch', {
-          "requests": incrArr
-        }).then((res) => {
-          res = res.json();
-          if (res.error) {
-            throw res.error;
-          }
-          resolve(res);
-        }).catch((error) => {
-          console.error('Failed to save visitor count', error);
-          reject(error);
-        });
-      });
-    }
-
-    // 构建自增请求体
-    function buildIncrement(objectId) {
-      return {
-        "method": "PUT",
-        "path": `/1.1/classes/Counter/${ objectId }`,
-        "body": {
-          "time": {
-            '__op': 'Increment',
-            'amount': 1
-          }
-        }
-      }
-    }
-
-    // 校验是否为有效的 UV
-    function validUV() {
-      var key = 'LeanCloud_UV_Flag';
-      var flag = localStorage.getItem(key);
-      if (flag) {
-        // 距离标记小于 24 小时则不计为 UV
-        if (new Date().getTime() - parseInt(flag) <= 86400000) {
-          return false;
-        }
-      }
-      localStorage.setItem(key, new Date().getTime().toString());
-      return true;
-    }
-
-    function addCount(Counter) {
-      var enableIncr = 'true' === 'true' && window.location.hostname !== 'localhost';
-      var getterArr = [];
-      var incrArr = [];
-
-      // 请求 PV 并自增
-      var pvCtn = document.querySelector('#leancloud-site-pv-container');
-      if (pvCtn || enableIncr) {
-        var pvGetter = getRecord(Counter, 'site-pv').then((record) => {
-          incrArr.push(buildIncrement(record.objectId))
-          var ele = document.querySelector('#leancloud-site-pv');
-          if (ele) {
-            ele.innerText = record.time + 1;
-            if (pvCtn) {
-              pvCtn.style.display = 'inline';
-            }
-          }
-        });
-        getterArr.push(pvGetter);
-      }
-
-      // 请求 UV 并自增
-      var uvCtn = document.querySelector('#leancloud-site-uv-container');
-      if (uvCtn || enableIncr) {
-        var uvGetter = getRecord(Counter, 'site-uv').then((record) => {
-          var vuv = validUV();
-          vuv && incrArr.push(buildIncrement(record.objectId))
-          var ele = document.querySelector('#leancloud-site-uv');
-          if (ele) {
-            ele.innerText = record.time + (vuv ? 1 : 0);
-            if (uvCtn) {
-              uvCtn.style.display = 'inline';
-            }
-          }
-        });
-        getterArr.push(uvGetter);
-      }
-
-      // 如果是文章，请求文章的浏览数，并自增
-      if ('false' === 'true') {
-        var viewCtn = document.querySelector('#leancloud-post-views-container');
-        if (viewCtn || enableIncr) {
-          var target = decodeURI('/page/2/');
-          var viewGetter = getRecord(Counter, target).then((record) => {
-            incrArr.push(buildIncrement(record.objectId))
-            if (viewCtn) {
-              var ele = document.querySelector('#leancloud-post-views');
-              if (ele) {
-                ele.innerText = (record.time || 0) + 1;
-                viewCtn.style.display = 'inline';
-              }
-            }
-          });
-          getterArr.push(viewGetter);
-        }
-      }
-
-      // 如果启动计数自增，批量发起自增请求
-      if (enableIncr) {
-        Promise.all(getterArr).then(() => {
-          incrArr.length > 0 && increment(Counter, incrArr);
-        })
-      }
-    }
-
-    var app_id = 'n6Mj5ldxlOzFKmG1RboJvi35-gzGzoHsz'
-    var app_key = 'e0SXMiS3gUuaA37sDxUdkj1x'
-    var server_url = 'https://n6mj5ldx.lc-cn-n1-shared.com'
-
-    function fetchData(api_server) {
-      var Counter = (method, url, data) => {
-        return fetch(`${ api_server }/1.1${ url }`, {
-          method,
-          headers: {
-            'X-LC-Id': app_id,
-            'X-LC-Key': app_key,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data)
-        });
-      };
-
-      addCount(Counter);
-    }
-
-    var api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${ app_id.slice(0, 8).toLowerCase() }.api.lncldglobal.com`;
-
-    if (api_server) {
-      fetchData(api_server);
-    } else {
-      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
-        .then(resp => resp.json())
-        .then(({api_server}) => {
-          fetchData('https://' + api_server);
-        });
-    }
-  })();
-</script>
+  
 
 
 
@@ -968,36 +887,39 @@ DJI Matrix 100
 
 
 
-  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
   <script>
-    var typed = new Typed('#subtitle', {
-      strings: [
-        '  ',
-        "写些东西的地方。&nbsp;",
-      ],
-      cursorChar: "_",
-      typeSpeed: 70,
-      loop: false,
-    });
-    typed.stop();
-    $(document).ready(function () {
-      $(".typed-cursor").addClass("h2");
-      typed.start();
-    });
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
   </script>
-
-
 
 
 
   <script  src="/js/local-search.js" ></script>
   <script>
-    var path = "/local-search.xml";
-    var inputArea = document.querySelector("#local-search-input");
-    inputArea.onclick = function () {
-      searchFunc(path, 'local-search-input', 'local-search-result');
-      this.onclick = null
-    }
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
   </script>
 
 
@@ -1011,13 +933,6 @@ DJI Matrix 100
 
 
 
-
-
-
-
-
-
-
   
 
   
@@ -1031,6 +946,11 @@ DJI Matrix 100
   
 
 
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
 
 
 

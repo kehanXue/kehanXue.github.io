@@ -1,7 +1,7 @@
+
+
 <!DOCTYPE html>
-<html lang="en">
-
-
+<html lang="en" data-default-color-scheme=&#34;auto&#34;>
 
 
 
@@ -19,26 +19,33 @@
   <meta name="keywords" content="">
   <title>论文阅读 - Event-based Camera 标定工作整理大全 - Kehan&#39;s Blog</title>
 
-  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
 
-  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
   <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
 
   
-    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
   
 
   
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
 
 
 <!-- 主题依赖的图标库，不要自行修改 -->
 
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
 
 
 
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
 
 
 <link  rel="stylesheet" href="/css/main.css" />
@@ -46,7 +53,12 @@
 <!-- 自定义样式保持在最底部 -->
 
 
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blog.kehan.site","root":"/","version":"1.8.6","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"copy_btn":true,"image_zoom":{"enable":true},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"n6Mj5ldxlOzFKmG1RboJvi35-gzGzoHsz","app_key":"e0SXMiS3gUuaA37sDxUdkj1x","server_url":"https://n6mj5ldx.lc-cn-n1-shared.com"},"tajs":null}};
+  </script>
   <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
 <meta name="generator" content="Hexo 4.2.1"></head>
 
 
@@ -129,8 +141,14 @@
         
         
           <li class="nav-item" id="search-btn">
-            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
-                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
           </li>
         
       </ul>
@@ -138,25 +156,28 @@
   </div>
 </nav>
 
-    <div class="view intro-2" id="background" parallax=true
+    <div class="banner intro-2" id="background" parallax=true
          style="background: url('/img/black-bg.jpg') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-          <div class="container text-center white-text fadeInUp">
-            <span class="h2" id="subtitle">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="论文阅读 - Event-based Camera 标定工作整理大全">
               
             </span>
 
             
-              
-  <div class="mt-3 post-meta">
-    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-    <time datetime="2020-01-15 23:45">
-      January 15, 2020 pm
-    </time>
-  </div>
-
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-01-15 23:45" pubdate>
+        January 15, 2020 pm
+      </time>
+    </span>
+  
+</div>
 
 <div class="mt-1">
   
@@ -182,9 +203,9 @@
   
     
       <!-- LeanCloud 统计文章PV -->
-      <span id="leancloud-post-views-container" class="post-meta" style="display: none">
+      <span id="leancloud-page-views-container" class="post-meta" style="display: none">
         <i class="iconfont icon-eye" aria-hidden="true"></i>
-        <span id="leancloud-post-views"></span> 次
+        <span id="leancloud-page-views"></span> 次
       </span>
     
   
@@ -209,9 +230,11 @@
     <div class="col-lg-8 nopadding-md">
       <div class="container nopadding-md" id="board-ctn">
         <div class="py-5" id="board">
-          <div class="post-content mx-auto" id="post">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">论文阅读 - Event-based Camera 标定工作整理大全</h1>
             
-            <article class="markdown-body">
+            <div class="markdown-body">
               <p>本篇内容整理有：</p>
 <ul>
 <li>有关 Event Camera Calibration 一些直接相关的工作和工具包</li>
@@ -294,16 +317,16 @@ WRC Symposium on Advanced Robotics and Automation (WRC SARA), 2018.</p>
 <h3 id="标定-event-camera-和-vlp-16-激光雷达之间的外参"><a class="markdownIt-Anchor" href="#标定-event-camera-和-vlp-16-激光雷达之间的外参"></a> <strong>标定 Event Camera 和 VLP-16 激光雷达之间的外参</strong></h3>
 <p>做了一个标定装置（后面带了一个闪烁的屏幕），Event camera 可以稳定的输出，雷达的 3D 点云也能扫出来明显的效果。作者用的设备是 VLP-16 和 <strong>Celex</strong>04-S。</p>
 <div align="center">
-    <img src="assets/Screenshot from 2020-01-04 16-09-15.png" srcset="/img/loading.gif" style="zoom:80%;" />
-    <img src="assets/Screenshot from 2020-01-04 16-09-38.png" srcset="/img/loading.gif" style="zoom:50%;" />
+    <img src="assets/Screenshot from 2020-01-04 16-09-15.png" style="zoom:80%;" />
+    <img src="assets/Screenshot from 2020-01-04 16-09-38.png" style="zoom:50%;" />
 </div>
 <p>标定方法也就是传统的模型：</p>
-<img src="assets/Screenshot from 2020-01-04 16-26-56.png" srcset="/img/loading.gif" style="zoom:57%;" />
+<img src="assets/Screenshot from 2020-01-04 16-26-56.png" style="zoom:57%;" />
 <p><strong>但是看了下公式发现它只标定了外参的 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi></mrow><annotation encoding="application/x-tex">T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span></span></span></span> 而没标定 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>R</mi></mrow><annotation encoding="application/x-tex">R</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.00773em;">R</span></span></span></span>…</strong></p>
 <div align="center">
-    <img src="assets/Screenshot from 2020-01-04 16-28-58.png" srcset="/img/loading.gif" style="zoom:37%;" />
-    <img src="assets/Screenshot from 2020-01-04 16-29-11.png" srcset="/img/loading.gif" style="zoom:37%;" />
-    <img src="assets/Screenshot from 2020-01-04 16-29-21.png" srcset="/img/loading.gif" style="zoom:43%;" />
+    <img src="assets/Screenshot from 2020-01-04 16-28-58.png" style="zoom:37%;" />
+    <img src="assets/Screenshot from 2020-01-04 16-29-11.png" style="zoom:37%;" />
+    <img src="assets/Screenshot from 2020-01-04 16-29-21.png" style="zoom:43%;" />
 </div>
 </blockquote>
 </li>
@@ -313,7 +336,7 @@ WRC Symposium on Advanced Robotics and Automation (WRC SARA), 2018.</p>
 IEEE Access, vol. 7, pp. 138415-138425, 2019.</p>
 <blockquote>
 <p>这一篇提到了关于双目的 dvs 之间基于 event 的外参标定工作。做了一个挺麻烦的装置… 他这应该是为了做一个固定的系统。也是通过 LED 灯、基于 events 进行的两者之间的外参标定</p>
-<img src="assets/Screenshot from 2020-01-04 17-23-52.png" srcset="/img/loading.gif" style="zoom:49%;" />
+<img src="assets/Screenshot from 2020-01-04 17-23-52.png" style="zoom:49%;" />
 </blockquote>
 </li>
 </ul>
@@ -323,12 +346,12 @@ IEEE Access, vol. 7, pp. 138415-138425, 2019.</p>
 <p>Zhu, A. Z., Thakur, D., Ozaslan, T., Pfrommer, B., Kumar, V., &amp; Daniilidis, K. (2018). <em>The Multivehicle Stereo Event Camera Dataset: An Event Camera Dataset for 3D Perception. IEEE Robotics and Automation Letters, 3 (3), 2032–2039.</em> doi:10.1109/lra.2018.2800793</p>
 </blockquote>
 <p>该数据集中多传感器的配置如下：</p>
-<img src="assets/Screenshot from 2020-01-04 21-32-46.png" srcset="/img/loading.gif" style="zoom:100%;" />
+<img src="assets/Screenshot from 2020-01-04 21-32-46.png" style="zoom:100%;" />
 <p>对于这些传感器配置的参数的确定：</p>
 <p>相机的内参、双目的外参和相机 - IMU 的外参通过 Kalibr 工具进行标定。左 DAVIS 和 VLP16 的标定通过 Camera and Range Calibration Toolbox 工具进行标定，<strong>用的是 DAVIS 的灰度帧</strong>，并且作者根据实际情况和 CAD 模型对其进行了手动微调。</p>
 <div align="center">
-    <img src="assets/Screenshot from 2020-01-04 21-40-27.png" srcset="/img/loading.gif" style="zoom:47%;" />
-    <img src="assets/Screenshot from 2020-01-04 21-41-13.png" srcset="/img/loading.gif" style="zoom:50%;" />
+    <img src="assets/Screenshot from 2020-01-04 21-40-27.png" style="zoom:47%;" />
+    <img src="assets/Screenshot from 2020-01-04 21-41-13.png" style="zoom:50%;" />
 </div>
 <hr />
 <h3 id="combined-dynamic-vision-rgb-d-dataset"><a class="markdownIt-Anchor" href="#combined-dynamic-vision-rgb-d-dataset"></a> <a href="http://ebvds.neurocomputing.systems/EBSLAM3D/index.html" target="_blank" rel="noopener">Combined Dynamic Vision / RGB-D Dataset</a></h3>
@@ -337,11 +360,11 @@ IEEE Access, vol. 7, pp. 138415-138425, 2019.</p>
 </blockquote>
 <p><a name="RGBD-DVS"></a> 这一篇的原文章是拿 RGB-D Camera 和 Event Camera 做 3D SLAM 的。顺便提出了这个数据集。</p>
 <p>作者的硬件配置长这个样子：</p>
-<img src="assets/Screenshot from 2020-01-04 22-08-19.png" srcset="/img/loading.gif" style="zoom:67%;" />
+<img src="assets/Screenshot from 2020-01-04 22-08-19.png" style="zoom:67%;" />
 <p><strong>这一篇做的标定的工作感觉和咱们想要做的有点接近。已经做了通过 RGB frame 与 dvs 的对应 pixel，从而将深度相机捕获的深度图中的每一个深度值与每一个 event 做 pixel 级的对齐</strong></p>
 <p>要解决这个问题，作者分了两步。首先先利用一个标定板，找出 RGBD 相机的彩图和 DVS 对应的 pixel。然后利用这些匹配好的 pixel 对，用针孔相机模型建模（利用 Depth 的投影），最后将求解两个相机的内参和两者之间的外参建模成一个最小二乘问题进行求解。</p>
 <p>找出 RGBD 相机和 DVS 对应 pixel 的标定板：</p>
-<p><img src="assets/Screenshot%20from%202020-01-04%2022-23-51.png" srcset="/img/loading.gif" alt="" /></p>
+<p><img src="assets/Screenshot%20from%202020-01-04%2022-23-51.png" alt="" /></p>
 <p>问题求解的建模过程：</p>
 <p>畸变矩阵这里被建模成了这个简单的模型。作者提到这个简单模型对于 dvs 的建模已经够用了。RGBD 相机在硬件上的补偿已经挺好，也够用了。</p>
 <p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>L</mi><mo stretchy="false">(</mo><mi>u</mi><mo stretchy="false">)</mo><mo>=</mo><mi>u</mi><mrow><mo fence="true">(</mo><mn>1</mn><mo>+</mo><msub><mi>κ</mi><mn>1</mn></msub><mi>r</mi><mo>+</mo><msub><mi>κ</mi><mn>2</mn></msub><msup><mi>r</mi><mn>2</mn></msup><mo fence="true">)</mo></mrow><mo separator="true">,</mo><mspace width="1em"/><mi>r</mi><mo>=</mo><mi mathvariant="normal">∥</mi><mi>u</mi><mi mathvariant="normal">∥</mi></mrow><annotation encoding="application/x-tex">L (u)=u\left (1+\kappa_{1} r+\kappa_{2} r^{2}\right), \quad r=\|u\|
@@ -355,10 +378,10 @@ IEEE Access, vol. 7, pp. 138415-138425, 2019.</p>
 <p>求解出 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>f</mi><mi>e</mi></msub><mo separator="true">,</mo><msub><mi>c</mi><mi>e</mi></msub><mo separator="true">,</mo><msub><mi>κ</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>κ</mi><mn>2</mn></msub><mo separator="true">,</mo><mi mathvariant="normal">T</mi></mrow><annotation encoding="application/x-tex">f_{e}, c_{e}, \kappa_{1}, \kappa_{2}, \mathrm {T}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">e</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">c</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">e</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">κ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">κ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathrm">T</span></span></span></span></span> 即可。RGBD 相机的内参可以另标定得到。</p>
 <hr />
 <h3 id="vivid-vision-for-visibility-dataset"><a class="markdownIt-Anchor" href="#vivid-vision-for-visibility-dataset"></a> <a href="https://sites.google.com/view/dgbicra2019-vivid/" target="_blank" rel="noopener">ViViD : Vision for Visibility Dataset</a></h3>
-<img src="assets/Screenshot from 2020-01-04 22-52-17-1578149580736.png" srcset="/img/loading.gif" style="zoom:100%;" />
+<img src="assets/Screenshot from 2020-01-04 22-52-17-1578149580736.png" style="zoom:100%;" />
 <p>他这个用的也是 DAVIS，用的灰度帧进行的外参标定。</p>
-<p><img src="assets/Screenshot%20from%202020-01-04%2022-53-39.png" srcset="/img/loading.gif" alt="" /></p>
-<p><img src="assets/Screenshot%20from%202020-01-04%2022-54-11.png" srcset="/img/loading.gif" alt="" /></p>
+<p><img src="assets/Screenshot%20from%202020-01-04%2022-53-39.png" alt="" /></p>
+<p><img src="assets/Screenshot%20from%202020-01-04%2022-54-11.png" alt="" /></p>
 <hr />
 <h3 id="the-uzh-fpv-drone-racing-dataset"><a class="markdownIt-Anchor" href="#the-uzh-fpv-drone-racing-dataset"></a> <a href="http://rpg.ifi.uzh.ch/uzh-fpv.html" target="_blank" rel="noopener">The UZH-FPV Drone Racing Dataset</a></h3>
 <p>直接用的是 DAVIS，frame 和 event 之间的标定是做好的。其他的直接用 DAVIS 的 frame 和 event 的还有很多数据集，如 <a href="http://rpg.ifi.uzh.ch/direct_event_camera_tracking/" target="_blank" rel="noopener">direct_event_camera_tracking dataset</a> 等。</p>
@@ -370,9 +393,9 @@ IEEE Access, vol. 7, pp. 138415-138425, 2019.</p>
 <p><a name="rgb-dvs-2"></a> 这也是一个结合 RGB-D（MS Kinect）和 DAVIS 数据的数据集。它的一个主要的工作是要将 rgbd 的 depth 图与 DAVIS 的灰度帧给对应起来（和 <a href="#RGBD-DVS"> 上面那个 RGBD 的工作 </a> 有点像）。分为两步，<strong>首先获取到两个传感器的内外参的参数，然后通过转换 rgbd 生成的点云的坐标系并在 DAVIS 的成像屏幕进行投影，得到它对应的深度图。</strong></p>
 <p>关于 DAVIS 和 RGBD 的外参标定，作者论文中并没有明确提及… 看描述应该是拿 RGBD 的 RGB 和 DAVIS 的灰度帧做的传统的外参标定。关于得到 DAVIS 坐标系下的深度图，作者将 RGBD 的点云通过两者的外参转换到 DAVIS 的坐标系下，然后再做个投影即可。</p>
 <div align="center">
-    <img src="assets/Screenshot from 2020-01-06 18-38-57.png" srcset="/img/loading.gif" style="zoom:50%;" />
-    <img src="assets/Screenshot from 2020-01-06 18-33-17.png" srcset="/img/loading.gif" style="zoom:60%;" />
-    <img src="assets/Screenshot from 2020-01-06 18-33-27.png" srcset="/img/loading.gif" style="zoom:80%;" />
+    <img src="assets/Screenshot from 2020-01-06 18-38-57.png" style="zoom:50%;" />
+    <img src="assets/Screenshot from 2020-01-06 18-33-17.png" style="zoom:60%;" />
+    <img src="assets/Screenshot from 2020-01-06 18-33-27.png" style="zoom:80%;" />
 </div>
 <hr />
 <h3 id="color-davis346-datasets"><a class="markdownIt-Anchor" href="#color-davis346-datasets"></a> <a href="http://rpg.ifi.uzh.ch/CED.html" target="_blank" rel="noopener">Color-DAVIS346 Datasets</a></h3>
@@ -380,8 +403,8 @@ IEEE Access, vol. 7, pp. 138415-138425, 2019.</p>
 <p>C. Scheerlinck*, H. Rebecq*, T. Stoffregen, N. Barnes, R. Mahony, D. Scaramuzza, <em>CED: Color Event Camera Dataset, IEEE Conference on Computer Vision and Pattern Recognition Workshops (CVPRW), 2019.</em></p>
 </blockquote>
 <p>这是一个带有彩色 fame 的 Event 数据集，但它直接拿 DAVIS346 相机录制的… 它可以直接输出彩色图像与 event。</p>
-<img src="assets/Screenshot from 2020-01-07 01-11-43.png" srcset="/img/loading.gif" style="zoom:60%;" />
-<img src="assets/Screenshot from 2020-01-07 01-11-33-1578330731656.png" srcset="/img/loading.gif" style="zoom:37%;" />
+<img src="assets/Screenshot from 2020-01-07 01-11-43.png" style="zoom:60%;" />
+<img src="assets/Screenshot from 2020-01-07 01-11-33-1578330731656.png" style="zoom:37%;" />
 <p><em>到此数据集方面整理的也差不多了，其他的 Event 数据集获取图像也基本都是通过 DAVIS 直接读取的，而不牵扯多传感器和外参。</em></p>
 <hr />
 <h3 id="ddd17"><a class="markdownIt-Anchor" href="#ddd17"></a> <a href="http://sensors.ini.uzh.ch/news_page/DDD17.html" target="_blank" rel="noopener">DDD17</a></h3>
@@ -407,14 +430,14 @@ Vision, Modeling and Visualization (Darmstadt, Germany, October 8-10, 2014), pp.
 </blockquote>
 <p><a name="beam"></a> 这是一篇做 Object Tracking 的工作。它利用 event 数据在彩色帧中跟踪快速运动的物体，所以需要将彩色图与 event 进行 Image registration。它利用了一个分束器装置使得在在两个相机中看到的场景尽可能保持一致 <em>（分束器应该是这个作用吧？那不然他后面算单应矩阵问题就会很大）</em>，然后通过一个标定板然后来求单应矩阵，将 DVS 坐标系映射到相机坐标系中去了。</p>
 <div align="center">
-    <img src="assets/Screenshot from 2020-01-08 10-39-27.png" srcset="/img/loading.gif" style="zoom:42%;" />
-    <img src="assets/Screenshot from 2020-01-08 10-39-54.png" srcset="/img/loading.gif" style="zoom:42%;" />
+    <img src="assets/Screenshot from 2020-01-08 10-39-27.png" style="zoom:42%;" />
+    <img src="assets/Screenshot from 2020-01-08 10-39-54.png" style="zoom:42%;" />
 </div>
 <p>分束器（beamsplitter）：</p>
-<img src="assets/v2-387dac22909d5485371329dfcc5f3d28_r-1578475989581-1578475992057.jpg" srcset="/img/loading.gif" alt="preview" style="zoom:67%;" />
+<img src="assets/v2-387dac22909d5485371329dfcc5f3d28_r-1578475989581-1578475992057.jpg" alt="preview" style="zoom:67%;" />
 <p><em>图片来自 <a href="https://zhuanlan.zhihu.com/p/24434788" target="_blank" rel="noopener">知乎</a></em></p>
 <p>为了将单应性对应的更准确，作者手动尽可能的将两个相机的光轴对齐。与传统相机相比，DVS 的分辨率较低，DVS 像素将始终映射到视频图像中直径为几个像素的区域。因此，作者发现单应性映射对于作者的目的而言足够精确。</p>
-<img src="assets/Screenshot from 2020-01-08 10-54-45.png" srcset="/img/loading.gif" style="zoom:40%;" />
+<img src="assets/Screenshot from 2020-01-08 10-54-45.png" style="zoom:40%;" />
 <hr />
 <h3 id="localization-and-ego-motion-estimation"><a class="markdownIt-Anchor" href="#localization-and-ego-motion-estimation"></a> Localization and Ego-Motion Estimation</h3>
 <blockquote>
@@ -423,9 +446,9 @@ Vision, Modeling and Visualization (Darmstadt, Germany, October 8-10, 2014), pp.
 IEEE/RSJ Int. Conf. Intelligent Robots and Systems (IROS), Chicago, IL, 2014, pp. 2761-2768. <a href="http://rpg.ifi.uzh.ch/docs/IROS14_Mueggler.pdf" target="_blank" rel="noopener">PDF</a>, <a href="https://youtu.be/LauQ6LWTkxM" target="_blank" rel="noopener">YouTube</a></p>
 </blockquote>
 <p>涉及到 DVS 内参的标定</p>
-<img src="assets/Screenshot from 2020-01-09 21-11-05.png" srcset="/img/loading.gif" style="zoom:60%;" />
-<img src="assets/Screenshot from 2020-01-09 21-10-39.png" srcset="/img/loading.gif" style="zoom:67%;" />
-<img src="assets/Screenshot from 2020-01-09 21-11-18.png" srcset="/img/loading.gif" style="zoom:67%;" />
+<img src="assets/Screenshot from 2020-01-09 21-11-05.png" style="zoom:60%;" />
+<img src="assets/Screenshot from 2020-01-09 21-10-39.png" style="zoom:67%;" />
+<img src="assets/Screenshot from 2020-01-09 21-11-18.png" style="zoom:67%;" />
 <h3 id="voslam-viovi-slam"><a class="markdownIt-Anchor" href="#voslam-viovi-slam"></a> VO/SLAM (VIO/VI-SLAM)</h3>
 <blockquote>
 <p>Censi, A. and Scaramuzza, D.,<br />
@@ -433,7 +456,7 @@ IEEE/RSJ Int. Conf. Intelligent Robots and Systems (IROS), Chicago, IL, 2014, pp
 IEEE Int. Conf. Robotics and Automation (ICRA), 2014, pp. 703-710. <a href="http://rpg.ifi.uzh.ch/docs/ICRA14_Censi.pdf" target="_blank" rel="noopener">PDF</a>, <a href="https://censi.science/pub/research/2013-dvsd/201405-icra15-dvsd.pdf" target="_blank" rel="noopener">Slides</a></p>
 </blockquote>
 <p><a name="vo-ex-cal"></a> 这一篇是同时通过一个灰度的 camera 和 DVS 来同时做的 VO。需要 camera 提供的绝对光强，所以需要将 camera 和 DVS 进行 Pixel 级别的对应。</p>
-<img src="assets/Screenshot from 2020-01-08 22-34-03.png" srcset="/img/loading.gif" style="zoom:80%;" />
+<img src="assets/Screenshot from 2020-01-08 22-34-03.png" style="zoom:80%;" />
 <p>该标定算法涉及时间同步和 pixel (空间) 的对齐。主要思路都是放置一段时间，然后利用两者捕获的光强变化作对比从而进行时间与空间的标定。</p>
 <ul>
 <li>
@@ -441,15 +464,15 @@ IEEE Int. Conf. Robotics and Automation (ICRA), 2014, pp. 703-710. <a href="http
 <p>要将 dvs 与 camera 的数据流的时间戳对齐，首先先将两者放置使其可以看到差不多的场景（see the same “changes”）。然后定义出一个可以表征两者观察到 change 而触发的信号，累积一段时间后将两者进行对比，从而判断出时移。由于累计的时间足够长，所以即使两者看到的场景并不完全一致，结果仍比较鲁棒。</p>
 <p>由于这两个数据流的频率不一致，因此需要将它们重新采样为相同的采样率 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">Δ</mi></mrow><annotation encoding="application/x-tex">\Delta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">Δ</span></span></span></span>。</p>
 <p>定义 dvs 的信号 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>f</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">f_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 为在时间间隔 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo stretchy="false">[</mo><mi>t</mi><mo>−</mo><mi mathvariant="normal">Δ</mi><mo separator="true">,</mo><mi>t</mi><mo>+</mo><mi mathvariant="normal">Δ</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[t-\Delta, t+\Delta]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord">Δ</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">Δ</span><span class="mclose">]</span></span></span></span> 内检测到的 event 数量：</p>
-<img src="assets/Screenshot from 2020-01-09 16-16-28.png" srcset="/img/loading.gif" style="zoom:80%;" />
+<img src="assets/Screenshot from 2020-01-09 16-16-28.png" style="zoom:80%;" />
 <p>定义表征 camera 图像光强变化的信号 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>g</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">g_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>：</p>
 <p>来自 camera 的数据可以被看做一个二元组 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo fence="true">⟨</mo><msub><mi>t</mi><mi>i</mi></msub><mo separator="true">,</mo><msub><mi>y</mi><mi>i</mi></msub><mo fence="true">⟩</mo></mrow><annotation encoding="application/x-tex">\left\langle t_{i}, y_{i}\right\rangle</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;">⟨</span><span class="mord"><span class="mord mathdefault">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;">⟩</span></span></span></span></span>，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>t</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">t_{i}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.76508em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 是时间戳，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>y</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">y_{i}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 代表整张图像（<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>y</mi><mi>i</mi></msub><mo>:</mo><msup><mi mathvariant="double-struck">S</mi><mn>2</mn></msup><mo>→</mo><mi mathvariant="double-struck">R</mi></mrow><annotation encoding="application/x-tex">y_{i}: \mathbb {S}^{2} \rightarrow \mathbb {R}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord"><span class="mord mathbb">S</span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68889em;vertical-align:0em;"></span><span class="mord"><span class="mord mathbb">R</span></span></span></span></span>  is the image<br />
 , here defined as a function on the visual sphere）。计算其离散的导数 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mover accent="true"><mi>y</mi><mo>˙</mo></mover><mi>i</mi></msub><mo>=</mo><mrow><mo fence="true">(</mo><msub><mi>y</mi><mrow><mi>i</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>−</mo><msub><mi>y</mi><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow></msub><mi mathvariant="normal">/</mi><mrow><mo fence="true">(</mo><msub><mi>t</mi><mrow><mi>i</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>−</mo><msub><mi>t</mi><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow></msub><mo fence="true">)</mo></mrow></mrow></mrow><annotation encoding="application/x-tex">\dot {y}_{i}=\left (y_{i+1}-y_{i-1} /\left (t_{i+1}-t_{i-1}\right)\right.</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8623000000000001em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord accent"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.66786em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.08333000000000002em;">˙</span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.19444em;"><span></span></span></span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;">(</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span><span class="mord">/</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;">(</span><span class="mord"><span class="mord mathdefault">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathdefault">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;">)</span></span><span class="mclose nulldelimiter"></span></span></span></span></span>，从而得出总的光强变化 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>c</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">c_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">c</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>c</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">c_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">c</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mover accent="true"><mi>y</mi><mo>˙</mo></mover><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">\dot {y}_{i}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8623000000000001em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord accent"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.66786em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.08333000000000002em;">˙</span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.19444em;"><span></span></span></span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 的一范数 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>c</mi><mi>i</mi></msub><mo>=</mo><msub><mo>∫</mo><msup><mi mathvariant="double-struck">S</mi><mn>2</mn></msup></msub><mrow><mo fence="true">∣</mo><msub><mover accent="true"><mi>y</mi><mo>˙</mo></mover><mi>i</mi></msub><mo stretchy="false">(</mo><mi>s</mi><mo stretchy="false">)</mo><mo fence="true">∣</mo></mrow><mi mathvariant="normal">d</mi><mi>s</mi></mrow><annotation encoding="application/x-tex">c_{i}=\int_{\mathbb {S}^{2}}\left|\dot {y}_{i}(s)\right| \mathrm {d} s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">c</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.1608200000000002em;vertical-align:-0.35582em;"></span><span class="mop"><span class="mop op-symbol small-op" style="margin-right:0.19445em;position:relative;top:-0.0005599999999999772em;">∫</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.16659999999999997em;"><span style="top:-2.34418em;margin-left:-0.19445em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathbb mtight">S</span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7463142857142857em;"><span style="top:-2.786em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.35582em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;">∣</span><span class="mord"><span class="mord accent"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.66786em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.08333000000000002em;">˙</span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.19444em;"><span></span></span></span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault">s</span><span class="mclose">)</span><span class="mclose delimcenter" style="top:0em;">∣</span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathrm">d</span></span><span class="mord mathdefault">s</span></span></span></span>。从而定义表征 camera 图像在时间间隔 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo stretchy="false">[</mo><mi>t</mi><mo>−</mo><mi mathvariant="normal">Δ</mi><mo separator="true">,</mo><mi>t</mi><mo>+</mo><mi mathvariant="normal">Δ</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[t-\Delta, t+\Delta]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord">Δ</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">Δ</span><span class="mclose">]</span></span></span></span> 的光强变化的信号 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>g</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">g_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>：</p>
-<img src="assets/Screenshot from 2020-01-09 16-28-46.png" srcset="/img/loading.gif" style="zoom:78%;" />
+<img src="assets/Screenshot from 2020-01-09 16-28-46.png" style="zoom:78%;" />
 <p>然后分析一段时间的两者信号，找出时移 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>τ</mi></mrow><annotation encoding="application/x-tex">\tau</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.1132em;">τ</span></span></span></span>:</p>
-<img src="assets/Screenshot from 2020-01-09 16-31-12.png" srcset="/img/loading.gif" style="zoom:67%;" />
+<img src="assets/Screenshot from 2020-01-09 16-31-12.png" style="zoom:67%;" />
 <p>同样，这种方法可以推广到只要能找到相互关系的、需要时间同步的两个系统中。</p>
-<img src="assets/Screenshot from 2020-01-09 16-32-28.png" srcset="/img/loading.gif" style="zoom:77%;" />
+<img src="assets/Screenshot from 2020-01-09 16-32-28.png" style="zoom:77%;" />
 </li>
 <li>
 <p>pixel 对齐（空间标定）的主要流程是：</p>
@@ -466,7 +489,7 @@ IEEE Int. Conf. Robotics and Automation (ICRA), 2014, pp. 703-710. <a href="http
 <p>定义 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>S</mi><mo stretchy="false">(</mo><mi>a</mi><mo separator="true">,</mo><mi>b</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">S (a,b)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mopen">(</span><span class="mord mathdefault">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">b</span><span class="mclose">)</span></span></span></span> 表示 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>f</mi><mi>t</mi></msub><mo stretchy="false">(</mo><mi>a</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">f_t (a)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault">a</span><span class="mclose">)</span></span></span></span> 和 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>g</mi><mi>t</mi></msub><mo stretchy="false">(</mo><mi>b</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">g_t (b)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault">b</span><span class="mclose">)</span></span></span></span> 的相关性：</p>
 <p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>S</mi><mo stretchy="false">(</mo><mi>a</mi><mo separator="true">,</mo><mi>b</mi><mo stretchy="false">)</mo><mo>=</mo><mi mathvariant="normal">corr</mi><mo>⁡</mo><mrow><mo fence="true">(</mo><msub><mi>f</mi><mi>t</mi></msub><mo stretchy="false">(</mo><mi>a</mi><mo stretchy="false">)</mo><mo separator="true">,</mo><msub><mi>g</mi><mi>t</mi></msub><mo stretchy="false">(</mo><mi>b</mi><mo stretchy="false">)</mo><mo fence="true">)</mo></mrow></mrow><annotation encoding="application/x-tex">S (a, b)=\operatorname {corr}\left (f_{t}(a), g_{t}(b)\right)
 </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mopen">(</span><span class="mord mathdefault">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">b</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop"><span class="mord mathrm">c</span><span class="mord mathrm">o</span><span class="mord mathrm">r</span><span class="mord mathrm">r</span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;">(</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">t</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault">a</span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">t</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault">b</span><span class="mclose">)</span><span class="mclose delimcenter" style="top:0em;">)</span></span></span></span></span></span></p>
-<img src="assets/Screenshot from 2020-01-09 16-51-17.png" srcset="/img/loading.gif" style="zoom:80%;" />
+<img src="assets/Screenshot from 2020-01-09 16-51-17.png" style="zoom:80%;" />
 <p>对每个 dvs pixel，将其与每个 camera pixel 遍历与对比。所以数据量的量级是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="script">O</mi><mrow><mo fence="true">(</mo><msubsup><mi>ρ</mi><mn>1</mn><mn>2</mn></msubsup><msubsup><mi>ρ</mi><mn>2</mn><mn>2</mn></msubsup><mo fence="true">)</mo></mrow></mrow><annotation encoding="application/x-tex">\mathcal {O}\left (\rho_{1}^{2} \rho_{2}^{2}\right)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.20001em;vertical-align:-0.35001em;"></span><span class="mord"><span class="mord mathcal" style="margin-right:0.02778em;">O</span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size1">(</span></span><span class="mord"><span class="mord mathdefault">ρ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-2.4518920000000004em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.24810799999999997em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathdefault">ρ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-2.4518920000000004em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.24810799999999997em;"><span></span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size1">)</span></span></span></span></span></span>(<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>ρ</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">\rho_{1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault">ρ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>, <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>ρ</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">\rho_{2}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault">ρ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 是两个相机的分辨率)。这是一个很恐怖的量级，甚至可能都不能完整加载到内存中… 所以作者在实验的时候对 dvs 的分辨率进行了下采样，从 128×128 降到了 16*16…</p>
 </li>
 <li>
@@ -483,7 +506,7 @@ IEEE Int. Conf. Robotics and Automation (ICRA), 2014, pp. 703-710. <a href="http
 <li>
 <p><strong>根据几何约束（正方形网格），对 dvs pixel 在相机像素平面上的排列情况进行再调整</strong></p>
 <p>由于是每个 dvs pixel 都是单独进行对应的，所以受到噪声对结果的影响还蛮大的。所以再对两者 pixel 的对应关系进行微调，加入 dvs 的 pixel 是网格几何分布的约束。下图是微调后的效果：</p>
-<img src="assets/Screenshot from 2020-01-09 17-12-02.png" srcset="/img/loading.gif" style="zoom:80%;" />
+<img src="assets/Screenshot from 2020-01-09 17-12-02.png" style="zoom:80%;" />
 <p>定义了一个能量函数：</p>
 <p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>E</mi><mo>=</mo><msub><mi>E</mi><mtext>data</mtext></msub><mo>+</mo><mi>α</mi><msub><mi>E</mi><mtext>model</mtext></msub></mrow><annotation encoding="application/x-tex">E=E_{\text {data}}+\alpha E_{\text {model}}
 </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">data</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord mathdefault" style="margin-right:0.0037em;">α</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">model</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span></p>
@@ -502,7 +525,7 @@ IEEE Int. Conf. Robotics and Automation (ICRA), 2014, pp. 703-710. <a href="http
 </li>
 <li>
 <p><strong>对 dvs 降采样后的 pixel 进行插值，得到全部的 dvs pixel 对应到 camera frame 中</strong></p>
-<img src="assets/Screenshot from 2020-01-09 19-08-26.png" srcset="/img/loading.gif" style="zoom:70%;" />
+<img src="assets/Screenshot from 2020-01-09 19-08-26.png" style="zoom:70%;" />
 </li>
 </ol>
 </li>
@@ -524,7 +547,7 @@ IEEE Int. Conf. Robotics and Automation (ICRA), 2014, pp. 703-710. <a href="http
 </li>
 <li>
 <p>虽然这个算法可以自标定，也就是标定过程是全自动的，但是对场景也有一定的限制：</p>
-<img src="assets/Screenshot from 2020-01-09 20-43-07.png" srcset="/img/loading.gif" style="zoom:80%;" />
+<img src="assets/Screenshot from 2020-01-09 20-43-07.png" style="zoom:80%;" />
 </li>
 </ol>
 <hr />
@@ -534,11 +557,11 @@ IEEE Int. Conf. Robotics and Automation (ICRA), 2014, pp. 703-710. <a href="http
 IEEE Robotics and Automation Letters (RA-L), 3 (2):994-1001, Apr. 2018. <a href="http://rpg.ifi.uzh.ch/docs/RAL18_VidalRebecq.pdf" target="_blank" rel="noopener">PDF</a>, <a href="https://youtu.be/jIvJuWdmemE" target="_blank" rel="noopener">YouTube</a>, <a href="http://rpg.ifi.uzh.ch/docs/RAL18_VidalRebecq_poster.pdf" target="_blank" rel="noopener">Poster</a>, <a href="http://rpg.ifi.uzh.ch/ultimateslam.html" target="_blank" rel="noopener">Project page</a>, <a href="https://youtu.be/0hDGFFJQfmA" target="_blank" rel="noopener">ICRA18 video pitch</a>.</p>
 </blockquote>
 <p>这一篇是结合 Event Frame、Standard Frame 和 IMU 三者联合做的 SLAM。</p>
-<img src="assets/Screenshot from 2020-01-08 23-05-10.png" srcset="/img/loading.gif" style="zoom:80%;" />
+<img src="assets/Screenshot from 2020-01-08 23-05-10.png" style="zoom:80%;" />
 <p>作者做实验直接用了 DAVIS，所以也无需考虑灰度帧与 dvs 的外参标定。</p>
 <div align="center">
-    <img src="assets/Screenshot from 2020-01-08 23-10-00.png" srcset="/img/loading.gif" style="zoom:50%;" />
-    <img src="assets/Screenshot from 2020-01-08 23-06-08.png" srcset="/img/loading.gif" style="zoom:55%;" />
+    <img src="assets/Screenshot from 2020-01-08 23-10-00.png" style="zoom:50%;" />
+    <img src="assets/Screenshot from 2020-01-08 23-06-08.png" style="zoom:55%;" />
 </div>
 ---
 <blockquote>
@@ -548,9 +571,9 @@ IEEE/RSJ Int. Conf. Intelligent Robots and Systems (IROS), 2016, pp. 16-23. <a h
 </blockquote>
 <p>作者做实验直接用了 DAVIS，所以也无需考虑灰度帧与 dvs 的外参标定。</p>
 <div>
-<img src="assets/Screenshot from 2020-01-09 21-22-47.png" srcset="/img/loading.gif" style="zoom:90%;" />
-<img src="assets/Screenshot from 2020-01-09 21-14-58.png" srcset="/img/loading.gif" style="zoom:80%;" />
-<img src="assets/Screenshot from 2020-01-09 21-14-48.png" srcset="/img/loading.gif" style="zoom:67%;" />
+<img src="assets/Screenshot from 2020-01-09 21-22-47.png" style="zoom:90%;" />
+<img src="assets/Screenshot from 2020-01-09 21-14-58.png" style="zoom:80%;" />
+<img src="assets/Screenshot from 2020-01-09 21-14-48.png" style="zoom:67%;" />
 </div>
 <h2 id="video-synthesis-的一些目前相关工作工作"><a class="markdownIt-Anchor" href="#video-synthesis-的一些目前相关工作工作"></a> Video Synthesis 的一些目前相关工作工作</h2>
 <p><em>以下仅从实验设置方面整理</em></p>
@@ -563,13 +586,13 @@ IEEE Int. Symp. on Circuits and Systems (ISCAS), 2014, pp. 686-689.</p>
 </blockquote>
 <p>这一篇是第一篇从 event 流中恢复视频帧的工作。<strong>直接利用 DAVIS 获取灰度帧和 event 数据，重建出灰度视频序列</strong>。</p>
 <div align="center">
-    <img src="assets/Screenshot from 2020-01-07 11-57-16.png" srcset="/img/loading.gif" style="zoom:55%;" />
-    <img src="assets/Screenshot from 2020-01-07 11-57-23.png" srcset="/img/loading.gif" style="zoom:53%;" />
+    <img src="assets/Screenshot from 2020-01-07 11-57-16.png" style="zoom:55%;" />
+    <img src="assets/Screenshot from 2020-01-07 11-57-23.png" style="zoom:53%;" />
 </div>
-<img src="assets/Screenshot from 2020-01-07 12-00-22.png" srcset="/img/loading.gif" style="zoom:80%;" />
+<img src="assets/Screenshot from 2020-01-07 12-00-22.png" style="zoom:80%;" />
 <p>算法主要步骤（待深究）：</p>
-<img src="assets/Screenshot from 2020-01-07 16-40-05.png" srcset="/img/loading.gif" style="zoom:67%;" />
-<img src="assets/Screenshot from 2020-01-07 16-40-21.png" srcset="/img/loading.gif" style="zoom:60%;" />
+<img src="assets/Screenshot from 2020-01-07 16-40-05.png" style="zoom:67%;" />
+<img src="assets/Screenshot from 2020-01-07 16-40-21.png" style="zoom:60%;" />
 <hr />
 <blockquote>
 <p>Liu HC., Zhang FL., Marshall D., Shi L., Hu SM.,<br />
@@ -577,8 +600,8 @@ IEEE Int. Symp. on Circuits and Systems (ISCAS), 2014, pp. 686-689.</p>
 The Visual Computer, 2017. <a href="https://cg.cs.tsinghua.edu.cn/papers/TVC-2017-HS-Video.pdf" target="_blank" rel="noopener">PDF</a>.</p>
 </blockquote>
 <p><a name="beam2"></a> 这一篇是从”<strong>前景高速运动、背景静止 (应用场景限制)</strong>” 的彩色视频序列中恢复超高帧率的视频。同时采集彩色视频与 event 流的装置与 <a href="#beam"> 上面的做目标识别的一篇文章 </a> 相同，都是采用一个光学分束器。</p>
-<img src="assets/Screenshot from 2020-01-08 11-21-27.png" srcset="/img/loading.gif" style="zoom:67%;" />
-<img src="assets/Screenshot from 2020-01-08 11-28-32.png" srcset="/img/loading.gif" style="zoom:80%;" />
+<img src="assets/Screenshot from 2020-01-08 11-21-27.png" style="zoom:67%;" />
+<img src="assets/Screenshot from 2020-01-08 11-28-32.png" style="zoom:80%;" />
 <hr />
 <blockquote>
 <p>Shedligeri, P.A., Shah, K., Kumar, D., Mitra, K.,<br />
@@ -586,10 +609,10 @@ The Visual Computer, 2017. <a href="https://cg.cs.tsinghua.edu.cn/papers/TVC-201
 arXiv:1805.06140, 2018.</p>
 </blockquote>
 <p>仅仅使用 DAVIS 的灰度帧和 event 进行的图像重建。考虑了 event camera 的突然运动和噪声的情况，效果更鲁棒。</p>
-<img src="assets/Screenshot from 2020-01-08 11-45-33.png" srcset="/img/loading.gif" style="zoom:50%;" />
+<img src="assets/Screenshot from 2020-01-08 11-45-33.png" style="zoom:50%;" />
 <div align="center">
-    <img src="assets/Screenshot from 2020-01-08 11-45-53.png" srcset="/img/loading.gif" style="zoom:52%;" />
-    <img src="assets/Screenshot from 2020-01-08 11-46-02.png" srcset="/img/loading.gif" style="zoom:28%;" />
+    <img src="assets/Screenshot from 2020-01-08 11-45-53.png" style="zoom:52%;" />
+    <img src="assets/Screenshot from 2020-01-08 11-46-02.png" style="zoom:28%;" />
 </div>
 ---
 <blockquote>
@@ -599,9 +622,9 @@ arXiv:1902.09680, 2019.</p>
 </blockquote>
 <p>基于学习的方法来做的。实验是直接选择的 DAVIS 数据集。</p>
 <div align="center">
-    <img src="assets/Screenshot from 2020-01-08 12-03-59.png" srcset="/img/loading.gif" style="zoom:80%;" />
-    <img src="assets/Screenshot from 2020-01-08 12-04-06.png" srcset="/img/loading.gif" style="zoom:53%;" />
-    <img src="assets/Screenshot from 2020-01-08 12-04-20.png" srcset="/img/loading.gif" style="zoom:67%;" />
+    <img src="assets/Screenshot from 2020-01-08 12-03-59.png" style="zoom:80%;" />
+    <img src="assets/Screenshot from 2020-01-08 12-04-06.png" style="zoom:53%;" />
+    <img src="assets/Screenshot from 2020-01-08 12-04-20.png" style="zoom:67%;" />
 </div>
 ---
 <blockquote>
@@ -610,9 +633,9 @@ arXiv:1902.09680, 2019.</p>
 IEEE Conf. Computer Vision and Pattern Recognition (CVPR), 2019. <a href="https://arxiv.org/pdf/1811.10180.pdf" target="_blank" rel="noopener">PDF</a>. <a href="http://rpg.ifi.uzh.ch/docs/CVPR19workshop/CVPRW19_Yuchao_Dai.pdf" target="_blank" rel="noopener">Slides</a>, <a href="https://drive.google.com/file/d/1NscnUF2QxK0of4ZW7T8kneJTH1X76l2u/view" target="_blank" rel="noopener">Video CVPR</a>, <a href="https://youtu.be/JcgboJ_7JAE" target="_blank" rel="noopener">Video CVPRW</a>, <a href="https://github.com/panpanfei/Bringing-a-Blurry-Frame-Alive-at-High-Frame-Rate-with-an-Event-Camera" target="_blank" rel="noopener">Code</a></p>
 </blockquote>
 <p>实验设置：利用的是 DAVIS 的灰度帧和 event，灰度帧的去模糊。</p>
-<img src="assets/Screenshot from 2020-01-08 16-58-30.png" srcset="/img/loading.gif" style="zoom:70%;" />
+<img src="assets/Screenshot from 2020-01-08 16-58-30.png" style="zoom:70%;" />
 <p>EDI 在今年还有其扩展版本 mEDI，arXiv:1903.06531v2。</p>
-<img src="assets/Screenshot from 2020-01-08 17-00-27.png" srcset="/img/loading.gif" style="zoom:55%;" />
+<img src="assets/Screenshot from 2020-01-08 17-00-27.png" style="zoom:55%;" />
 <hr />
 <blockquote>
 <p>Pini, S., Borghi, G., Vezzani, R., Cucchiara, R.,<br />
@@ -620,7 +643,7 @@ IEEE Conf. Computer Vision and Pattern Recognition (CVPR), 2019. <a href="https:
 Int. Conf. Image Analysis and Processing (ICIAP), 2019. Lecture Notes in Computer Science, vol 11751. <a href="https://iris.unimore.it/retrieve/handle/11380/1178955/224434/ICIAP19_Event_Cameras.pdf" target="_blank" rel="noopener">PDF</a></p>
 </blockquote>
 <p>这是一篇基于学习的方法来做的。使用 DDD17 数据集，基于 <strong>灰度帧和积分后的 event frame</strong>。做的是通过初始帧和后续的 event 数据流来估计接下来的帧。</p>
-<img src="assets/Screenshot from 2020-01-08 17-11-38.png" srcset="/img/loading.gif" style="zoom:50%;" />
+<img src="assets/Screenshot from 2020-01-08 17-11-38.png" style="zoom:50%;" />
 <hr />
 <blockquote>
 <p>Pini S., Borghi G., Vezzani R.,<br />
@@ -629,14 +652,14 @@ Int. Joint Conf. on Computer Vision, Imaging and Computer Graphics Theory and Ap
 </blockquote>
 <p>这也是一篇基于学习的方法来做的。这一篇通过 event 恢复彩色的视频流。通过初始帧和一定周期内出现的彩色帧，以及过程中的 event，恢复出彩色帧。</p>
 <p>作者提出的模型可以同时恢复彩色帧和灰度帧。作者通过一些通用数据集比如 KITTI，根据 event 的产生方式，通过彩色图，生成仿真的 event 数据流来进行对模型的训练；此外还用的两个 Event Camera 的数据集，都是采集的 DAVIS 的灰度帧。</p>
-<img src="assets/Screenshot from 2020-01-08 20-01-16.png" srcset="/img/loading.gif" style="zoom:80%;" />
-<img src="assets/Screenshot from 2020-01-08 20-01-28.png" srcset="/img/loading.gif" style="zoom:67%;" />
-<p><img src="assets/Screenshot%20from%202020-01-08%2020-02-44.png" srcset="/img/loading.gif" alt="" /></p>
-<img src="assets/Screenshot from 2020-01-08 20-02-20.png" srcset="/img/loading.gif" style="zoom:80%;" />
+<img src="assets/Screenshot from 2020-01-08 20-01-16.png" style="zoom:80%;" />
+<img src="assets/Screenshot from 2020-01-08 20-01-28.png" style="zoom:67%;" />
+<p><img src="assets/Screenshot%20from%202020-01-08%2020-02-44.png" alt="" /></p>
+<img src="assets/Screenshot from 2020-01-08 20-02-20.png" style="zoom:80%;" />
 <p>@author 薛轲翰</p>
 <p>@e-mail <a href="mailto:kehan.xue@gmail.com">kehan.xue@gmail.com</a></p>
 
-            </article>
+            </div>
             <hr>
             <div>
               <div class="post-metas mb-3">
@@ -662,11 +685,11 @@ Int. Joint Conf. on Computer Vision, Imaging and Computer Graphics Theory and Ap
                 
               </div>
               
-                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！<a href="https://blog.kehan.site/about">联系作者。</a></p>
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！<a href="https://blog.kehan.xyz/about" target="_blank" rel="noopener">联系作者。</a></p>
               
               
                 <div class="post-prevnext row">
-                  <div class="post-prev col-6">
+                  <article class="post-prev col-6">
                     
                     
                       <a href="/2020/02/26/LOAM%EF%BC%88A-LOAM%EF%BC%89Laser-SLAM-%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B/">
@@ -675,8 +698,8 @@ Int. Joint Conf. on Computer Vision, Imaging and Computer Graphics Theory and Ap
                         <span class="visible-mobile">Previous</span>
                       </a>
                     
-                  </div>
-                  <div class="post-next col-6">
+                  </article>
+                  <article class="post-next col-6">
                     
                     
                       <a href="/2019/12/07/Cartographer%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B%E8%A7%A3%E6%9E%90%E4%B8%8E%E8%B0%83%E4%BC%98/">
@@ -685,13 +708,13 @@ Int. Joint Conf. on Computer Vision, Imaging and Computer Graphics Theory and Ap
                         <i class="iconfont icon-arrowright"></i>
                       </a>
                     
-                  </div>
+                  </article>
                 </div>
               
             </div>
 
             
-          </div>
+          </article>
         </div>
       </div>
     </div>
@@ -699,7 +722,7 @@ Int. Joint Conf. on Computer Vision, Imaging and Computer Graphics Theory and Ap
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc">
   <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
-  <div id="tocbot"></div>
+  <div class="toc-body" id="toc-body"></div>
 </div>
 
       </div>
@@ -710,23 +733,22 @@ Int. Joint Conf. on Computer Vision, Imaging and Computer Graphics Theory and Ap
 <!-- Custom -->
 
   <div class="col-lg-7 mx-auto nopadding-md">
-    <div class="container custom post-content mx-auto">
+    <div class="container custom post-custom mx-auto">
       <script src="https://utteranc.es/client.js" repo="kehanXue/gitpage-comments" issue-term="pathname" theme="github-light"  crossorigin="anonymous" async> </script>
     </div>
   </div>
 
 
     
-  </main>
 
-  
-    <a id="scroll-top-button" href="#" role="button">
-      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-    </a>
-  
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
 
-  
-    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
      aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
@@ -747,21 +769,16 @@ Int. Joint Conf. on Computer Vision, Imaging and Computer Graphics Theory and Ap
     </div>
   </div>
 </div>
-  
-
-  
-
-  
-
-  <footer class="mt-5">
-  <div class="text-center py-3">
-    <div>
-      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
-      <i class="iconfont icon-love"></i>
-      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
-        <span>Fluid</span></a>
-    </div>
     
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
   <div class="statistics">
     
     
@@ -788,17 +805,33 @@ Int. Joint Conf. on Computer Vision, Imaging and Computer Graphics Theory and Ap
   </div>
 
 
-    
+  
 
-    
-  </div>
+  
 </footer>
 
 <!-- SCRIPTS -->
-<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
-<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":200})
+    NProgress.start()
+    document.addEventListener('DOMContentLoaded', function() {
+      window.NProgress && window.NProgress.inc();
+    })
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
 <script  src="/js/debouncer.js" ></script>
-<script  src="/js/main.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
 
 <!-- Plugins -->
 
@@ -809,283 +842,54 @@ Int. Joint Conf. on Computer Vision, Imaging and Computer Graphics Theory and Ap
 
 
 
-  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
-  <script  src="/js/clipboard-use.js" ></script>
+  
 
 
 
-  <script defer>
-  (function () {
-    // 查询存储的记录
-    function getRecord(Counter, target) {
-      return new Promise(function (resolve, reject) {
-        Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({target})))
-          .then(resp => resp.json())
-          .then(({results, code, error}) => {
-            if (code === 401) {
-              throw error;
-            }
-            if (results && results.length > 0) {
-              var record = results[0];
-              resolve(record);
-            } else {
-              Counter('post', '/classes/Counter', {target, time: 0})
-                .then(resp => resp.json())
-                .then((record, error) => {
-                  if (error) {
-                    throw error;
-                  }
-                  resolve(record);
-                }).catch(error => {
-                console.error('Failed to create', error);
-                reject(error);
-              });
-            }
-          }).catch((error) => {
-          console.error('LeanCloud Counter Error:', error);
-          reject(error);
-        });
-      })
-    }
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
 
-    // 发起自增请求
-    function increment(Counter, incrArr) {
-      return new Promise(function (resolve, reject) {
-        Counter('post', '/batch', {
-          "requests": incrArr
-        }).then((res) => {
-          res = res.json();
-          if (res.error) {
-            throw res.error;
-          }
-          resolve(res);
-        }).catch((error) => {
-          console.error('Failed to save visitor count', error);
-          reject(error);
-        });
-      });
-    }
 
-    // 构建自增请求体
-    function buildIncrement(objectId) {
-      return {
-        "method": "PUT",
-        "path": `/1.1/classes/Counter/${ objectId }`,
-        "body": {
-          "time": {
-            '__op': 'Increment',
-            'amount': 1
-          }
-        }
-      }
-    }
 
-    // 校验是否为有效的 UV
-    function validUV() {
-      var key = 'LeanCloud_UV_Flag';
-      var flag = localStorage.getItem(key);
-      if (flag) {
-        // 距离标记小于 24 小时则不计为 UV
-        if (new Date().getTime() - parseInt(flag) <= 86400000) {
-          return false;
-        }
-      }
-      localStorage.setItem(key, new Date().getTime().toString());
-      return true;
-    }
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
 
-    function addCount(Counter) {
-      var enableIncr = 'true' === 'true' && window.location.hostname !== 'localhost';
-      var getterArr = [];
-      var incrArr = [];
 
-      // 请求 PV 并自增
-      var pvCtn = document.querySelector('#leancloud-site-pv-container');
-      if (pvCtn || enableIncr) {
-        var pvGetter = getRecord(Counter, 'site-pv').then((record) => {
-          incrArr.push(buildIncrement(record.objectId))
-          var ele = document.querySelector('#leancloud-site-pv');
-          if (ele) {
-            ele.innerText = record.time + 1;
-            if (pvCtn) {
-              pvCtn.style.display = 'inline';
-            }
-          }
-        });
-        getterArr.push(pvGetter);
-      }
 
-      // 请求 UV 并自增
-      var uvCtn = document.querySelector('#leancloud-site-uv-container');
-      if (uvCtn || enableIncr) {
-        var uvGetter = getRecord(Counter, 'site-uv').then((record) => {
-          var vuv = validUV();
-          vuv && incrArr.push(buildIncrement(record.objectId))
-          var ele = document.querySelector('#leancloud-site-uv');
-          if (ele) {
-            ele.innerText = record.time + (vuv ? 1 : 0);
-            if (uvCtn) {
-              uvCtn.style.display = 'inline';
-            }
-          }
-        });
-        getterArr.push(uvGetter);
-      }
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
 
-      // 如果是文章，请求文章的浏览数，并自增
-      if ('true' === 'true') {
-        var viewCtn = document.querySelector('#leancloud-post-views-container');
-        if (viewCtn || enableIncr) {
-          var target = decodeURI('/2020/01/15/Event-based-Camera-%E6%A0%87%E5%AE%9A%E5%B7%A5%E4%BD%9C%E6%95%B4%E7%90%86%E5%A4%A7%E5%85%A8/');
-          var viewGetter = getRecord(Counter, target).then((record) => {
-            incrArr.push(buildIncrement(record.objectId))
-            if (viewCtn) {
-              var ele = document.querySelector('#leancloud-post-views');
-              if (ele) {
-                ele.innerText = (record.time || 0) + 1;
-                viewCtn.style.display = 'inline';
-              }
-            }
-          });
-          getterArr.push(viewGetter);
-        }
-      }
 
-      // 如果启动计数自增，批量发起自增请求
-      if (enableIncr) {
-        Promise.all(getterArr).then(() => {
-          incrArr.length > 0 && increment(Counter, incrArr);
-        })
-      }
-    }
 
-    var app_id = 'n6Mj5ldxlOzFKmG1RboJvi35-gzGzoHsz'
-    var app_key = 'e0SXMiS3gUuaA37sDxUdkj1x'
-    var server_url = 'https://n6mj5ldx.lc-cn-n1-shared.com'
-
-    function fetchData(api_server) {
-      var Counter = (method, url, data) => {
-        return fetch(`${ api_server }/1.1${ url }`, {
-          method,
-          headers: {
-            'X-LC-Id': app_id,
-            'X-LC-Key': app_key,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data)
-        });
-      };
-
-      addCount(Counter);
-    }
-
-    var api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${ app_id.slice(0, 8).toLowerCase() }.api.lncldglobal.com`;
-
-    if (api_server) {
-      fetchData(api_server);
-    } else {
-      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
-        .then(resp => resp.json())
-        .then(({api_server}) => {
-          fetchData('https://' + api_server);
-        });
-    }
-  })();
-</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
 
 
 
 
+  <script defer src="/js/leancloud.js" ></script>
 
 
-  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
   <script>
-    $(document).ready(function () {
-      var boardCtn = $('#board-ctn');
-      var boardTop = boardCtn.offset().top;
-
-      tocbot.init({
-        tocSelector: '#tocbot',
-        contentSelector: 'article.markdown-body',
-        headingSelector: 'h1,h2,h3,h4,h5,h6',
-        linkClass: 'tocbot-link',
-        activeLinkClass: 'tocbot-active-link',
-        listClass: 'tocbot-list',
-        isCollapsedClass: 'tocbot-is-collapsed',
-        collapsibleClass: 'tocbot-is-collapsible',
-        collapseDepth: 0,
-        scrollSmooth: true,
-        headingsOffset: -boardTop
-      });
-      if ($('.toc-list-item').length > 0) {
-        $('#toc').css('visibility', 'visible');
-      }
-    });
-  </script>
-
-
-
-  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
-  <script>
-    var typed = new Typed('#subtitle', {
-      strings: [
-        '  ',
-        "论文阅读 - Event-based Camera 标定工作整理大全&nbsp;",
-      ],
-      cursorChar: "_",
-      typeSpeed: 70,
-      loop: false,
-    });
-    typed.stop();
-    $(document).ready(function () {
-      $(".typed-cursor").addClass("h2");
-      typed.start();
-    });
-  </script>
-
-
-
-  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
-  <script>
-    anchors.options = {
-      placement: "right",
-      visible: "hover",
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
       
-    };
-    var el = "h1,h2,h3,h4,h5,h6".split(",");
-    var res = [];
-    for (item of el) {
-      res.push(".markdown-body > " + item)
-    }
-    anchors.add(res.join(", "))
+      typing(title)
+      
+    })(window, document);
   </script>
 
 
 
   <script  src="/js/local-search.js" ></script>
   <script>
-    var path = "/local-search.xml";
-    var inputArea = document.querySelector("#local-search-input");
-    inputArea.onclick = function () {
-      searchFunc(path, 'local-search-input', 'local-search-result');
-      this.onclick = null
-    }
-  </script>
-
-
-
-  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
-  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
-
-  <script>
-    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
-      function () {
-        var element = document.createElement('a');
-        $(element).attr('data-fancybox', 'images');
-        $(element).attr('href', $(this).attr('src'));
-        $(this).wrap(element);
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
       }
-    );
+    })()
   </script>
 
 
@@ -1096,13 +900,8 @@ Int. Joint Conf. on Computer Vision, Imaging and Computer Graphics Theory and Ap
 
   
     <!-- KaTeX -->
-    <link  rel="stylesheet" href="https://cdn.staticfile.org/KaTeX/0.11.1/katex.min.css" />
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" />
   
-
-
-
-
-
 
 
 
@@ -1124,6 +923,11 @@ Int. Joint Conf. on Computer Vision, Imaging and Computer Graphics Theory and Ap
   
 
 
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
 
 
 

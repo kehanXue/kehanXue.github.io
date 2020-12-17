@@ -1,7 +1,7 @@
+
+
 <!DOCTYPE html>
-<html lang="en">
-
-
+<html lang="en" data-default-color-scheme=&#34;auto&#34;>
 
 
 
@@ -19,26 +19,33 @@
   <meta name="keywords" content="">
   <title>CeleX5-ROS: CeleX5-MIPI 事件相机的一个完善的 ROS 工具包  - Kehan&#39;s Blog</title>
 
-  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
 
-  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
   <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
 
   
-    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
   
 
   
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
 
 
 <!-- 主题依赖的图标库，不要自行修改 -->
 
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
 
 
 
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
 
 
 <link  rel="stylesheet" href="/css/main.css" />
@@ -46,7 +53,12 @@
 <!-- 自定义样式保持在最底部 -->
 
 
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blog.kehan.site","root":"/","version":"1.8.6","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"copy_btn":true,"image_zoom":{"enable":true},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"n6Mj5ldxlOzFKmG1RboJvi35-gzGzoHsz","app_key":"e0SXMiS3gUuaA37sDxUdkj1x","server_url":"https://n6mj5ldx.lc-cn-n1-shared.com"},"tajs":null}};
+  </script>
   <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
 <meta name="generator" content="Hexo 4.2.1"></head>
 
 
@@ -129,8 +141,14 @@
         
         
           <li class="nav-item" id="search-btn">
-            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
-                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
           </li>
         
       </ul>
@@ -138,25 +156,28 @@
   </div>
 </nav>
 
-    <div class="view intro-2" id="background" parallax=true
+    <div class="banner intro-2" id="background" parallax=true
          style="background: url('/img/black-bg.jpg') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-          <div class="container text-center white-text fadeInUp">
-            <span class="h2" id="subtitle">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="CeleX5-ROS: CeleX5-MIPI 事件相机的一个完善的 ROS 工具包 ">
               
             </span>
 
             
-              
-  <div class="mt-3 post-meta">
-    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-    <time datetime="2020-03-10 23:45">
-      March 10, 2020 pm
-    </time>
-  </div>
-
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-03-10 23:45" pubdate>
+        March 10, 2020 pm
+      </time>
+    </span>
+  
+</div>
 
 <div class="mt-1">
   
@@ -182,9 +203,9 @@
   
     
       <!-- LeanCloud 统计文章PV -->
-      <span id="leancloud-post-views-container" class="post-meta" style="display: none">
+      <span id="leancloud-page-views-container" class="post-meta" style="display: none">
         <i class="iconfont icon-eye" aria-hidden="true"></i>
-        <span id="leancloud-post-views"></span> 次
+        <span id="leancloud-page-views"></span> 次
       </span>
     
   
@@ -209,9 +230,11 @@
     <div class="col-lg-8 nopadding-md">
       <div class="container nopadding-md" id="board-ctn">
         <div class="py-5" id="board">
-          <div class="post-content mx-auto" id="post">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">CeleX5-ROS: CeleX5-MIPI 事件相机的一个完善的 ROS 工具包 </h1>
             
-            <article class="markdown-body">
+            <div class="markdown-body">
               <p>我在前段时间为 CeleX5-MIPI 系列相机开发了一套完善的 ROS 下的驱动。CeleX5-MIPI 是一款国产的事件相机，具有 1280x800 的分辨率。项目已开源在：<a href="https://github.com/kehanXue/CeleX5-ROS" target="_blank" rel="noopener">https://github.com/kehanXue/CeleX5-ROS</a> 。</p>
 <a id="more"></a>
 <p>视频 demo：</p>
@@ -238,7 +261,7 @@
 <p><a href="#%E7%BC%96%E8%AF%91%E4%B8%8E%E8%BF%90%E8%A1%8C">编译与运行</a></p>
 <p><a href="#%E4%BB%8D%E5%AD%98%E5%9C%A8%E7%9A%84%E9%97%AE%E9%A2%98">仍存在的问题</a></p>
 <h2 id="介绍"><a class="markdownIt-Anchor" href="#介绍"></a> 介绍</h2>
-<img src="assets/242069421.jpg" srcset="/img/loading.gif" height="300" alt="CeleX5-MIPI"/>
+<img src="assets/242069421.jpg" height="300" alt="CeleX5-MIPI"/>
 <p>CeleX™ 是针对机器视觉而设计的智能图像传感器系列。传感器中的每一像素点能够独立自主地监测相对光强的变化，并在到达阈值时被激发发出被读出信号。行和列仲裁电路实时处理像素激发信号，并确保即使同时接收到多个请求时能够按有序的方式逐一处理。传感器依据被激发的事件，输出连续的异步数据流，而不是图像帧。CeleX™ 传感器监测的运动物体速度不再受传统的曝光时间和帧速率限制。它可以侦测高达万帧 / 秒昂贵高速相机才能获取到的高速物体运动信息，而且还能大幅降低后端处理量。</p>
 <p>CeleX-5 是一款多功能智能图像传感器，具有一百万像素（分辨率为：1280*800）和片上集成的一些附加功能（如光流）。传感器支持几种不同的输出格式：纯二进制地址事件，具有像素强度信息或定时信息的地址事件。此外，传感器的读出方案可以是异步数据流或同步全帧。输出格式和读出方案的不同组合使该传感器具有很大的灵活性，总共支持 6 种独立的操作模式（但是其中有一种未在 sdk 中提供相应接口）。为了进一步满足不同应用的要求，传感器还可以配置为 Loop 模式，可以在三种不同模式之间自动切换。</p>
 <p><a href="https://www.ros.org/" target="_blank" rel="noopener">ROS</a> 是目前很主流的实验平台，提供了丰富的开发接口和资源。但在 <a href="https://github.com/CelePixel/CeleX5-MIPI" target="_blank" rel="noopener">CeleX™官方开源仓库</a> 中，关于 ROS 下的示例非常的不完善：</p>
@@ -256,7 +279,7 @@
 <ul>
 <li>
 <p><code>celex5_ros</code>：提供了 CeleX5-MIPI 相机的 ROS 下的较为完善驱动，可根据用户需求自由配置输出多路数据（原始 Event 数据、IMU 数据、灰度帧、光流信息等），并提供了 <code>rqt_reconfigure</code> 调参面板以支持动态调参。<a href="celex5_ros">更多细节</a>。</p>
-<img src="assets/Screenshot from 2020-01-22 21-16-52.png" srcset="/img/loading.gif" width="800" />
+<img src="assets/Screenshot from 2020-01-22 21-16-52.png" width="800" />
 <p><em>目前仅仅在 CeleX5-MIPI 设备上测试通过，由于手里没有 CeleX5 系列的其他产品所以无法测试。</em></p>
 </li>
 <li>
@@ -264,7 +287,7 @@
 </li>
 <li>
 <p><code>celex5_calibration</code>：提供了有关于 <code>celex5_calibration</code> 基于 Events 数据进行标定相关的工具和教程，包括标定板生成（目前仅支持闪烁的棋盘格，其他类型待加入）、内参标定、与传统相机进行外参标定（使用 Kalibr）、同步收集与定制发布标定所需的图像数据、与传统相机进行时间戳对齐（TODO，目前存在问题）等工具。<a href="calibration">更多细节</a></p>
-<img src="assets/Screenshot from 2020-02-12 21-02-32.png" srcset="/img/loading.gif" width="600" />
+<img src="assets/Screenshot from 2020-02-12 21-02-32.png" width="600" />
 </li>
 </ul>
 <p><em>建议在使用前，请首先认真阅读 <a href="https://github.com/CelePixel/CeleX5-MIPI/tree/master/Documentation" target="_blank" rel="noopener">CeleX 官方提供的</a> 快速入门手册和 API 文档的概念部分，对基本名词术语有大概认识。</em></p>
@@ -272,79 +295,19 @@
 <ol>
 <li>
 <p>编译</p>
-<pre><code class="hljs bash">mkdir -p ~/celex_ws/src
-<span class="hljs-built_in">cd</span> ~/celex_ws/src
-git <span class="hljs-built_in">clone</span> git@github.com:kehanXue/CeleX5-ROS.git
-git submodule update --init --recursive
-<span class="hljs-comment"># Or with http: `git clone https://github.com/kehanXue/CeleX5-ROS.git`</span>
-<span class="hljs-built_in">cd</span> ..
-rosdep install -y --from-paths src --ignore-src --rosdistro <span class="hljs-variable">$ROS_DISTRO</span>
-catkin_make <span class="hljs-comment"># Or use `catkin build`</span></code></pre>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">mkdir -p ~/celex_ws/src<br><span class="hljs-built_in">cd</span> ~/celex_ws/src<br>git <span class="hljs-built_in">clone</span> git@github.com:kehanXue/CeleX5-ROS.git<br>git submodule update --init --recursive<br><span class="hljs-comment"># Or with http: `git clone https://github.com/kehanXue/CeleX5-ROS.git`</span><br><span class="hljs-built_in">cd</span> ..<br>rosdep install -y --from-paths src --ignore-src --rosdistro <span class="hljs-variable">$ROS_DISTRO</span><br>catkin_make <span class="hljs-comment"># Or use `catkin build`</span><br></code></pre></td></tr></table></figure>
 <p>如果过程中报少哪些依赖库的错误，安装即可。</p>
 </li>
 <li>
 <p>运行 <code>celex5_ros</code> <a href="celex5_ros">更多细节</a></p>
 <p>首先将相机连接到电脑上。</p>
-<pre><code class="hljs bash"><span class="hljs-built_in">source</span> ~/celex_ws/devel/setup.bash <span class="hljs-comment"># Or source setup.zsh when you use zsh</span>
-roslaunch celex5_ros celex5_ros_node.launch
-<span class="hljs-comment"># In a new Terminal</span>
-rosrun rqt_reconfigure rqt_reconfigure <span class="hljs-comment"># Open rqt_reconfigure to config</span>
-​```无报错即正常运行。使用`rostopic list`即可看到发布的话题，使用`rivz`或者`image_view`订阅相对应图像话题即可看到发布的图像。某图像话题中是否发布数据由参数配置、上表的相机工作模式所共同决定。```bash
-$ rostopic list
-/celex5_mipi/display/accumulated_img/camera_info
-/celex5_mipi/display/accumulated_img/raw_image
-/celex5_mipi/display/binary_img/camera_info
-/celex5_mipi/display/binary_img/raw_image
-/celex5_mipi/display/count_img/camera_info
-/celex5_mipi/display/count_img/raw_image
-/celex5_mipi/display/denoised_binary_img/camera_info
-/celex5_mipi/display/denoised_binary_img/raw_image
-/celex5_mipi/display/full_frame_img/camera_info
-/celex5_mipi/display/full_frame_img/raw_image
-/celex5_mipi/display/gray_img/camera_info
-/celex5_mipi/display/gray_img/raw_image
-/celex5_mipi/display/in_pixel_img/camera_info
-/celex5_mipi/display/in_pixel_img/raw_image
-/celex5_mipi/display/optical_flow_direction_img/camera_info
-/celex5_mipi/display/optical_flow_direction_img/raw_image
-/celex5_mipi/display/optical_flow_img/camera_info
-/celex5_mipi/display/optical_flow_img/raw_image
-/celex5_mipi/display/optical_flow_speed_img/camera_info
-/celex5_mipi/display/optical_flow_speed_img/raw_image
-/celex5_mipi/display/parameter_descriptions
-/celex5_mipi/display/parameter_updates
-/celex5_mipi/display/superimposed_img/camera_info
-/celex5_mipi/display/superimposed_img/raw_image
-/celex5_mipi/events
-/celex5_mipi/imu_data
-/celex5_mipi/polarity_img/camera_info
-/celex5_mipi/polarity_img/raw_image
-/celex5_mipi/sensor/parameter_descriptions
-/celex5_mipi/sensor/parameter_updates
-/rosout
-/rosout_agg
-​```其中原始 event 数据的话题：`/celex5_mipi/events`imu 数据的话题（注意由于 CeleX5 原始 imu 数据获取的方式，导致 imu 话题与 ROS 中标准的 IMU 话题的消息类型不同）：`/celex5_mipi/imu_data`通过`image_view`查看某一图像：```bash
-rosrun image_view image_view image:=/celex5_mipi/display/binary_img/raw_image
-​```3. 使用`celex5_calibration`
-
-更多细节：[链接](celex5_calibration)
-
-提供了一系列基于 Events 数据进行相机参数标定的办法。
-
-- 标定工具的生成
-
-  运行：
-
-  ```bash
-  rosrun celex5_ros pattern_generator_node
-  <span class="hljs-comment"># In a new Terminal</span>
-  rosrun rqt_reconfigure rqt_reconfigure <span class="hljs-comment">#  Open rqt_reconfigure to config</span></code></pre>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">source</span> ~/celex_ws/devel/setup.bash <span class="hljs-comment"># Or source setup.zsh when you use zsh</span><br>roslaunch celex5_ros celex5_ros_node.launch<br><span class="hljs-comment"># In a new Terminal</span><br>rosrun rqt_reconfigure rqt_reconfigure <span class="hljs-comment"># Open rqt_reconfigure to config</span><br>​```无报错即正常运行。使用`rostopic list`即可看到发布的话题，使用`rivz`或者`image_view`订阅相对应图像话题即可看到发布的图像。某图像话题中是否发布数据由参数配置、上表的相机工作模式所共同决定。```bash<br>$ rostopic list<br>/celex5_mipi/display/accumulated_img/camera_info<br>/celex5_mipi/display/accumulated_img/raw_image<br>/celex5_mipi/display/binary_img/camera_info<br>/celex5_mipi/display/binary_img/raw_image<br>/celex5_mipi/display/count_img/camera_info<br>/celex5_mipi/display/count_img/raw_image<br>/celex5_mipi/display/denoised_binary_img/camera_info<br>/celex5_mipi/display/denoised_binary_img/raw_image<br>/celex5_mipi/display/full_frame_img/camera_info<br>/celex5_mipi/display/full_frame_img/raw_image<br>/celex5_mipi/display/gray_img/camera_info<br>/celex5_mipi/display/gray_img/raw_image<br>/celex5_mipi/display/in_pixel_img/camera_info<br>/celex5_mipi/display/in_pixel_img/raw_image<br>/celex5_mipi/display/optical_flow_direction_img/camera_info<br>/celex5_mipi/display/optical_flow_direction_img/raw_image<br>/celex5_mipi/display/optical_flow_img/camera_info<br>/celex5_mipi/display/optical_flow_img/raw_image<br>/celex5_mipi/display/optical_flow_speed_img/camera_info<br>/celex5_mipi/display/optical_flow_speed_img/raw_image<br>/celex5_mipi/display/parameter_descriptions<br>/celex5_mipi/display/parameter_updates<br>/celex5_mipi/display/superimposed_img/camera_info<br>/celex5_mipi/display/superimposed_img/raw_image<br>/celex5_mipi/events<br>/celex5_mipi/imu_data<br>/celex5_mipi/polarity_img/camera_info<br>/celex5_mipi/polarity_img/raw_image<br>/celex5_mipi/sensor/parameter_descriptions<br>/celex5_mipi/sensor/parameter_updates<br>/rosout<br>/rosout_agg<br>​```其中原始 event 数据的话题：`/celex5_mipi/events`imu 数据的话题（注意由于 CeleX5 原始 imu 数据获取的方式，导致 imu 话题与 ROS 中标准的 IMU 话题的消息类型不同）：`/celex5_mipi/imu_data`通过`image_view`查看某一图像：```bash<br>rosrun image_view image_view image:=/celex5_mipi/display/binary_img/raw_image<br>​```3. 使用`celex5_calibration`<br><br>更多细节：[链接](celex5_calibration)<br><br>提供了一系列基于 Events 数据进行相机参数标定的办法。<br><br>- 标定工具的生成<br><br>  运行：<br><br>  ```bash<br>  rosrun celex5_ros pattern_generator_node<br>  <span class="hljs-comment"># In a new Terminal</span><br>  rosrun rqt_reconfigure rqt_reconfigure <span class="hljs-comment">#  Open rqt_reconfigure to config</span><br></code></pre></td></tr></table></figure>
 <p>更多细节：<a href="celex5_calibration/src/pattern">链接</a></p>
 <ul>
 <li>
 <p>基于 ROS 中的 <a href="http://wiki.ros.org/camera_calibration/Tutorials" target="_blank" rel="noopener">camera_calibration</a> 工具包进行的内参标定。（如果要标定与其他相机的外参，ROS 中的这个工具仅支持分辨率一样的…）</p>
 <p>安装：</p>
-<pre><code class="hljs bash">sudo apt install ros-<span class="hljs-variable">$ROS_DISTRO</span>-camera-calibration</code></pre>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo apt install ros-<span class="hljs-variable">$ROS_DISTRO</span>-camera-calibration<br></code></pre></td></tr></table></figure>
 <p>CeleX5-MIPI 进行基于该方法进行标定的具体过程：<a href="celex5_calibration/src/intrinsics_extrinsics/pkg_camera_calibration">链接</a></p>
 </li>
 <li>
@@ -372,7 +335,7 @@ rosrun image_view image_view image:=/celex5_mipi/display/binary_img/raw_image
 <li>关于与其他相机进行时间戳标定的相关功能还未完成。</li>
 </ul>
 
-            </article>
+            </div>
             <hr>
             <div>
               <div class="post-metas mb-3">
@@ -396,11 +359,11 @@ rosrun image_view image_view image:=/celex5_mipi/display/binary_img/raw_image
                 
               </div>
               
-                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！<a href="https://blog.kehan.site/about">联系作者。</a></p>
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！<a href="https://blog.kehan.xyz/about" target="_blank" rel="noopener">联系作者。</a></p>
               
               
                 <div class="post-prevnext row">
-                  <div class="post-prev col-6">
+                  <article class="post-prev col-6">
                     
                     
                       <a href="/2020/04/18/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86%E5%AE%9E%E8%B7%B5-MJava%E7%AE%80%E5%8D%95%E5%89%8D%E7%AB%AF%E7%9A%84%E5%AE%9E%E7%8E%B0/">
@@ -409,8 +372,8 @@ rosrun image_view image_view image:=/celex5_mipi/display/binary_img/raw_image
                         <span class="visible-mobile">Previous</span>
                       </a>
                     
-                  </div>
-                  <div class="post-next col-6">
+                  </article>
+                  <article class="post-next col-6">
                     
                     
                       <a href="/2020/03/04/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Low-Latency-Visual-Odometry-using-Event-based-Feature-Tracks/">
@@ -419,13 +382,13 @@ rosrun image_view image_view image:=/celex5_mipi/display/binary_img/raw_image
                         <i class="iconfont icon-arrowright"></i>
                       </a>
                     
-                  </div>
+                  </article>
                 </div>
               
             </div>
 
             
-          </div>
+          </article>
         </div>
       </div>
     </div>
@@ -433,7 +396,7 @@ rosrun image_view image_view image:=/celex5_mipi/display/binary_img/raw_image
       <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
         <div id="toc">
   <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
-  <div id="tocbot"></div>
+  <div class="toc-body" id="toc-body"></div>
 </div>
 
       </div>
@@ -444,23 +407,22 @@ rosrun image_view image_view image:=/celex5_mipi/display/binary_img/raw_image
 <!-- Custom -->
 
   <div class="col-lg-7 mx-auto nopadding-md">
-    <div class="container custom post-content mx-auto">
+    <div class="container custom post-custom mx-auto">
       <script src="https://utteranc.es/client.js" repo="kehanXue/gitpage-comments" issue-term="pathname" theme="github-light"  crossorigin="anonymous" async> </script>
     </div>
   </div>
 
 
     
-  </main>
 
-  
-    <a id="scroll-top-button" href="#" role="button">
-      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-    </a>
-  
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
 
-  
-    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
      aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
@@ -481,21 +443,16 @@ rosrun image_view image_view image:=/celex5_mipi/display/binary_img/raw_image
     </div>
   </div>
 </div>
-  
-
-  
-
-  
-
-  <footer class="mt-5">
-  <div class="text-center py-3">
-    <div>
-      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
-      <i class="iconfont icon-love"></i>
-      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
-        <span>Fluid</span></a>
-    </div>
     
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
   <div class="statistics">
     
     
@@ -522,17 +479,33 @@ rosrun image_view image_view image:=/celex5_mipi/display/binary_img/raw_image
   </div>
 
 
-    
+  
 
-    
-  </div>
+  
 </footer>
 
 <!-- SCRIPTS -->
-<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
-<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":200})
+    NProgress.start()
+    document.addEventListener('DOMContentLoaded', function() {
+      window.NProgress && window.NProgress.inc();
+    })
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
 <script  src="/js/debouncer.js" ></script>
-<script  src="/js/main.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
 
 <!-- Plugins -->
 
@@ -543,283 +516,54 @@ rosrun image_view image_view image:=/celex5_mipi/display/binary_img/raw_image
 
 
 
-  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
-  <script  src="/js/clipboard-use.js" ></script>
+  
 
 
 
-  <script defer>
-  (function () {
-    // 查询存储的记录
-    function getRecord(Counter, target) {
-      return new Promise(function (resolve, reject) {
-        Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({target})))
-          .then(resp => resp.json())
-          .then(({results, code, error}) => {
-            if (code === 401) {
-              throw error;
-            }
-            if (results && results.length > 0) {
-              var record = results[0];
-              resolve(record);
-            } else {
-              Counter('post', '/classes/Counter', {target, time: 0})
-                .then(resp => resp.json())
-                .then((record, error) => {
-                  if (error) {
-                    throw error;
-                  }
-                  resolve(record);
-                }).catch(error => {
-                console.error('Failed to create', error);
-                reject(error);
-              });
-            }
-          }).catch((error) => {
-          console.error('LeanCloud Counter Error:', error);
-          reject(error);
-        });
-      })
-    }
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
 
-    // 发起自增请求
-    function increment(Counter, incrArr) {
-      return new Promise(function (resolve, reject) {
-        Counter('post', '/batch', {
-          "requests": incrArr
-        }).then((res) => {
-          res = res.json();
-          if (res.error) {
-            throw res.error;
-          }
-          resolve(res);
-        }).catch((error) => {
-          console.error('Failed to save visitor count', error);
-          reject(error);
-        });
-      });
-    }
 
-    // 构建自增请求体
-    function buildIncrement(objectId) {
-      return {
-        "method": "PUT",
-        "path": `/1.1/classes/Counter/${ objectId }`,
-        "body": {
-          "time": {
-            '__op': 'Increment',
-            'amount': 1
-          }
-        }
-      }
-    }
 
-    // 校验是否为有效的 UV
-    function validUV() {
-      var key = 'LeanCloud_UV_Flag';
-      var flag = localStorage.getItem(key);
-      if (flag) {
-        // 距离标记小于 24 小时则不计为 UV
-        if (new Date().getTime() - parseInt(flag) <= 86400000) {
-          return false;
-        }
-      }
-      localStorage.setItem(key, new Date().getTime().toString());
-      return true;
-    }
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
 
-    function addCount(Counter) {
-      var enableIncr = 'true' === 'true' && window.location.hostname !== 'localhost';
-      var getterArr = [];
-      var incrArr = [];
 
-      // 请求 PV 并自增
-      var pvCtn = document.querySelector('#leancloud-site-pv-container');
-      if (pvCtn || enableIncr) {
-        var pvGetter = getRecord(Counter, 'site-pv').then((record) => {
-          incrArr.push(buildIncrement(record.objectId))
-          var ele = document.querySelector('#leancloud-site-pv');
-          if (ele) {
-            ele.innerText = record.time + 1;
-            if (pvCtn) {
-              pvCtn.style.display = 'inline';
-            }
-          }
-        });
-        getterArr.push(pvGetter);
-      }
 
-      // 请求 UV 并自增
-      var uvCtn = document.querySelector('#leancloud-site-uv-container');
-      if (uvCtn || enableIncr) {
-        var uvGetter = getRecord(Counter, 'site-uv').then((record) => {
-          var vuv = validUV();
-          vuv && incrArr.push(buildIncrement(record.objectId))
-          var ele = document.querySelector('#leancloud-site-uv');
-          if (ele) {
-            ele.innerText = record.time + (vuv ? 1 : 0);
-            if (uvCtn) {
-              uvCtn.style.display = 'inline';
-            }
-          }
-        });
-        getterArr.push(uvGetter);
-      }
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
 
-      // 如果是文章，请求文章的浏览数，并自增
-      if ('true' === 'true') {
-        var viewCtn = document.querySelector('#leancloud-post-views-container');
-        if (viewCtn || enableIncr) {
-          var target = decodeURI('/2020/03/10/CeleX5-ROS-CeleX5-MIPI-%E4%BA%8B%E4%BB%B6%E7%9B%B8%E6%9C%BA%E7%9A%84%E4%B8%80%E4%B8%AA%E5%AE%8C%E5%96%84%E7%9A%84ROS%E5%B7%A5%E5%85%B7%E5%8C%85/');
-          var viewGetter = getRecord(Counter, target).then((record) => {
-            incrArr.push(buildIncrement(record.objectId))
-            if (viewCtn) {
-              var ele = document.querySelector('#leancloud-post-views');
-              if (ele) {
-                ele.innerText = (record.time || 0) + 1;
-                viewCtn.style.display = 'inline';
-              }
-            }
-          });
-          getterArr.push(viewGetter);
-        }
-      }
 
-      // 如果启动计数自增，批量发起自增请求
-      if (enableIncr) {
-        Promise.all(getterArr).then(() => {
-          incrArr.length > 0 && increment(Counter, incrArr);
-        })
-      }
-    }
 
-    var app_id = 'n6Mj5ldxlOzFKmG1RboJvi35-gzGzoHsz'
-    var app_key = 'e0SXMiS3gUuaA37sDxUdkj1x'
-    var server_url = 'https://n6mj5ldx.lc-cn-n1-shared.com'
-
-    function fetchData(api_server) {
-      var Counter = (method, url, data) => {
-        return fetch(`${ api_server }/1.1${ url }`, {
-          method,
-          headers: {
-            'X-LC-Id': app_id,
-            'X-LC-Key': app_key,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data)
-        });
-      };
-
-      addCount(Counter);
-    }
-
-    var api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${ app_id.slice(0, 8).toLowerCase() }.api.lncldglobal.com`;
-
-    if (api_server) {
-      fetchData(api_server);
-    } else {
-      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
-        .then(resp => resp.json())
-        .then(({api_server}) => {
-          fetchData('https://' + api_server);
-        });
-    }
-  })();
-</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
 
 
 
 
+  <script defer src="/js/leancloud.js" ></script>
 
 
-  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
   <script>
-    $(document).ready(function () {
-      var boardCtn = $('#board-ctn');
-      var boardTop = boardCtn.offset().top;
-
-      tocbot.init({
-        tocSelector: '#tocbot',
-        contentSelector: 'article.markdown-body',
-        headingSelector: 'h1,h2,h3,h4,h5,h6',
-        linkClass: 'tocbot-link',
-        activeLinkClass: 'tocbot-active-link',
-        listClass: 'tocbot-list',
-        isCollapsedClass: 'tocbot-is-collapsed',
-        collapsibleClass: 'tocbot-is-collapsible',
-        collapseDepth: 0,
-        scrollSmooth: true,
-        headingsOffset: -boardTop
-      });
-      if ($('.toc-list-item').length > 0) {
-        $('#toc').css('visibility', 'visible');
-      }
-    });
-  </script>
-
-
-
-  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
-  <script>
-    var typed = new Typed('#subtitle', {
-      strings: [
-        '  ',
-        "CeleX5-ROS: CeleX5-MIPI 事件相机的一个完善的 ROS 工具包 &nbsp;",
-      ],
-      cursorChar: "_",
-      typeSpeed: 70,
-      loop: false,
-    });
-    typed.stop();
-    $(document).ready(function () {
-      $(".typed-cursor").addClass("h2");
-      typed.start();
-    });
-  </script>
-
-
-
-  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
-  <script>
-    anchors.options = {
-      placement: "right",
-      visible: "hover",
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
       
-    };
-    var el = "h1,h2,h3,h4,h5,h6".split(",");
-    var res = [];
-    for (item of el) {
-      res.push(".markdown-body > " + item)
-    }
-    anchors.add(res.join(", "))
+      typing(title)
+      
+    })(window, document);
   </script>
 
 
 
   <script  src="/js/local-search.js" ></script>
   <script>
-    var path = "/local-search.xml";
-    var inputArea = document.querySelector("#local-search-input");
-    inputArea.onclick = function () {
-      searchFunc(path, 'local-search-input', 'local-search-result');
-      this.onclick = null
-    }
-  </script>
-
-
-
-  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
-  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
-
-  <script>
-    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
-      function () {
-        var element = document.createElement('a');
-        $(element).attr('data-fancybox', 'images');
-        $(element).attr('href', $(this).attr('src'));
-        $(this).wrap(element);
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
       }
-    );
+    })()
   </script>
 
 
@@ -830,13 +574,8 @@ rosrun image_view image_view image:=/celex5_mipi/display/binary_img/raw_image
 
   
     <!-- KaTeX -->
-    <link  rel="stylesheet" href="https://cdn.staticfile.org/KaTeX/0.11.1/katex.min.css" />
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" />
   
-
-
-
-
-
 
 
 
@@ -858,6 +597,11 @@ rosrun image_view image_view image:=/celex5_mipi/display/binary_img/raw_image
   
 
 
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
 
 
 

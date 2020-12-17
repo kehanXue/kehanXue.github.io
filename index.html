@@ -1,7 +1,7 @@
+
+
 <!DOCTYPE html>
-<html lang="en">
-
-
+<html lang="en" data-default-color-scheme=&#34;auto&#34;>
 
 
 
@@ -19,17 +19,17 @@
   <meta name="keywords" content="">
   <title>Kehan&#39;s Blog</title>
 
-  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
 
 
 <!-- 主题依赖的图标库，不要自行修改 -->
 
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
 
 
 
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
 
 
 <link  rel="stylesheet" href="/css/main.css" />
@@ -37,7 +37,12 @@
 <!-- 自定义样式保持在最底部 -->
 
 
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"blog.kehan.site","root":"/","version":"1.8.6","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"copy_btn":true,"image_zoom":{"enable":true},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"n6Mj5ldxlOzFKmG1RboJvi35-gzGzoHsz","app_key":"e0SXMiS3gUuaA37sDxUdkj1x","server_url":"https://n6mj5ldx.lc-cn-n1-shared.com"},"tajs":null}};
+  </script>
   <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
 <meta name="generator" content="Hexo 4.2.1"></head>
 
 
@@ -120,8 +125,14 @@
         
         
           <li class="nav-item" id="search-btn">
-            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
-                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
           </li>
         
       </ul>
@@ -129,13 +140,13 @@
   </div>
 </nav>
 
-    <div class="view intro-2" id="background" parallax=true
+    <div class="banner intro-2" id="background" parallax=true
          style="background: url('/img/sauvc-banner.jpg') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-          <div class="container text-center white-text fadeInUp">
-            <span class="h2" id="subtitle">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="写些东西的地方。">
               
             </span>
 
@@ -165,28 +176,36 @@
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2020/09/23/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Event-based-Stereo-Visual-Odometry/" target="_blank">
-          <img src="/assets/esvo-index.jpeg" srcset="/img/loading.gif" alt="论文阅读 - Event-based Stereo Visual Odometry">
+          <img src="/assets/esvo-index.jpeg" alt="论文阅读 - Event-based Stereo Visual Odometry">
         </a>
       </div>
     
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a class="index-header" href="/2020/09/23/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Event-based-Stereo-Visual-Odometry/">论文阅读 - Event-based Stereo Visual Odometry</a>
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/09/23/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Event-based-Stereo-Visual-Odometry/">论文阅读 - Event-based Stereo Visual Odometry</a>
+      </h1>
 
-      <a href="/2020/09/23/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Event-based-Stereo-Visual-Odometry/" class="index-excerpt">
-        
-        
+      <p class="index-excerpt">
+        <a href="/2020/09/23/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Event-based-Stereo-Visual-Odometry/">
           
-        
-        <div>
+          
+            
+          
+          
 本文由我在 计算机视觉工坊 首发，在我的个人博客转载。
 
-“Event-based Stereo Visual Odometry” 是港科大沈劭劼老师组的一篇新工作。其基于双目的 Event Camera 来实现 Visual Odometry。</div>
-      </a>
+“Event-based Stereo Visual Odometry” 是港科大沈劭劼老师组的一篇新工作。其基于双目的 Event Camera 来实现 Visual Odometry。
+        </a>
+      </p>
 
       <div class="index-btm post-metas">
         
           <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>&nbsp;2020-09-23
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-09-23 11:16" pubdate>
+              2020-09-23
+            </time>
           </div>
         
         
@@ -208,7 +227,7 @@
           </div>
         
       </div>
-    </div>
+    </article>
   </div>
 
   <div class="row mx-auto index-card">
@@ -216,25 +235,33 @@
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2020/08/06/Ubuntu-18-04-%E5%9C%A8-Clion-%E4%B8%AD%E4%BD%BF%E7%94%A8-Docker-%E6%8F%92%E4%BB%B6/" target="_blank">
-          <img src="/assets/docker-clion-index.jpg" srcset="/img/loading.gif" alt="Ubuntu 18.04 在 Clion 中使用 Docker 插件">
+          <img src="/assets/docker-clion-index.jpg" alt="Ubuntu 18.04 在 Clion 中使用 Docker 插件">
         </a>
       </div>
     
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a class="index-header" href="/2020/08/06/Ubuntu-18-04-%E5%9C%A8-Clion-%E4%B8%AD%E4%BD%BF%E7%94%A8-Docker-%E6%8F%92%E4%BB%B6/">Ubuntu 18.04 在 Clion 中使用 Docker 插件</a>
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/08/06/Ubuntu-18-04-%E5%9C%A8-Clion-%E4%B8%AD%E4%BD%BF%E7%94%A8-Docker-%E6%8F%92%E4%BB%B6/">Ubuntu 18.04 在 Clion 中使用 Docker 插件</a>
+      </h1>
 
-      <a href="/2020/08/06/Ubuntu-18-04-%E5%9C%A8-Clion-%E4%B8%AD%E4%BD%BF%E7%94%A8-Docker-%E6%8F%92%E4%BB%B6/" class="index-excerpt">
-        
-        
+      <p class="index-excerpt">
+        <a href="/2020/08/06/Ubuntu-18-04-%E5%9C%A8-Clion-%E4%B8%AD%E4%BD%BF%E7%94%A8-Docker-%E6%8F%92%E4%BB%B6/">
           
-        
-        <div>在我的 Ubuntu 18.04 中，当 Clion 的 Docker 插件直接使用 Unix socket 与 Docker daemon 进行通信时，会抛出 java.io.IOException: unexpected end of stream on http://docker.socket/... 的异常。所以采用将 Docker daemon 开启一个新的 tcp 端口，配置 Clio</div>
-      </a>
+          
+            
+          
+          在我的 Ubuntu 18.04 中，当 Clion 的 Docker 插件直接使用 Unix socket 与 Docker daemon 进行通信时，会抛出 java.io.IOException: unexpected end of stream on http://docker.socket/... 的异常。所以采用将 Docker daemon 开启一个新的 tcp 端口，配置 Clio
+        </a>
+      </p>
 
       <div class="index-btm post-metas">
         
           <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>&nbsp;2020-08-06
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-08-06 15:47" pubdate>
+              2020-08-06
+            </time>
           </div>
         
         
@@ -256,7 +283,7 @@
           </div>
         
       </div>
-    </div>
+    </article>
   </div>
 
   <div class="row mx-auto index-card">
@@ -264,25 +291,33 @@
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2020/08/03/%E8%BD%AC-%E8%B0%88%E8%B0%88-C-C-%E4%B8%AD%E7%9A%84-volatile/" target="_blank">
-          <img src="/assets/cpp-volatile.jpeg" srcset="/img/loading.gif" alt="[转] 谈谈 C/C++ 中的 volatile">
+          <img src="/assets/cpp-volatile.jpeg" alt="[转] 谈谈 C/C++ 中的 volatile">
         </a>
       </div>
     
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a class="index-header" href="/2020/08/03/%E8%BD%AC-%E8%B0%88%E8%B0%88-C-C-%E4%B8%AD%E7%9A%84-volatile/">[转] 谈谈 C/C++ 中的 volatile</a>
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/08/03/%E8%BD%AC-%E8%B0%88%E8%B0%88-C-C-%E4%B8%AD%E7%9A%84-volatile/">[转] 谈谈 C/C++ 中的 volatile</a>
+      </h1>
 
-      <a href="/2020/08/03/%E8%BD%AC-%E8%B0%88%E8%B0%88-C-C-%E4%B8%AD%E7%9A%84-volatile/" class="index-excerpt">
-        
-        
+      <p class="index-excerpt">
+        <a href="/2020/08/03/%E8%BD%AC-%E8%B0%88%E8%B0%88-C-C-%E4%B8%AD%E7%9A%84-volatile/">
           
-        
-        <div>本文转载了一篇关于 volatile 关键字在多线程中用法的拨乱反正的文章。为了解决多线程编程中可能的 false sharing 问题，std::atomic 更推荐被使用。</div>
-      </a>
+          
+            
+          
+          本文转载了一篇关于 volatile 关键字在多线程中用法的拨乱反正的文章。为了解决多线程编程中可能的 false sharing 问题，std::atomic 更推荐被使用。
+        </a>
+      </p>
 
       <div class="index-btm post-metas">
         
           <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>&nbsp;2020-08-03
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-08-03 17:11" pubdate>
+              2020-08-03
+            </time>
           </div>
         
         
@@ -302,7 +337,7 @@
           </div>
         
       </div>
-    </div>
+    </article>
   </div>
 
   <div class="row mx-auto index-card">
@@ -310,25 +345,33 @@
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2020/08/03/%E8%BD%AC-%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA-C-11-std-async/" target="_blank">
-          <img src="/assets/cpp-async.jpeg" srcset="/img/loading.gif" alt="[转] 深入浅出 C++ 11 std::async">
+          <img src="/assets/cpp-async.jpeg" alt="[转] 深入浅出 C++ 11 std::async">
         </a>
       </div>
     
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a class="index-header" href="/2020/08/03/%E8%BD%AC-%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA-C-11-std-async/">[转] 深入浅出 C++ 11 std::async</a>
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/08/03/%E8%BD%AC-%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA-C-11-std-async/">[转] 深入浅出 C++ 11 std::async</a>
+      </h1>
 
-      <a href="/2020/08/03/%E8%BD%AC-%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA-C-11-std-async/" class="index-excerpt">
-        
-        
+      <p class="index-excerpt">
+        <a href="/2020/08/03/%E8%BD%AC-%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA-C-11-std-async/">
           
-        
-        <div>std::async 会自动创建一个线程去调用线程函数，它返回一个 std::future，这个 future 中存储了线程函数返回的结果，当我们需要线程函数的结果时，直接从 future 中获取。它首先解耦了线程的创建和执行，使得我们可以在需要的时候获取异步操作的结果；其次它还提供了线程的创建策略（比如可以通过延迟加载的方式去创建线程），使得我们可以以多种方式去创建线程。</div>
-      </a>
+          
+            
+          
+          std::async 会自动创建一个线程去调用线程函数，它返回一个 std::future，这个 future 中存储了线程函数返回的结果，当我们需要线程函数的结果时，直接从 future 中获取。它首先解耦了线程的创建和执行，使得我们可以在需要的时候获取异步操作的结果；其次它还提供了线程的创建策略（比如可以通过延迟加载的方式去创建线程），使得我们可以以多种方式去创建线程。
+        </a>
+      </p>
 
       <div class="index-btm post-metas">
         
           <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>&nbsp;2020-08-03
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-08-03 16:03" pubdate>
+              2020-08-03
+            </time>
           </div>
         
         
@@ -348,7 +391,7 @@
           </div>
         
       </div>
-    </div>
+    </article>
   </div>
 
   <div class="row mx-auto index-card">
@@ -356,25 +399,33 @@
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2020/07/27/DSO%E4%B8%ADResidual-pattern%E7%9A%84SSE%E5%8A%A0%E9%80%9F/" target="_blank">
-          <img src="/assets/dso-res-pattern-index.png" srcset="/img/loading.gif" alt="DSO 中 Residual pattern 的 SSE 加速">
+          <img src="/assets/dso-res-pattern-index.png" alt="DSO 中 Residual pattern 的 SSE 加速">
         </a>
       </div>
     
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a class="index-header" href="/2020/07/27/DSO%E4%B8%ADResidual-pattern%E7%9A%84SSE%E5%8A%A0%E9%80%9F/">DSO 中 Residual pattern 的 SSE 加速</a>
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/07/27/DSO%E4%B8%ADResidual-pattern%E7%9A%84SSE%E5%8A%A0%E9%80%9F/">DSO 中 Residual pattern 的 SSE 加速</a>
+      </h1>
 
-      <a href="/2020/07/27/DSO%E4%B8%ADResidual-pattern%E7%9A%84SSE%E5%8A%A0%E9%80%9F/" class="index-excerpt">
-        
-        
+      <p class="index-excerpt">
+        <a href="/2020/07/27/DSO%E4%B8%ADResidual-pattern%E7%9A%84SSE%E5%8A%A0%E9%80%9F/">
           
-        
-        <div>最近在阅读 DSO 论文的时候，在计算 residual 的时候，作者选取了一个奇怪的 pattern。作者提到，这是为了使用 SSE 加速而考虑的。SSE 又是什么呢？</div>
-      </a>
+          
+            
+          
+          最近在阅读 DSO 论文的时候，在计算 residual 的时候，作者选取了一个奇怪的 pattern。作者提到，这是为了使用 SSE 加速而考虑的。SSE 又是什么呢？
+        </a>
+      </p>
 
       <div class="index-btm post-metas">
         
           <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>&nbsp;2020-07-27
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-07-27 12:12" pubdate>
+              2020-07-27
+            </time>
           </div>
         
         
@@ -396,7 +447,7 @@
           </div>
         
       </div>
-    </div>
+    </article>
   </div>
 
   <div class="row mx-auto index-card">
@@ -404,28 +455,36 @@
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2020/07/25/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-ORB-SLAM3-%E5%B0%9D%E9%B2%9C/" target="_blank">
-          <img src="/assets/orb-slam3-index.jpeg" srcset="/img/loading.gif" alt="论文阅读 - ORB-SLAM3 尝鲜">
+          <img src="/assets/orb-slam3-index.jpeg" alt="论文阅读 - ORB-SLAM3 尝鲜">
         </a>
       </div>
     
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a class="index-header" href="/2020/07/25/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-ORB-SLAM3-%E5%B0%9D%E9%B2%9C/">论文阅读 - ORB-SLAM3 尝鲜</a>
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/07/25/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-ORB-SLAM3-%E5%B0%9D%E9%B2%9C/">论文阅读 - ORB-SLAM3 尝鲜</a>
+      </h1>
 
-      <a href="/2020/07/25/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-ORB-SLAM3-%E5%B0%9D%E9%B2%9C/" class="index-excerpt">
-        
-        
+      <p class="index-excerpt">
+        <a href="/2020/07/25/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-ORB-SLAM3-%E5%B0%9D%E9%B2%9C/">
           
-        
-        <div>
+          
+            
+          
+          
 本文由我在 3D 视觉工坊 首发，在这里转载。
 
-ORB-SLAM3 是第一个同时具备纯视觉（visual）数据处理、视觉+惯性（visual-inertial）数据处理、和构建多地图（multi-map）功能，支持单目、双目以及 RGB-D 相机，同时支持针孔相机、鱼眼相机模型的 SLAM 系统。</div>
-      </a>
+ORB-SLAM3 是第一个同时具备纯视觉（visual）数据处理、视觉+惯性（visual-inertial）数据处理、和构建多地图（multi-map）功能，支持单目、双目以及 RGB-D 相机，同时支持针孔相机、鱼眼相机模型的 SLAM 系统。
+        </a>
+      </p>
 
       <div class="index-btm post-metas">
         
           <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>&nbsp;2020-07-25
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-07-25 09:14" pubdate>
+              2020-07-25
+            </time>
           </div>
         
         
@@ -447,7 +506,7 @@ ORB-SLAM3 是第一个同时具备纯视觉（visual）数据处理、视觉+惯
           </div>
         
       </div>
-    </div>
+    </article>
   </div>
 
   <div class="row mx-auto index-card">
@@ -455,28 +514,36 @@ ORB-SLAM3 是第一个同时具备纯视觉（visual）数据处理、视觉+惯
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2020/07/17/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Ultimate-SLAM/" target="_blank">
-          <img src="/assets/ultimate-slam-index.jpg" srcset="/img/loading.gif" alt="论文阅读 - Ultimate SLAM? Combining Events, Images, and IMU">
+          <img src="/assets/ultimate-slam-index.jpg" alt="论文阅读 - Ultimate SLAM? Combining Events, Images, and IMU">
         </a>
       </div>
     
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a class="index-header" href="/2020/07/17/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Ultimate-SLAM/">论文阅读 - Ultimate SLAM? Combining Events, Images, and IMU</a>
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/07/17/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Ultimate-SLAM/">论文阅读 - Ultimate SLAM? Combining Events, Images, and IMU</a>
+      </h1>
 
-      <a href="/2020/07/17/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Ultimate-SLAM/" class="index-excerpt">
-        
-        
+      <p class="index-excerpt">
+        <a href="/2020/07/17/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Ultimate-SLAM/">
           
-        
-        <div>
+          
+            
+          
+          
 本文由我在 3D 视觉工坊 首发，在这里转载。
 
-这篇论文提出了首个将 Event-based Camera（事件相机）、Traditional Frame-based Camera（传统相机）与 IMU 三者结合的一个 SLAM pipeline。</div>
-      </a>
+这篇论文提出了首个将 Event-based Camera（事件相机）、Traditional Frame-based Camera（传统相机）与 IMU 三者结合的一个 SLAM pipeline。
+        </a>
+      </p>
 
       <div class="index-btm post-metas">
         
           <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>&nbsp;2020-07-17
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-07-17 15:55" pubdate>
+              2020-07-17
+            </time>
           </div>
         
         
@@ -500,7 +567,7 @@ ORB-SLAM3 是第一个同时具备纯视觉（visual）数据处理、视觉+惯
           </div>
         
       </div>
-    </div>
+    </article>
   </div>
 
   <div class="row mx-auto index-card">
@@ -508,25 +575,33 @@ ORB-SLAM3 是第一个同时具备纯视觉（visual）数据处理、视觉+惯
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2020/06/10/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-EMVS/" target="_blank">
-          <img src="/assets/emvs-index.jpeg" srcset="/img/loading.gif" alt="论文阅读 - EMVS: Event-Based Multi-View Stereo">
+          <img src="/assets/emvs-index.jpeg" alt="论文阅读 - EMVS: Event-Based Multi-View Stereo">
         </a>
       </div>
     
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a class="index-header" href="/2020/06/10/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-EMVS/">论文阅读 - EMVS: Event-Based Multi-View Stereo</a>
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/06/10/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-EMVS/">论文阅读 - EMVS: Event-Based Multi-View Stereo</a>
+      </h1>
 
-      <a href="/2020/06/10/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-EMVS/" class="index-excerpt">
-        
-        
+      <p class="index-excerpt">
+        <a href="/2020/06/10/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-EMVS/">
           
-        
-        <div>EMVS: Event-Based Multi-View Stereo—3D Reconstruction with an Event Camera in Real-Time 描述了一种利用 Event Camera 的高速特性，提出的一种 MVS 方法。将传统 MVS 的 Space-Sweep 方法应用到 Event-based MVS 中。</div>
-      </a>
+          
+            
+          
+          EMVS: Event-Based Multi-View Stereo—3D Reconstruction with an Event Camera in Real-Time 描述了一种利用 Event Camera 的高速特性，提出的一种 MVS 方法。将传统 MVS 的 Space-Sweep 方法应用到 Event-based MVS 中。
+        </a>
+      </p>
 
       <div class="index-btm post-metas">
         
           <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>&nbsp;2020-06-10
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-06-10 21:45" pubdate>
+              2020-06-10
+            </time>
           </div>
         
         
@@ -552,7 +627,7 @@ ORB-SLAM3 是第一个同时具备纯视觉（visual）数据处理、视觉+惯
           </div>
         
       </div>
-    </div>
+    </article>
   </div>
 
   <div class="row mx-auto index-card">
@@ -560,25 +635,33 @@ ORB-SLAM3 是第一个同时具备纯视觉（visual）数据处理、视觉+惯
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2020/04/18/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86%E5%AE%9E%E8%B7%B5-MJava%E7%AE%80%E5%8D%95%E5%89%8D%E7%AB%AF%E7%9A%84%E5%AE%9E%E7%8E%B0/" target="_blank">
-          <img src="/assets/Mjava-Scanner-DFA.jpg" srcset="/img/loading.gif" alt="编译原理实践 - MJava 简单前端的实现">
+          <img src="/assets/Mjava-Scanner-DFA.jpg" alt="编译原理实践 - MJava 简单前端的实现">
         </a>
       </div>
     
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a class="index-header" href="/2020/04/18/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86%E5%AE%9E%E8%B7%B5-MJava%E7%AE%80%E5%8D%95%E5%89%8D%E7%AB%AF%E7%9A%84%E5%AE%9E%E7%8E%B0/">编译原理实践 - MJava 简单前端的实现</a>
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/04/18/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86%E5%AE%9E%E8%B7%B5-MJava%E7%AE%80%E5%8D%95%E5%89%8D%E7%AB%AF%E7%9A%84%E5%AE%9E%E7%8E%B0/">编译原理实践 - MJava 简单前端的实现</a>
+      </h1>
 
-      <a href="/2020/04/18/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86%E5%AE%9E%E8%B7%B5-MJava%E7%AE%80%E5%8D%95%E5%89%8D%E7%AB%AF%E7%9A%84%E5%AE%9E%E7%8E%B0/" class="index-excerpt">
-        
-        
+      <p class="index-excerpt">
+        <a href="/2020/04/18/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86%E5%AE%9E%E8%B7%B5-MJava%E7%AE%80%E5%8D%95%E5%89%8D%E7%AB%AF%E7%9A%84%E5%AE%9E%E7%8E%B0/">
           
-        
-        <div>这学期选修了学院的编译原理课程，在实践环节实现了 MJava（一种自定义的简单语言）的编译器前端（词法分析与语法分析模块）。词法分析使用构造的 DFA 进行识别，语法分析使用递归下降法进行分析。完整项目请见：https://github.com/kehanXue/MJava-Compiler。</div>
-      </a>
+          
+            
+          
+          这学期选修了学院的编译原理课程，在实践环节实现了 MJava（一种自定义的简单语言）的编译器前端（词法分析与语法分析模块）。词法分析使用构造的 DFA 进行识别，语法分析使用递归下降法进行分析。完整项目请见：https://github.com/kehanXue/MJava-Compiler。
+        </a>
+      </p>
 
       <div class="index-btm post-metas">
         
           <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>&nbsp;2020-04-18
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-04-18 23:38" pubdate>
+              2020-04-18
+            </time>
           </div>
         
         
@@ -598,7 +681,7 @@ ORB-SLAM3 是第一个同时具备纯视觉（visual）数据处理、视觉+惯
           </div>
         
       </div>
-    </div>
+    </article>
   </div>
 
   <div class="row mx-auto index-card">
@@ -606,25 +689,33 @@ ORB-SLAM3 是第一个同时具备纯视觉（visual）数据处理、视觉+惯
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2020/03/10/CeleX5-ROS-CeleX5-MIPI-%E4%BA%8B%E4%BB%B6%E7%9B%B8%E6%9C%BA%E7%9A%84%E4%B8%80%E4%B8%AA%E5%AE%8C%E5%96%84%E7%9A%84ROS%E5%B7%A5%E5%85%B7%E5%8C%85/" target="_blank">
-          <img src="/assets/celex-ros-index.jpeg" srcset="/img/loading.gif" alt="CeleX5-ROS: CeleX5-MIPI 事件相机的一个完善的 ROS 工具包 ">
+          <img src="/assets/celex-ros-index.jpeg" alt="CeleX5-ROS: CeleX5-MIPI 事件相机的一个完善的 ROS 工具包 ">
         </a>
       </div>
     
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a class="index-header" href="/2020/03/10/CeleX5-ROS-CeleX5-MIPI-%E4%BA%8B%E4%BB%B6%E7%9B%B8%E6%9C%BA%E7%9A%84%E4%B8%80%E4%B8%AA%E5%AE%8C%E5%96%84%E7%9A%84ROS%E5%B7%A5%E5%85%B7%E5%8C%85/">CeleX5-ROS: CeleX5-MIPI 事件相机的一个完善的 ROS 工具包 </a>
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/03/10/CeleX5-ROS-CeleX5-MIPI-%E4%BA%8B%E4%BB%B6%E7%9B%B8%E6%9C%BA%E7%9A%84%E4%B8%80%E4%B8%AA%E5%AE%8C%E5%96%84%E7%9A%84ROS%E5%B7%A5%E5%85%B7%E5%8C%85/">CeleX5-ROS: CeleX5-MIPI 事件相机的一个完善的 ROS 工具包 </a>
+      </h1>
 
-      <a href="/2020/03/10/CeleX5-ROS-CeleX5-MIPI-%E4%BA%8B%E4%BB%B6%E7%9B%B8%E6%9C%BA%E7%9A%84%E4%B8%80%E4%B8%AA%E5%AE%8C%E5%96%84%E7%9A%84ROS%E5%B7%A5%E5%85%B7%E5%8C%85/" class="index-excerpt">
-        
-        
+      <p class="index-excerpt">
+        <a href="/2020/03/10/CeleX5-ROS-CeleX5-MIPI-%E4%BA%8B%E4%BB%B6%E7%9B%B8%E6%9C%BA%E7%9A%84%E4%B8%80%E4%B8%AA%E5%AE%8C%E5%96%84%E7%9A%84ROS%E5%B7%A5%E5%85%B7%E5%8C%85/">
           
-        
-        <div>我在前段时间为 CeleX5-MIPI 系列相机开发了一套完善的 ROS 下的驱动。CeleX5-MIPI 是一款国产的事件相机，具有 1280x800 的分辨率。项目已开源在：https://github.com/kehanXue/CeleX5-ROS 。</div>
-      </a>
+          
+            
+          
+          我在前段时间为 CeleX5-MIPI 系列相机开发了一套完善的 ROS 下的驱动。CeleX5-MIPI 是一款国产的事件相机，具有 1280x800 的分辨率。项目已开源在：https://github.com/kehanXue/CeleX5-ROS 。
+        </a>
+      </p>
 
       <div class="index-btm post-metas">
         
           <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>&nbsp;2020-03-10
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-03-10 23:45" pubdate>
+              2020-03-10
+            </time>
           </div>
         
         
@@ -646,7 +737,7 @@ ORB-SLAM3 是第一个同时具备纯视觉（visual）数据处理、视觉+惯
           </div>
         
       </div>
-    </div>
+    </article>
   </div>
 
 
@@ -671,16 +762,15 @@ ORB-SLAM3 是第一个同时具备纯视觉（visual）数据处理、视觉+惯
         </div>
       </div>
     
-  </main>
 
-  
-    <a id="scroll-top-button" href="#" role="button">
-      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-    </a>
-  
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
 
-  
-    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
      aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
@@ -701,21 +791,16 @@ ORB-SLAM3 是第一个同时具备纯视觉（visual）数据处理、视觉+惯
     </div>
   </div>
 </div>
-  
-
-  
-
-  
-
-  <footer class="mt-5">
-  <div class="text-center py-3">
-    <div>
-      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
-      <i class="iconfont icon-love"></i>
-      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
-        <span>Fluid</span></a>
-    </div>
     
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
   <div class="statistics">
     
     
@@ -742,17 +827,33 @@ ORB-SLAM3 是第一个同时具备纯视觉（visual）数据处理、视觉+惯
   </div>
 
 
-    
+  
 
-    
-  </div>
+  
 </footer>
 
 <!-- SCRIPTS -->
-<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
-<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":200})
+    NProgress.start()
+    document.addEventListener('DOMContentLoaded', function() {
+      window.NProgress && window.NProgress.inc();
+    })
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
 <script  src="/js/debouncer.js" ></script>
-<script  src="/js/main.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
 
 <!-- Plugins -->
 
@@ -763,189 +864,7 @@ ORB-SLAM3 是第一个同时具备纯视觉（visual）数据处理、视觉+惯
 
 
 
-  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
-  <script  src="/js/clipboard-use.js" ></script>
-
-
-
-  <script defer>
-  (function () {
-    // 查询存储的记录
-    function getRecord(Counter, target) {
-      return new Promise(function (resolve, reject) {
-        Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({target})))
-          .then(resp => resp.json())
-          .then(({results, code, error}) => {
-            if (code === 401) {
-              throw error;
-            }
-            if (results && results.length > 0) {
-              var record = results[0];
-              resolve(record);
-            } else {
-              Counter('post', '/classes/Counter', {target, time: 0})
-                .then(resp => resp.json())
-                .then((record, error) => {
-                  if (error) {
-                    throw error;
-                  }
-                  resolve(record);
-                }).catch(error => {
-                console.error('Failed to create', error);
-                reject(error);
-              });
-            }
-          }).catch((error) => {
-          console.error('LeanCloud Counter Error:', error);
-          reject(error);
-        });
-      })
-    }
-
-    // 发起自增请求
-    function increment(Counter, incrArr) {
-      return new Promise(function (resolve, reject) {
-        Counter('post', '/batch', {
-          "requests": incrArr
-        }).then((res) => {
-          res = res.json();
-          if (res.error) {
-            throw res.error;
-          }
-          resolve(res);
-        }).catch((error) => {
-          console.error('Failed to save visitor count', error);
-          reject(error);
-        });
-      });
-    }
-
-    // 构建自增请求体
-    function buildIncrement(objectId) {
-      return {
-        "method": "PUT",
-        "path": `/1.1/classes/Counter/${ objectId }`,
-        "body": {
-          "time": {
-            '__op': 'Increment',
-            'amount': 1
-          }
-        }
-      }
-    }
-
-    // 校验是否为有效的 UV
-    function validUV() {
-      var key = 'LeanCloud_UV_Flag';
-      var flag = localStorage.getItem(key);
-      if (flag) {
-        // 距离标记小于 24 小时则不计为 UV
-        if (new Date().getTime() - parseInt(flag) <= 86400000) {
-          return false;
-        }
-      }
-      localStorage.setItem(key, new Date().getTime().toString());
-      return true;
-    }
-
-    function addCount(Counter) {
-      var enableIncr = 'true' === 'true' && window.location.hostname !== 'localhost';
-      var getterArr = [];
-      var incrArr = [];
-
-      // 请求 PV 并自增
-      var pvCtn = document.querySelector('#leancloud-site-pv-container');
-      if (pvCtn || enableIncr) {
-        var pvGetter = getRecord(Counter, 'site-pv').then((record) => {
-          incrArr.push(buildIncrement(record.objectId))
-          var ele = document.querySelector('#leancloud-site-pv');
-          if (ele) {
-            ele.innerText = record.time + 1;
-            if (pvCtn) {
-              pvCtn.style.display = 'inline';
-            }
-          }
-        });
-        getterArr.push(pvGetter);
-      }
-
-      // 请求 UV 并自增
-      var uvCtn = document.querySelector('#leancloud-site-uv-container');
-      if (uvCtn || enableIncr) {
-        var uvGetter = getRecord(Counter, 'site-uv').then((record) => {
-          var vuv = validUV();
-          vuv && incrArr.push(buildIncrement(record.objectId))
-          var ele = document.querySelector('#leancloud-site-uv');
-          if (ele) {
-            ele.innerText = record.time + (vuv ? 1 : 0);
-            if (uvCtn) {
-              uvCtn.style.display = 'inline';
-            }
-          }
-        });
-        getterArr.push(uvGetter);
-      }
-
-      // 如果是文章，请求文章的浏览数，并自增
-      if ('false' === 'true') {
-        var viewCtn = document.querySelector('#leancloud-post-views-container');
-        if (viewCtn || enableIncr) {
-          var target = decodeURI('/');
-          var viewGetter = getRecord(Counter, target).then((record) => {
-            incrArr.push(buildIncrement(record.objectId))
-            if (viewCtn) {
-              var ele = document.querySelector('#leancloud-post-views');
-              if (ele) {
-                ele.innerText = (record.time || 0) + 1;
-                viewCtn.style.display = 'inline';
-              }
-            }
-          });
-          getterArr.push(viewGetter);
-        }
-      }
-
-      // 如果启动计数自增，批量发起自增请求
-      if (enableIncr) {
-        Promise.all(getterArr).then(() => {
-          incrArr.length > 0 && increment(Counter, incrArr);
-        })
-      }
-    }
-
-    var app_id = 'n6Mj5ldxlOzFKmG1RboJvi35-gzGzoHsz'
-    var app_key = 'e0SXMiS3gUuaA37sDxUdkj1x'
-    var server_url = 'https://n6mj5ldx.lc-cn-n1-shared.com'
-
-    function fetchData(api_server) {
-      var Counter = (method, url, data) => {
-        return fetch(`${ api_server }/1.1${ url }`, {
-          method,
-          headers: {
-            'X-LC-Id': app_id,
-            'X-LC-Key': app_key,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data)
-        });
-      };
-
-      addCount(Counter);
-    }
-
-    var api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${ app_id.slice(0, 8).toLowerCase() }.api.lncldglobal.com`;
-
-    if (api_server) {
-      fetchData(api_server);
-    } else {
-      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
-        .then(resp => resp.json())
-        .then(({api_server}) => {
-          fetchData('https://' + api_server);
-        });
-    }
-  })();
-</script>
+  
 
 
 
@@ -954,36 +873,39 @@ ORB-SLAM3 是第一个同时具备纯视觉（visual）数据处理、视觉+惯
 
 
 
-  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
   <script>
-    var typed = new Typed('#subtitle', {
-      strings: [
-        '  ',
-        "写些东西的地方。&nbsp;",
-      ],
-      cursorChar: "_",
-      typeSpeed: 70,
-      loop: false,
-    });
-    typed.stop();
-    $(document).ready(function () {
-      $(".typed-cursor").addClass("h2");
-      typed.start();
-    });
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
   </script>
-
-
 
 
 
   <script  src="/js/local-search.js" ></script>
   <script>
-    var path = "/local-search.xml";
-    var inputArea = document.querySelector("#local-search-input");
-    inputArea.onclick = function () {
-      searchFunc(path, 'local-search-input', 'local-search-result');
-      this.onclick = null
-    }
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
   </script>
 
 
@@ -997,13 +919,6 @@ ORB-SLAM3 是第一个同时具备纯视觉（visual）数据处理、视觉+惯
 
 
 
-
-
-
-
-
-
-
   
 
   
@@ -1017,6 +932,11 @@ ORB-SLAM3 是第一个同时具备纯视觉（visual）数据处理、视觉+惯
   
 
 
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
 
 
 
