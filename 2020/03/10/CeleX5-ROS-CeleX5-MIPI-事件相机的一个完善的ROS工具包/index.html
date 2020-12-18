@@ -7,13 +7,15 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/success.png">
-  <link rel="icon" type="image/png" href="/img/success.png">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
   <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
-  <meta name="theme-color" content="#2f4154">
+  <meta name="theme-color" content="#222831">
   <meta name="description" content="">
   <meta name="author" content="Kehan Xue">
   <meta name="keywords" content="">
@@ -55,7 +57,7 @@
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"blog.kehan.site","root":"/","version":"1.8.6","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"copy_btn":true,"image_zoom":{"enable":true},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"n6Mj5ldxlOzFKmG1RboJvi35-gzGzoHsz","app_key":"e0SXMiS3gUuaA37sDxUdkj1x","server_url":"https://n6mj5ldx.lc-cn-n1-shared.com"},"tajs":null}};
+    var CONFIG = {"hostname":"blog.kehan.site","root":"/","version":"1.8.6","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":"❡"},"copy_btn":true,"image_zoom":{"enable":true},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"n6Mj5ldxlOzFKmG1RboJvi35-gzGzoHsz","app_key":"e0SXMiS3gUuaA37sDxUdkj1x","server_url":"https://n6mj5ldx.lc-cn-n1-shared.com"},"tajs":null}};
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
@@ -164,10 +166,17 @@
           <div class="page-header text-center fade-in-up">
             <span class="h2" id="subtitle" title="CeleX5-ROS: CeleX5-MIPI 事件相机的一个完善的 ROS 工具包 ">
               
+                CeleX5-ROS: CeleX5-MIPI 事件相机的一个完善的 ROS 工具包 
+              
             </span>
 
             
               <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      Kehan Xue
+    </span>
   
   
     <span class="post-meta">
@@ -295,19 +304,19 @@
 <ol>
 <li>
 <p>编译</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">mkdir -p ~/celex_ws/src<br><span class="hljs-built_in">cd</span> ~/celex_ws/src<br>git <span class="hljs-built_in">clone</span> git@github.com:kehanXue/CeleX5-ROS.git<br>git submodule update --init --recursive<br><span class="hljs-comment"># Or with http: `git clone https://github.com/kehanXue/CeleX5-ROS.git`</span><br><span class="hljs-built_in">cd</span> ..<br>rosdep install -y --from-paths src --ignore-src --rosdistro <span class="hljs-variable">$ROS_DISTRO</span><br>catkin_make <span class="hljs-comment"># Or use `catkin build`</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter hljs hljs hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">mkdir -p ~/celex_ws/src<br><span class="hljs-built_in">cd</span> ~/celex_ws/src<br>git <span class="hljs-built_in">clone</span> git@github.com:kehanXue/CeleX5-ROS.git<br>git submodule update --init --recursive<br><span class="hljs-comment"># Or with http: `git clone https://github.com/kehanXue/CeleX5-ROS.git`</span><br><span class="hljs-built_in">cd</span> ..<br>rosdep install -y --from-paths src --ignore-src --rosdistro <span class="hljs-variable">$ROS_DISTRO</span><br>catkin_make <span class="hljs-comment"># Or use `catkin build`</span><br></code></pre></div></td></tr></table></figure>
 <p>如果过程中报少哪些依赖库的错误，安装即可。</p>
 </li>
 <li>
 <p>运行 <code>celex5_ros</code> <a href="celex5_ros">更多细节</a></p>
 <p>首先将相机连接到电脑上。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">source</span> ~/celex_ws/devel/setup.bash <span class="hljs-comment"># Or source setup.zsh when you use zsh</span><br>roslaunch celex5_ros celex5_ros_node.launch<br><span class="hljs-comment"># In a new Terminal</span><br>rosrun rqt_reconfigure rqt_reconfigure <span class="hljs-comment"># Open rqt_reconfigure to config</span><br>​```无报错即正常运行。使用`rostopic list`即可看到发布的话题，使用`rivz`或者`image_view`订阅相对应图像话题即可看到发布的图像。某图像话题中是否发布数据由参数配置、上表的相机工作模式所共同决定。```bash<br>$ rostopic list<br>/celex5_mipi/display/accumulated_img/camera_info<br>/celex5_mipi/display/accumulated_img/raw_image<br>/celex5_mipi/display/binary_img/camera_info<br>/celex5_mipi/display/binary_img/raw_image<br>/celex5_mipi/display/count_img/camera_info<br>/celex5_mipi/display/count_img/raw_image<br>/celex5_mipi/display/denoised_binary_img/camera_info<br>/celex5_mipi/display/denoised_binary_img/raw_image<br>/celex5_mipi/display/full_frame_img/camera_info<br>/celex5_mipi/display/full_frame_img/raw_image<br>/celex5_mipi/display/gray_img/camera_info<br>/celex5_mipi/display/gray_img/raw_image<br>/celex5_mipi/display/in_pixel_img/camera_info<br>/celex5_mipi/display/in_pixel_img/raw_image<br>/celex5_mipi/display/optical_flow_direction_img/camera_info<br>/celex5_mipi/display/optical_flow_direction_img/raw_image<br>/celex5_mipi/display/optical_flow_img/camera_info<br>/celex5_mipi/display/optical_flow_img/raw_image<br>/celex5_mipi/display/optical_flow_speed_img/camera_info<br>/celex5_mipi/display/optical_flow_speed_img/raw_image<br>/celex5_mipi/display/parameter_descriptions<br>/celex5_mipi/display/parameter_updates<br>/celex5_mipi/display/superimposed_img/camera_info<br>/celex5_mipi/display/superimposed_img/raw_image<br>/celex5_mipi/events<br>/celex5_mipi/imu_data<br>/celex5_mipi/polarity_img/camera_info<br>/celex5_mipi/polarity_img/raw_image<br>/celex5_mipi/sensor/parameter_descriptions<br>/celex5_mipi/sensor/parameter_updates<br>/rosout<br>/rosout_agg<br>​```其中原始 event 数据的话题：`/celex5_mipi/events`imu 数据的话题（注意由于 CeleX5 原始 imu 数据获取的方式，导致 imu 话题与 ROS 中标准的 IMU 话题的消息类型不同）：`/celex5_mipi/imu_data`通过`image_view`查看某一图像：```bash<br>rosrun image_view image_view image:=/celex5_mipi/display/binary_img/raw_image<br>​```3. 使用`celex5_calibration`<br><br>更多细节：[链接](celex5_calibration)<br><br>提供了一系列基于 Events 数据进行相机参数标定的办法。<br><br>- 标定工具的生成<br><br>  运行：<br><br>  ```bash<br>  rosrun celex5_ros pattern_generator_node<br>  <span class="hljs-comment"># In a new Terminal</span><br>  rosrun rqt_reconfigure rqt_reconfigure <span class="hljs-comment">#  Open rqt_reconfigure to config</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter hljs hljs hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash"><span class="hljs-built_in">source</span> ~/celex_ws/devel/setup.bash <span class="hljs-comment"># Or source setup.zsh when you use zsh</span><br>roslaunch celex5_ros celex5_ros_node.launch<br><span class="hljs-comment"># In a new Terminal</span><br>rosrun rqt_reconfigure rqt_reconfigure <span class="hljs-comment"># Open rqt_reconfigure to config</span><br>​```无报错即正常运行。使用`rostopic list`即可看到发布的话题，使用`rivz`或者`image_view`订阅相对应图像话题即可看到发布的图像。某图像话题中是否发布数据由参数配置、上表的相机工作模式所共同决定。```bash<br>$ rostopic list<br>/celex5_mipi/display/accumulated_img/camera_info<br>/celex5_mipi/display/accumulated_img/raw_image<br>/celex5_mipi/display/binary_img/camera_info<br>/celex5_mipi/display/binary_img/raw_image<br>/celex5_mipi/display/count_img/camera_info<br>/celex5_mipi/display/count_img/raw_image<br>/celex5_mipi/display/denoised_binary_img/camera_info<br>/celex5_mipi/display/denoised_binary_img/raw_image<br>/celex5_mipi/display/full_frame_img/camera_info<br>/celex5_mipi/display/full_frame_img/raw_image<br>/celex5_mipi/display/gray_img/camera_info<br>/celex5_mipi/display/gray_img/raw_image<br>/celex5_mipi/display/in_pixel_img/camera_info<br>/celex5_mipi/display/in_pixel_img/raw_image<br>/celex5_mipi/display/optical_flow_direction_img/camera_info<br>/celex5_mipi/display/optical_flow_direction_img/raw_image<br>/celex5_mipi/display/optical_flow_img/camera_info<br>/celex5_mipi/display/optical_flow_img/raw_image<br>/celex5_mipi/display/optical_flow_speed_img/camera_info<br>/celex5_mipi/display/optical_flow_speed_img/raw_image<br>/celex5_mipi/display/parameter_descriptions<br>/celex5_mipi/display/parameter_updates<br>/celex5_mipi/display/superimposed_img/camera_info<br>/celex5_mipi/display/superimposed_img/raw_image<br>/celex5_mipi/events<br>/celex5_mipi/imu_data<br>/celex5_mipi/polarity_img/camera_info<br>/celex5_mipi/polarity_img/raw_image<br>/celex5_mipi/sensor/parameter_descriptions<br>/celex5_mipi/sensor/parameter_updates<br>/rosout<br>/rosout_agg<br>​```其中原始 event 数据的话题：`/celex5_mipi/events`imu 数据的话题（注意由于 CeleX5 原始 imu 数据获取的方式，导致 imu 话题与 ROS 中标准的 IMU 话题的消息类型不同）：`/celex5_mipi/imu_data`通过`image_view`查看某一图像：```bash<br>rosrun image_view image_view image:=/celex5_mipi/display/binary_img/raw_image<br>​```3. 使用`celex5_calibration`<br><br>更多细节：[链接](celex5_calibration)<br><br>提供了一系列基于 Events 数据进行相机参数标定的办法。<br><br>- 标定工具的生成<br><br>  运行：<br><br>  ```bash<br>  rosrun celex5_ros pattern_generator_node<br>  <span class="hljs-comment"># In a new Terminal</span><br>  rosrun rqt_reconfigure rqt_reconfigure <span class="hljs-comment">#  Open rqt_reconfigure to config</span><br></code></pre></div></td></tr></table></figure>
 <p>更多细节：<a href="celex5_calibration/src/pattern">链接</a></p>
 <ul>
 <li>
 <p>基于 ROS 中的 <a href="http://wiki.ros.org/camera_calibration/Tutorials" target="_blank" rel="noopener">camera_calibration</a> 工具包进行的内参标定。（如果要标定与其他相机的外参，ROS 中的这个工具仅支持分辨率一样的…）</p>
 <p>安装：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo apt install ros-<span class="hljs-variable">$ROS_DISTRO</span>-camera-calibration<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter hljs hljs hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">sudo apt install ros-<span class="hljs-variable">$ROS_DISTRO</span>-camera-calibration<br></code></pre></div></td></tr></table></figure>
 <p>CeleX5-MIPI 进行基于该方法进行标定的具体过程：<a href="celex5_calibration/src/intrinsics_extrinsics/pkg_camera_calibration">链接</a></p>
 </li>
 <li>
@@ -540,17 +549,6 @@
   <script defer src="/js/leancloud.js" ></script>
 
 
-
-  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var title = document.getElementById('subtitle').title;
-      
-      typing(title)
-      
-    })(window, document);
-  </script>
 
 
 

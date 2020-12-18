@@ -7,13 +7,15 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/success.png">
-  <link rel="icon" type="image/png" href="/img/success.png">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
   <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
-  <meta name="theme-color" content="#2f4154">
+  <meta name="theme-color" content="#222831">
   <meta name="description" content="">
   <meta name="author" content="Kehan Xue">
   <meta name="keywords" content="">
@@ -55,7 +57,7 @@
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"blog.kehan.site","root":"/","version":"1.8.6","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"copy_btn":true,"image_zoom":{"enable":true},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"n6Mj5ldxlOzFKmG1RboJvi35-gzGzoHsz","app_key":"e0SXMiS3gUuaA37sDxUdkj1x","server_url":"https://n6mj5ldx.lc-cn-n1-shared.com"},"tajs":null}};
+    var CONFIG = {"hostname":"blog.kehan.site","root":"/","version":"1.8.6","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":"❡"},"copy_btn":true,"image_zoom":{"enable":true},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"n6Mj5ldxlOzFKmG1RboJvi35-gzGzoHsz","app_key":"e0SXMiS3gUuaA37sDxUdkj1x","server_url":"https://n6mj5ldx.lc-cn-n1-shared.com"},"tajs":null}};
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
@@ -164,10 +166,17 @@
           <div class="page-header text-center fade-in-up">
             <span class="h2" id="subtitle" title="DSO 中 Residual pattern 的 SSE 加速">
               
+                DSO 中 Residual pattern 的 SSE 加速
+              
             </span>
 
             
               <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      Kehan Xue
+    </span>
   
   
     <span class="post-meta">
@@ -260,7 +269,7 @@
 <p>由于浮点数占4个字节或者8个字节，而整数却可以分别占1,2,4个字节。按照应用场合不同使用的不同，因此向量化加速也不同。因此一个指令最多完成4个浮点数计算。而可以完成16个int8_t数据的计算。</p>
 </blockquote>
 <p>具体到 DSO 的实现中，可以看出大概。如在 <code>src/OptimizationBackend/MatrixAccumulators.h</code> 文件的 <code>99-106</code> 行中：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs C++">...  <br>  <span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-keyword">void</span> <span class="hljs-title">initialize</span><span class="hljs-params">()</span></span><br><span class="hljs-function">  </span>&#123;<br>    A=<span class="hljs-number">0</span>;<br>    <span class="hljs-built_in">memset</span>(SSEData,<span class="hljs-number">0</span>, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>)*<span class="hljs-number">4</span>*<span class="hljs-number">1</span>);<br>    <span class="hljs-built_in">memset</span>(SSEData1k,<span class="hljs-number">0</span>, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>)*<span class="hljs-number">4</span>*<span class="hljs-number">1</span>);<br>    <span class="hljs-built_in">memset</span>(SSEData1m,<span class="hljs-number">0</span>, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>)*<span class="hljs-number">4</span>*<span class="hljs-number">1</span>);<br>    num = numIn1 = numIn1k = numIn1m = <span class="hljs-number">0</span>;<br>  &#125;<br>...<br></code></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter hljs hljs hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs C++">...  <br>  <span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-keyword">void</span> <span class="hljs-title">initialize</span><span class="hljs-params">()</span></span><br><span class="hljs-function">  </span>&#123;<br>    A=<span class="hljs-number">0</span>;<br>    <span class="hljs-built_in">memset</span>(SSEData,<span class="hljs-number">0</span>, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>)*<span class="hljs-number">4</span>*<span class="hljs-number">1</span>);<br>    <span class="hljs-built_in">memset</span>(SSEData1k,<span class="hljs-number">0</span>, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>)*<span class="hljs-number">4</span>*<span class="hljs-number">1</span>);<br>    <span class="hljs-built_in">memset</span>(SSEData1m,<span class="hljs-number">0</span>, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>)*<span class="hljs-number">4</span>*<span class="hljs-number">1</span>);<br>    num = numIn1 = numIn1k = numIn1m = <span class="hljs-number">0</span>;<br>  &#125;<br>...<br></code></pre></div></td></tr></table></figure>
 <p>可见，DSO 中进行 SSE 加速的操作的数据类型为 <code>float</code>，正好 128 位的 SSE 寄存器中最多存放 4 个浮点数类型（<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>4</mn><mo>∗</mo><mo stretchy="false">(</mo><mn>4</mn><mo>∗</mo><mn>8</mn><mo stretchy="false">)</mo><mo>=</mo><mn>128</mn></mrow><annotation encoding="application/x-tex">4*(4*8) = 128</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">4</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">4</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">8</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">2</span><span class="mord">8</span></span></span></span> bit），代码中的实现也亦是如此。</p>
 
             </div>
@@ -468,17 +477,6 @@
   <script defer src="/js/leancloud.js" ></script>
 
 
-
-  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var title = document.getElementById('subtitle').title;
-      
-      typing(title)
-      
-    })(window, document);
-  </script>
 
 
 

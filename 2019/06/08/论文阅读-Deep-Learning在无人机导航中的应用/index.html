@@ -7,13 +7,15 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/success.png">
-  <link rel="icon" type="image/png" href="/img/success.png">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
   <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
-  <meta name="theme-color" content="#2f4154">
+  <meta name="theme-color" content="#222831">
   <meta name="description" content="">
   <meta name="author" content="Kehan Xue">
   <meta name="keywords" content="">
@@ -55,7 +57,7 @@
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"blog.kehan.site","root":"/","version":"1.8.6","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"copy_btn":true,"image_zoom":{"enable":true},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"n6Mj5ldxlOzFKmG1RboJvi35-gzGzoHsz","app_key":"e0SXMiS3gUuaA37sDxUdkj1x","server_url":"https://n6mj5ldx.lc-cn-n1-shared.com"},"tajs":null}};
+    var CONFIG = {"hostname":"blog.kehan.site","root":"/","version":"1.8.6","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":"❡"},"copy_btn":true,"image_zoom":{"enable":true},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"n6Mj5ldxlOzFKmG1RboJvi35-gzGzoHsz","app_key":"e0SXMiS3gUuaA37sDxUdkj1x","server_url":"https://n6mj5ldx.lc-cn-n1-shared.com"},"tajs":null}};
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
@@ -164,10 +166,17 @@
           <div class="page-header text-center fade-in-up">
             <span class="h2" id="subtitle" title="论文阅读 - DroNet: Deep learning 在无人机导航中的应用">
               
+                论文阅读 - DroNet: Deep learning 在无人机导航中的应用
+              
             </span>
 
             
               <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      Kehan Xue
+    </span>
   
   
     <span class="post-meta">
@@ -265,7 +274,7 @@ IEEE Robotics and Automation Letters (RA-L), 2018.<br />
 <blockquote>
 <p>通过代码看到最终 collision 这个全连接节点最终输出还被作用了一个 sigmod 函数，这个论文中并未提到为何。猜测是用于归一化（概率值必须大于 0 小于 1，而刚开始训练的时候 loss 大多依据（后面会讲到） steering 的 loss，可能会出现 [-1, 0] 之间的数，所以要归一化到 (0,1)） / 某种意义上的数据增强？具体只能等跑训练代码的时候看一下实际该参数的值。</p>
 <p>cnn_models.py</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-number">85</span>    <span class="hljs-comment"># Collision channel</span><br><span class="hljs-number">86</span>    coll = Dense (output_dim)(x)<br><span class="hljs-number">87</span>    coll = Activation (<span class="hljs-string">'sigmoid'</span>)(coll)<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter hljs hljs hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs python"><span class="hljs-number">85</span>    <span class="hljs-comment"># Collision channel</span><br><span class="hljs-number">86</span>    coll = Dense (output_dim)(x)<br><span class="hljs-number">87</span>    coll = Activation (<span class="hljs-string">'sigmoid'</span>)(coll)<br></code></pre></div></td></tr></table></figure>
 </blockquote>
 <p><strong>关于训练方法:</strong></p>
 <p>关于转角的预测本质是一个回归问题，关于障碍物的检测本质是一个二分类问题（虽然最后输出的是概率，但是从数据集本质来看是一个二分类问题，这个后续详述）。该网络比较特殊（两种不同的问题模型的输出，共享网络），所以要设计出一种合理的 loss 函数.</p>
@@ -509,17 +518,6 @@ IEEE Robotics and Automation Letters (RA-L), 2018.<br />
   <script defer src="/js/leancloud.js" ></script>
 
 
-
-  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var title = document.getElementById('subtitle').title;
-      
-      typing(title)
-      
-    })(window, document);
-  </script>
 
 
 
