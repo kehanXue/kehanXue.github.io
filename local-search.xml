@@ -20,9 +20,9 @@
     
     <tags>
       
-      <tag>Robotics</tag>
-      
       <tag>Event-Camera</tag>
+      
+      <tag>Robotics</tag>
       
     </tags>
     
@@ -178,11 +178,11 @@
     
     <tags>
       
+      <tag>Event-Camera</tag>
+      
       <tag>SLAM</tag>
       
       <tag>Robotics</tag>
-      
-      <tag>Event-Camera</tag>
       
     </tags>
     
@@ -695,9 +695,9 @@
     
     <tags>
       
-      <tag>Robotics</tag>
-      
       <tag>ROS</tag>
+      
+      <tag>Robotics</tag>
       
       <tag>Calibration</tag>
       

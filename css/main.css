@@ -316,34 +316,34 @@ img[srcset] {
 }
 :root {
   --color-mode: 'light';
-  --body-bg-color: #e8e8e8;
-  --board-bg-color: #e8e8e8;
-  --text-color: #222831;
-  --sec-text-color: #718096;
-  --post-text-color: #2c3e50;
-  --post-heading-color: #1a202c;
+  --body-bg-color: #ffffff;
+  --board-bg-color: #ffffff;
+  --text-color: #000000;
+  --sec-text-color: #000000;
+  --post-text-color: #000000;
+  --post-heading-color: #000000;
   --post-link-color: #0366d6;
   --link-hover-color: #30a9de;
   --link-hover-bg-color: #f8f9fa;
-  --navbar-bg-color: #222831;
-  --navbar-text-color: #e8e8e8;
+  --navbar-bg-color: #000000;
+  --navbar-text-color: #ffffff;
 }
 @media (prefers-color-scheme: dark) {
   :root {
     --color-mode: 'dark';
   }
   :root:not([data-user-color-scheme]) {
-    --body-bg-color: #222831;
-    --board-bg-color: #222831;
-    --text-color: #e8e8e8;
-    --sec-text-color: #a7a9ad;
-    --post-text-color: #c4c6c9;
-    --post-heading-color: #c4c6c9;
+    --body-bg-color: #333333;
+    --board-bg-color: #333333;
+    --text-color: #ffffff;
+    --sec-text-color: #ffffff;
+    --post-text-color: #ffffff;
+    --post-heading-color: #ffffff;
     --post-link-color: #1589e9;
     --link-hover-color: #30a9de;
     --link-hover-bg-color: #364151;
-    --navbar-bg-color: #e8e8e8;
-    --navbar-text-color: #222831;
+    --navbar-bg-color: #333333;
+    --navbar-text-color: #ffffff;
   }
   :root:not([data-user-color-scheme]) img,
   :root:not([data-user-color-scheme]) .note,
@@ -403,17 +403,17 @@ img[srcset] {
   }
 }
 [data-user-color-scheme='dark'] {
-  --body-bg-color: #222831;
-  --board-bg-color: #222831;
-  --text-color: #e8e8e8;
-  --sec-text-color: #a7a9ad;
-  --post-text-color: #c4c6c9;
-  --post-heading-color: #c4c6c9;
+  --body-bg-color: #333333;
+  --board-bg-color: #333333;
+  --text-color: #ffffff;
+  --sec-text-color: #ffffff;
+  --post-text-color: #ffffff;
+  --post-heading-color: #ffffff;
   --post-link-color: #1589e9;
   --link-hover-color: #30a9de;
   --link-hover-bg-color: #364151;
-  --navbar-bg-color: #e8e8e8;
-  --navbar-text-color: #222831;
+  --navbar-bg-color: #333333;
+  --navbar-text-color: #ffffff;
 }
 [data-user-color-scheme='dark'] img,
 [data-user-color-scheme='dark'] .note,
@@ -1591,10 +1591,10 @@ post-custom {
   border-left: 0.35rem solid;
   border-radius: 0.25rem;
   margin: 1.5rem 0;
-  color: #222831;
+  color: #000000;
 }
 .note a {
-  color: #222831;
+  color: #000000;
 }
 .note *:last-child {
   margin-bottom: 0;
@@ -1633,7 +1633,7 @@ post-custom {
   font-size: 85%;
   margin: 0;
   padding: 0.2em 0.4em;
-  color: #222831;
+  color: #000000;
 }
 .label-default {
   background: #e7e3e3;
